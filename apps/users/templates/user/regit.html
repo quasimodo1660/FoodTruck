@@ -1,0 +1,106 @@
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">  
+        <title>Registration Form</title>
+        <meta name="description" content="fill_me_in" >
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+   </head>
+   <body>     
+        <nav id="nav_top" class="navbar navbar-inverse navbar-static-top">
+                <div class="container" id="main_container">
+                        <a class="navbar-brand" href="http://api.jquery.com">Register</a>
+                </div>
+        </nav>
+        <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3>Your Information</h3>
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your information with anyone else.</small><br>
+                        {% for message in messages %}
+                        <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                          {{ message }}
+                        </div>
+                      {% endfor %}
+                      <form method="post">
+                        {% csrf_token %}
+                        {% if user_form.non_field_errors %}
+                        <div class="alert alert-danger" role="alert">
+                          {% for error in user_form.non_field_errors %}
+                            {{ error }}
+                          {% endfor %}
+                        </div>
+                      {% endif %}
+                      {% for field in user_form.visible_fields %}
+                      <div class="form-group">
+                        {{ field.label_tag }}
+                  
+                        {% if user_form.is_bound %}
+                          {% if field.errors %}
+                            {% render_field field class="form-control is-invalid" %}
+                            {% for error in field.errors %}
+                              <div class="invalid-feedback">
+                                {{ error }}
+                              </div>
+                            {% endfor %}
+                          {% else %}
+                            {% render_field field class="form-control is-valid" %}
+                          {% endif %}
+                        {% else %}
+                          {% render_field field class="form-control" %}
+                        {% endif %}
+                  
+                        {% if field.help_text %}
+                          <small class="form-text text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+                      </div>
+                    {% endfor %}
+
+                   
+                    {% for field in profile_form.visible_fields %}
+                      <div class="form-group">
+                        {{ field.label_tag }}
+                  
+                        {% if profile_form.is_bound %}
+                          {% if field.errors %}
+                            {% render_field field class="form-control is-invalid" %}
+                            {% for error in field.errors %}
+                              <div class="invalid-feedback">
+                                {{ error }}
+                              </div>
+                            {% endfor %}
+                          {% else %}
+                            {% render_field field class="form-control is-valid" %}
+                          {% endif %}
+                        {% else %}
+                          {% render_field field class="form-control" %}
+                        {% endif %}
+                  
+                        {% if field.help_text %}
+                          <small class="form-text text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+                      </div>
+                    {% endfor %}
+                  <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                      </form>
+                        <h3>Back to <a href="/">Log in</a></h3>
+                    </div>
+                    <div class="col-md-6" id="right_main">
+                      
+                    </div>
+                    {% load static %}
+                    <script src="{% static 'user/js/main.js' %}"></script> 
+
+   </body>
+</html>
+
+
