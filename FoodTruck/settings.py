@@ -58,7 +58,7 @@ ROOT_URLCONF = 'FoodTruck.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['FoodTruck/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

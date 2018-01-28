@@ -1,0 +1,66 @@
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">  
+  <title>Fill_me_in</title>
+  <meta name="description" content="fill_me_in" >
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#FCB902">
+      <a class="navbar-brand" href="#" style="margin-left:2%">
+        <img src="https://i.imgur.com/IABAnAE.jpg" width="35" height="35" class="d-inline-block align-top" alt="CengFan">
+        CengFan
+      </a>
+      <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href=" ">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+        </ul>
+      </div>
+      <form class="form-inline" style="margin-right:1%;border-color:#FCB902">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+      </form>
+      {% if user.is_authenticated %}
+      <div class="btn-group"  style="margin-right:2%">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="background-color:#FCB902;border-color:#FCB902">
+          Right-aligned menu
+        </button>
+        <div class="dropdown-menu dropdown-menu-right">
+          <button class="dropdown-item" type="button"><a class="dropdown-item" href="/accounts/profile">Profile</a></button>
+          <button class="dropdown-item" type="button" ><a class="dropdown-item" href="">Settings</a></button>
+          <button class="dropdown-item" type="button"><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></button>
+        </div>
+      </div>
+      {% else %}
+      <span class="d-block d-lg-inline-block" style="margin-right:2%">
+        <div class="HeaderNavlink px-0 py-2 m-0">
+          <a class="text-bold text-white no-underline" href="accounts/login" data-ga-click="(Logged out) Header, clicked Sign in, text:sign-in">Sign in</a>
+            <span class="text-gray" style="color:gray">or</span>
+            <a class="text-bold text-white no-underline" href="accounts/signup" data-ga-click="(Logged out) Header, clicked Sign up, text:sign-up">Sign up</a>
+        </div>
+      </span>
+      {% endif %}
+    </nav>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
