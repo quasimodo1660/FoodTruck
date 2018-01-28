@@ -19,6 +19,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^',include('apps.home.urls')),
+    url(r'^dish/',include('apps.lunchbox.urls')),
     url(r'^accounts/',include('apps.users.urls')),
     url(r'^accounts/',include('django.contrib.auth.urls')),
     url(r'^admin/', admin.site.urls),
