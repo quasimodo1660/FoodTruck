@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class='container'>
+<div class='row'>
+
+    <div class='col-md-8'>
+            <form method="post"  action="/dish/update/" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type = 'hidden' id ='lng' name = 'lng' value="">
+                <input type = 'hidden' id = 'lat' name = 'lat' value="">
+                <input type = 'hidden' id = 'city' name = 'city' value="">
+                
+                <div class="form-group">
+                        <input type="text" class="form-control" name="title" placeholder="Enter title" style="border:none">
+                </div>
+                <input type="file" class="form-control-file" id="exampleFormControlFile1" name='image'>
+                <div class="form-group">
+                        <textarea class="form-control" name="des" placeholder="Enter description" style="border:none"></textarea>
+                </div>
+                <div class="form-group">
+                        <input type="date" class="form-control date" name="time" style="border:none">
+                </div>
+
+                
+                <div class="form-group">
+                        <input type="text" class="form-control" name="loc" placeholder="Enter location" id='loc' style="border:none">
+                </div>
+                <div id="infowindow-content">
+                        <img src="" width="16" height="16" id="place-icon">
+                        <span id="place-name"  class="title"></span><br>
+                        <span id="place-address"></span>
+                </div>
+
+
+
+
+                <input type="submit" class="btn btn-primary" name='b1' value='draft'>
+                <input type="submit" class="btn btn-primary" name='b2' value='save'>
+               
+            </form>
+        </div>
+        <div class='col-md-4'>
+                <table class="table">
+                        <tbody>
+                            <tr>
+                                <th scope="row">Step 1</th>
+                                <td><input type="text" class="form-control" name="step1" style="border:none"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Step 2</th>
+                                <td><input type="text" class="form-control" name="step2" style="border:none"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Step 3</th>
+                                <td><input type="text" class="form-control" name="step3" style="border:none"></td>
+                            </tr>
+                        </tbody>
+                </table>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAD1BgNBjRye5nHsUPtz-EukHsXe4anQhc&libraries=places"></script>
+{% load static %}
+<script src="{% static 'lunchbox/js/main.js' %}"></script> 
+{% endblock %}

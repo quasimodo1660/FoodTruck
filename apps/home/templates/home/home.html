@@ -2,4 +2,8 @@
 
 {% block content %}
 <p>here will show the cotent</p>
+<form action='dish/add/' method="post">
+    {% csrf_token %}  
+<button type='submit'>add a lunchbox</button>
+</form>
 {% endblock %}
