@@ -7,3 +7,10 @@ class LunchboxForm(forms.ModelForm):
     class Meta:
         model=Lunchbox
         fields=('title','description','user')
+
+
+class LunchboxImageForm(forms.ModelForm):
+    class Meta:
+        model = LunchboxImage
+        fields = ('image',)
+

@@ -56,6 +56,8 @@ class LunchboxImage(models.Model):
     lunchbox= models.ForeignKey(Lunchbox,related_name='images')
     image=models.ImageField(upload_to=lunchbox_directory_path)
     uploaded_at = models.DateTimeField(auto_now_add=True)
+    # def __unicode__(self):
+    #     return self.image.name
 
 
 # @receiver(post_save,sender=Lunchbox)

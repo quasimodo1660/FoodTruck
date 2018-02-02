@@ -1,4 +1,17 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block javascript %}
+ 
+  <script src="{% static 'js/jquery-file-upload/vendor/jquery.ui.widget.js' %}"></script>
+  <script src="{% static 'js/jquery-file-upload/jquery.iframe-transport.js' %}"></script>
+  <script src="{% static 'js/jquery-file-upload/jquery.fileupload.js' %}"></script>
+
+  <script src="{% static 'lunchbox/js/progress-bar-upload.js' %}"></script>
+{% endblock %}
+
+
+
+
 
 {% block content %}
 <div class='container'>
@@ -14,7 +27,7 @@
                 <div class="form-group">
                         <input type="text" class="form-control" name="title" placeholder="Enter title" style="border:none">
                 </div>
-                <input type="file" class="form-control-file" id="exampleFormControlFile1" name='image'>
+                <input type="file" class="form-control-file" id="exampleFormControlFile1" name='imagep'>
                 <div class="form-group">
                         <textarea class="form-control" name="des" placeholder="Enter description" style="border:none"></textarea>
                 </div>
@@ -39,6 +52,48 @@
                 <input type="submit" class="btn btn-primary" name='b2' value='save'>
                
             </form>
+            
+            <!-- Display the Progress -->
+            <div class="modal fade" id="modal-progress" data-backdrop="static" data-keyboard="false">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title">Uploading...</h4>
+                        </div>
+                        <div class="modal-body">
+                          <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style="margin-bottom: 20px;">
+                        <button type="button" class="btn btn-primary js-upload-photos">
+                          <span class="glyphicon glyphicon-cloud-upload"></span> Upload photos
+                        </button>
+                     
+                      <input id="fileupload" type="file" name="file" multiple
+                             style="display: none;"
+                             data-url="/dish/uplaods/"
+                             data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
+                      
+                     
+                      <table id="gallery" class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Photo</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          
+                        </tbody>
+                      </table>
+                  
+
+
+
         </div>
         <div class='col-md-4'>
                 <table class="table">
@@ -58,11 +113,12 @@
                         </tbody>
                 </table>
         </div>
+        <tr><th><label for="id_image">Image:</label></th><td><ul class="errorlist"><li>This field is required.</li></ul><input type="file" name="image" required id="id_image" /></td></tr>
     </div>
 </div>
 
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAD1BgNBjRye5nHsUPtz-EukHsXe4anQhc&libraries=places"></script>
-{% load static %}
+
 <script src="{% static 'lunchbox/js/main.js' %}"></script> 
 {% endblock %}
