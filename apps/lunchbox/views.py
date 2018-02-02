@@ -35,7 +35,6 @@ def uplaods(request):
     form = LunchboxImageForm(request.POST, request.FILES)
     form.user = request.user
     form.lunchbox = Lunchbox.objects.get(id=55)
-    print 'valid'
     if form.is_valid():
         photo = form.save()
         data = {'is_valid': True, 'name': photo.file.name, 'url': photo.file.url}

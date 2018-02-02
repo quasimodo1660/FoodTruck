@@ -6,6 +6,7 @@ $(function () {
 
   $("#fileupload").fileupload({
     dataType: 'json',
+    url:'/dish/uplaods/',
     sequentialUploads: true,
 
     start: function (e) {
