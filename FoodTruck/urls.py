@@ -17,15 +17,24 @@ from django.conf.urls import url,include
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework import routers
+from apps.users import views as UV
+from rest_framework.authtoken import views
+
+router = routers.DefaultRouter()
+router.register(r'users', UV.UserViewSet)
+router.register(r'groups', UV.GroupViewSet)
 
 
 urlpatterns = [
+    url(r'^api/', include(router.urls)),
     url(r'^',include('apps.home.urls')),
     url(r'^dish/',include('apps.lunchbox.urls')),
     url(r'^accounts/',include('apps.users.urls')),
     url(r'^accounts/',include('django.contrib.auth.urls')),
     url(r'^admin/', admin.site.urls),
-    url(r'^api-auth/', include('rest_framework.urls'))
+    url(r'^api-auth/', include('rest_framework.urls')),
+    url(r'^api-token-auth/', views.obtain_auth_token),
 ]
 
 
