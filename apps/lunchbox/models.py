@@ -39,6 +39,8 @@ class Lunchbox(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
     public  = models.BooleanField(default = False)
+    def __unicode__(self):
+        return self.title
 
 
 class Step(models.Model):
@@ -47,14 +49,14 @@ class Step(models.Model):
     updated_at = models.DateTimeField(auto_now = True)
     description = models.TextField(max_length = 500, blank=True)
 
-def lunchbox_directory_path(User,Lunchbox,filename):
+def lunchbox_directory_path(Lunchbox,filename):
     print 'sbb'
-    return 'Users/user_{0}/{1}/{2}'.format(User.id,Lunchbox.title,filename)
+    return 'Users/user_{0}/{1}/{2}'.format(Lunchbox.title,filename)
 
 class LunchboxImage(models.Model):
     user= models.ForeignKey(User,related_name='lunchboxImages')
     lunchbox= models.ForeignKey(Lunchbox,related_name='images')
-    image=models.ImageField(upload_to=lunchbox_directory_path)
+    image=models.ImageField(upload_to='media/test/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
     # def __unicode__(self):
     #     return self.image.name

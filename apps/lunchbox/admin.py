@@ -20,3 +20,12 @@ class CategoryAdmin(ImportExportModelAdmin,admin.ModelAdmin):
 @admin.register(Tag)
 class TagAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     list_display = ('id','name','created_at','updated_at','category_id')
+
+
+@admin.register(Lunchbox)
+class LunchboxAdmin(ImportExportModelAdmin,admin.ModelAdmin):
+    list_display = ('id','title','location','lon','lat')
+
+@admin.register(LunchboxImage)
+class LunchboxAdmin(ImportExportModelAdmin,admin.ModelAdmin):
+    list_display=('id','lunchbox')
