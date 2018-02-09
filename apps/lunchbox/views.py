@@ -7,6 +7,9 @@ from django.contrib.auth.models import User
 from .models import *
 from django.http import JsonResponse
 import time
+from .serializers import *
+from rest_framework import viewsets
+
 
 # Create your views here.
 def index(request):
@@ -41,3 +44,9 @@ def uplaods(request):
     else:
         data = {'is_valid': False}
     return JsonResponse(data)
+
+
+
+class LunchboxViewSet(viewsets.ModelViewSet):
+    queryset = Lunchbox.objects.all().order_by('-updated_at')
+    serializer_class = LunchboxSerializer

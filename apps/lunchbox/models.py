@@ -19,7 +19,7 @@ class Category(models.Model):
 
 class Tag(models.Model):
     name=models.CharField(max_length=255)
-    category_id=models.ForeignKey(Category,related_name='tags')
+    category=models.ForeignKey(Category,related_name='tags')
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
     def __unicode__(self):
@@ -59,7 +59,7 @@ class LunchboxImage(models.Model):
     image=models.ImageField(upload_to='media/test/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
     # def __unicode__(self):
-    #     return self.image.name
+    #     return self.image
 
 
 # @receiver(post_save,sender=Lunchbox)

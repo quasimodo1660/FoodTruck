@@ -19,11 +19,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework import routers
 from apps.users import views as UV
+from apps.lunchbox import views as LV
 from rest_framework.authtoken import views
 
 router = routers.DefaultRouter()
 router.register(r'users', UV.UserViewSet)
 router.register(r'groups', UV.GroupViewSet)
+router.register(r'lunchbox',LV.LunchboxViewSet)
 
 
 urlpatterns = [
