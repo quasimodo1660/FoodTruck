@@ -10,7 +10,8 @@ from django.contrib.auth import login
 
 def index(request):
     user=request.user
-    return render(request,'home/home.html',{'user':user})
+    lunchboxImages = LunchboxImage.objects.all()
+    return render(request,'home/home.html',{'user':user,'all_lunchboxes':Lunchbox.objects.all().order_by("-updated_at"),'LIS':lunchboxImages})
 
 
 

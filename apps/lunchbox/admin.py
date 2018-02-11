@@ -27,5 +27,5 @@ class LunchboxAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     list_display = ('id','title','location','lon','lat')
 
 @admin.register(LunchboxImage)
-class LunchboxAdmin(ImportExportModelAdmin,admin.ModelAdmin):
-    list_display=('id','lunchbox')
+class LunchboxAdmin(admin.ModelAdmin):
+    list_display=('user','lunchbox','image')

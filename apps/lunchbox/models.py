@@ -5,6 +5,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from PIL import Image
+from django.utils.translation import ugettext as _
+from django.utils import six
 
 
 
@@ -49,17 +52,17 @@ class Step(models.Model):
     updated_at = models.DateTimeField(auto_now = True)
     description = models.TextField(max_length = 500, blank=True)
 
-def lunchbox_directory_path(Lunchbox,filename):
+def lunchbox_directory_path(instance,filename):
     print 'sbb'
-    return 'Users/user_{0}/{1}/{2}'.format(Lunchbox.title,filename)
+    return 'Lunchbox/{0}/{1}/{2}'.format(instance.user.username,instance.lunchbox.title,filename)
 
 class LunchboxImage(models.Model):
     user= models.ForeignKey(User,related_name='lunchboxImages')
     lunchbox= models.ForeignKey(Lunchbox,related_name='images')
-    image=models.ImageField(upload_to='media/test/')
+    image=models.ImageField(upload_to=lunchbox_directory_path)
     uploaded_at = models.DateTimeField(auto_now_add=True)
-    # def __unicode__(self):
-    #     return self.image
+    def __unicode__(self):
+        return _(six.u('LunchboxImage for %s'))
 
 
 # @receiver(post_save,sender=Lunchbox)

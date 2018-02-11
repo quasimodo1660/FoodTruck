@@ -1,10 +1,34 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">         <!-- Font Awesome, http://fontawesome.io/ -->                           <!-- Bootstrap styles, https://getbootstrap.com/ -->
+    <link rel="stylesheet" href="{% static 'css/tooplate-style.css' %}">      
+{% endblock %}
 
 {% block content %}
-<p>here will show the cotent</p>
 <form action='dish/add/' method="post">
     {% csrf_token %}  
-<button type='submit'>add a lunchbox</button>
-<a class="btn btn-primary btn-lg" href="/test" role="button">Test</a>
+    <button type='submit'>add a lunchbox</button>
 </form>
+<div class="container-fluid">
+<div class="tm-body tm-gallery-container">                    
+    <div class="grid">
+    {% for lunchbox in all_lunchboxes %}
+         <div class="grid-item">
+        {% for image in LIS %}
+            {% if image.lunchbox.id == lunchbox.id %}
+            <img class="content_img" src="/media/{{ image.image }}" alt="{{ lunchbox.title }}"><br>
+            {% endif %}
+        {% endfor %}
+        </div>   
+    {% endfor %}
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
+<script src="{% static 'js/masonry.pkgd.min.js' %}"></script>
+<script src="{% static 'js/showImg.js' %}"></script>
 {% endblock %}
