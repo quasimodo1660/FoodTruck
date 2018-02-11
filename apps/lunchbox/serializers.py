@@ -1,11 +1,14 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from .models import *
+from ..users.serializers import *
 
 
 class LunchboxSerializer(serializers.HyperlinkedModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(many=False, queryset=User.objects.all())
+    user = serializers.ReadOnlyField(source='user.username')
+    # user = serializers.PrimaryKeyRelatedField(many=False, queryset=User.objects.all())
     images = serializers.PrimaryKeyRelatedField(many=True, queryset=LunchboxImage.objects.all())
     class Meta:
         model=Lunchbox
-        fields = ('user','title','description','lon','lat','offertime','images')
+        fields = ('url','user','title','description','lon','lat','offertime','images')
+        read_only_fields = ('url','images')

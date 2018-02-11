@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from PIL import Image
-from django.utils.translation import ugettext as _
-from django.utils import six
+
+from django.utils.encoding import iri_to_uri
 
 
 
@@ -62,7 +62,7 @@ class LunchboxImage(models.Model):
     image=models.ImageField(upload_to=lunchbox_directory_path)
     uploaded_at = models.DateTimeField(auto_now_add=True)
     def __unicode__(self):
-        return _(six.u('LunchboxImage for %s'))
+        return iri_to_uri(self.image)
 
 
 # @receiver(post_save,sender=Lunchbox)

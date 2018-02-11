@@ -9,7 +9,7 @@ $(document).ready(function(){
         // use element for option
         // columnWidth: '.grid-sizer',
         // percentPosition: true
-
+        
         itemSelector: '.grid-item',
         isFitWidth: true,
         columnWidth: 1
