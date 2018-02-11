@@ -50,7 +50,6 @@ def uplaods(request):
 class LunchboxViewSet(viewsets.ModelViewSet):
     queryset = Lunchbox.objects.all().order_by('-updated_at')
     serializer_class = LunchboxSerializer
-    
     # @datail_route(methods=['GET'])
     # def image(self, request, *args, **kwargs):
     #     pass
