@@ -1,4 +1,5 @@
 {% load widget_tweaks %}
+{% load avatar_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,9 +45,7 @@
       </form>
       {% if user.is_authenticated %}
       <div class="btn-group"  style="margin-right:2%">
-        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="background-color:#FCB902;border-color:#FCB902">
-          Right-aligned menu
-        </button>
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="background-color:#FCB902;border-color:#FCB902">Welcome, {% block user %}{% endblock user %}</button>
         <div class="dropdown-menu dropdown-menu-right">
           <button class="dropdown-item" type="button"><a class="dropdown-item" href="/accounts/profile">Profile</a></button>
           <button class="dropdown-item" type="button" ><a class="dropdown-item" href="">Settings</a></button>

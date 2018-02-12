@@ -19,5 +19,5 @@ $(document).ready(function(){
       $grid.masonry('layout');
     });            
 
-    // Update the current year in copyright      
+
 });
