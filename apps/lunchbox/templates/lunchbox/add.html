@@ -19,37 +19,44 @@
 {% block content %}
 <div class='container'>
 <div class='row'>
-    <div class='col-md-8'>
+    <div class='col-md-7'>
+      <div class='row'>
             <form method="post"  action="/dish/update/">
+              <div class='form-row'>
                 {% csrf_token %}
+               
                 <input type = 'hidden' id ='lng' name = 'lng' value="">
                 <input type = 'hidden' id = 'lat' name = 'lat' value="">
                 <input type = 'hidden' id = 'city' name = 'city' value="">
-                
-                <div class="form-group">
+        
+                <div class="form-group col-lg-12">
                         <input type="text" class="form-control" name="title" placeholder="Enter title" style="border:none">
                 </div>
-                <div class="form-group">
+                <div class="form-group col-lg-12">
                         <textarea class="form-control" name="des" placeholder="Enter description" style="border:none"></textarea>
                 </div>
-                <div class="form-group">
+                <div class="form-group col-lg-12">
                         <input type="date" class="form-control date" name="time" style="border:none">
                 </div>
 
                 
-                <div class="form-group">
+                <div class="form-group col-lg-12">
                         <input type="text" class="form-control" name="loc" placeholder="Enter location" id='loc' style="border:none">
                 </div>
+                <div class="form-group col-lg-12">
                 <div id="infowindow-content">
                         <img src="" width="16" height="16" id="place-icon">
                         <span id="place-name"  class="title"></span><br>
                         <span id="place-address"></span>
                 </div>
+                </div>
+              </div>
                 <input type="submit" class="btn btn-primary" name='b1' value='draft'>
                 <input type="submit" class="btn btn-primary" name='b2' value='save'>
             </form>
-          
-            <!-- Display the Progress -->
+          </div>
+            <hr>
+            <!-- multiple images upload with progress bar -->
            
             <div class='row'>
                   <div style="margin-bottom: 20px;">
@@ -87,13 +94,9 @@
                         </div>
                       </div>
                     </div>
-        
-
-
-        
-
+                <!-- end of multiple images upload with progress bar -->
         </div>
-        <div class='col-md-4'>
+        <div class='col-md-5'>
                 <table class="table">
                         <tbody>
                             <tr>
