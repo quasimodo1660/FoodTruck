@@ -9,8 +9,4 @@ class LunchboxForm(forms.ModelForm):
         fields=('title','description','user')
 
 
-class LunchboxImageForm(forms.ModelForm):
-    class Meta:
-        model = LunchboxImage
-        fields = ('image',)
 

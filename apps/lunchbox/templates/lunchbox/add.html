@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block javascript %}
- 
+  <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
   <script src="{% static 'js/jquery-file-upload/vendor/jquery.ui.widget.js' %}"></script>
   <script src="{% static 'js/jquery-file-upload/jquery.iframe-transport.js' %}"></script>
   <script src="{% static 'js/jquery-file-upload/jquery.fileupload.js' %}"></script>
 
+ 
   <script src="{% static 'lunchbox/js/progress-bar-upload.js' %}"></script>
+  
 {% endblock %}
 
 
@@ -16,9 +19,8 @@
 {% block content %}
 <div class='container'>
 <div class='row'>
-
     <div class='col-md-8'>
-            <form method="post"  action="/dish/update/" enctype="multipart/form-data">
+            <form method="post"  action="/dish/update/">
                 {% csrf_token %}
                 <input type = 'hidden' id ='lng' name = 'lng' value="">
                 <input type = 'hidden' id = 'lat' name = 'lat' value="">
@@ -27,7 +29,6 @@
                 <div class="form-group">
                         <input type="text" class="form-control" name="title" placeholder="Enter title" style="border:none">
                 </div>
-                <input type="file" class="form-control-file" id="exampleFormControlFile1" name='imagep'>
                 <div class="form-group">
                         <textarea class="form-control" name="des" placeholder="Enter description" style="border:none"></textarea>
                 </div>
@@ -44,18 +45,13 @@
                         <span id="place-name"  class="title"></span><br>
                         <span id="place-address"></span>
                 </div>
-
-
-
-
                 <input type="submit" class="btn btn-primary" name='b1' value='draft'>
                 <input type="submit" class="btn btn-primary" name='b2' value='save'>
-               
             </form>
-            
+          
             <!-- Display the Progress -->
            
-
+            <div class='row'>
                   <div style="margin-bottom: 20px;">
                         <button type="button" class="btn btn-primary js-upload-photos">
                           <span class="glyphicon glyphicon-cloud-upload"></span> Upload photos
@@ -64,10 +60,8 @@
                       <input id="fileupload" type="file" name="file" multiple
                              style="display: none;"
                              data-url="/dish/uplaods/"
-                             data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
-                      </div>
-
-                     
+                             data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>        
+                  </div>
                       <table id="gallery" class="table table-bordered">
                         <thead>
                           <tr>
@@ -93,7 +87,11 @@
                           </div>
                         </div>
                       </div>
+                    </div>
+        
 
+
+        
 
         </div>
         <div class='col-md-4'>
@@ -114,7 +112,6 @@
                         </tbody>
                 </table>
         </div>
-        <tr><th><label for="id_image">Image:</label></th><td><ul class="errorlist"><li>This field is required.</li></ul><input type="file" name="image" required id="id_image" /></td></tr>
     </div>
 </div>
 

@@ -17,8 +17,7 @@ def index(request):
 
 
 def add(request):
-    lunchbox = Lunchbox.objects.get(id=55)
-    return render(request,'lunchbox/add.html',{'lunchbox':lunchbox})
+    return render(request,'lunchbox/add.html')
 
 def update(request):
     print request.user
@@ -27,24 +26,13 @@ def update(request):
     return HttpResponse('sbb')
 
 def uplaods(request):
-    # print('recieve request')
-    # print request.FILES
-    # photo = LunchboxImage.objects.create(user=request.user,lunchbox = Lunchbox.objects.get(id=55),image=request.FILES)
-    # if photo:
-    #     data = {'is_valid': True, 'name': photo.image.name, 'url': photo.image.url}
-    # else:
-    #     data = {'is_valid': False}
-    # return JsonResponse(data)
-    form = LunchboxImageForm(request.POST, request.FILES)
-    form.user = request.user
-    form.lunchbox = Lunchbox.objects.get(id=55)
-    if form.is_valid():
-        photo = form.save()
-        data = {'is_valid': True, 'name': photo.file.name, 'url': photo.file.url}
-    else:
-        data = {'is_valid': False}
-    return JsonResponse(data)
-
+    if request.method =='POST':
+        photo = LunchboxImage.objects.create(user=request.user,lunchbox = Lunchbox.objects.last(),image=request.FILES['file'])
+        if photo:
+            data = {'is_valid': True, 'name': photo.image.name, 'url': photo.image.url}
+        else:
+            data = {'is_valid': False}
+        return JsonResponse(data)
 
 
 class LunchboxViewSet(viewsets.ModelViewSet):
