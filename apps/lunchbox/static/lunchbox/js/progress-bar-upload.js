@@ -29,8 +29,9 @@ $(function () {
       console.log(data);
       if (data.result.is_valid) {
         console.log(data.result.is_valid);
+        console.log('\"' + data.result.url+'\"');
         $("#gallery tbody").prepend(
-          "<tr><td><a href='" + data.result.url + "'>" + data.result.name + "</a></td></tr>"
+          "<tr><td><img src="+data.result.url+"></td></tr>"
         )
       }
     }
