@@ -41,3 +41,9 @@ class LunchboxViewSet(viewsets.ModelViewSet):
     # @datail_route(methods=['GET'])
     # def image(self, request, *args, **kwargs):
     #     pass
+
+def show(request,id):
+    lunchbox=Lunchbox.objects.get(pk=int(id))
+    user=request.user
+    return render(request,'lunchbox/showOne.html',{lunchbox:lunchbox,user:user})
+   

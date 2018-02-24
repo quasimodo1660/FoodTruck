@@ -31,7 +31,7 @@ router.register(r'lunchbox',LV.LunchboxViewSet)
 urlpatterns = [
     url(r'^api/', include(router.urls)),
     url(r'^',include('apps.home.urls')),
-    url(r'^dish/',include('apps.lunchbox.urls')),
+    url(r'^lunchbox/',include('apps.lunchbox.urls')),
     url(r'^accounts/',include('apps.users.urls')),
     url(r'^accounts/',include('django.contrib.auth.urls')),
     url(r'^admin/', admin.site.urls),

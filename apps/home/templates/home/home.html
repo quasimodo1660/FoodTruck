@@ -7,10 +7,11 @@
 {% endblock %}
 
 {% block content %}
-<form action='dish/add/' method="post">
-    {% csrf_token %}  
-    <button type='submit'>add a lunchbox</button>
-</form>
+<div class='row float-right'>
+        <a href='/lunchbox/add'><button class='btn btn-primary' style='margin-right:2em'>add a lunchbox</button></a>
+</div>
+
+
 <div class="container-fluid">
 <div class="tm-body tm-gallery-container">                    
     <div class="grid">
@@ -21,6 +22,7 @@
             <img class="content_img" src="/media/{{ image.image }}" alt="{{ lunchbox.title }}"><br>
             {% endif %}
         {% endfor %}
+        <a href="/lunchbox/{{lunchbox.id}}">{{lunchbox.title}}</a>
         </div>
     {% endfor %}
     </div>
