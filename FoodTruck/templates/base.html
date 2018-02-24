@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">  
-  <title>Fill_me_in</title>
+  <title>YBox</title>
   <meta name="description" content="fill_me_in" >
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
@@ -46,7 +46,7 @@
       </form>
       {% if user.is_authenticated %}
       <div class="btn-group"  style="margin-right:2%">
-        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="background-color:#FCB902;border-color:#FCB902">Welcome, {% block user %}{% endblock user %}</button>
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="background-color:#FCB902;border-color:#FCB902">Welcome, {{user.username}} {% avatar user 40 class="img-circle img-responsive rounded-circle" id="user_avatar" %}</button>
         <div class="dropdown-menu dropdown-menu-right">
           <button class="dropdown-item" type="button"><a class="dropdown-item" href="/accounts/profile">Profile</a></button>
           <button class="dropdown-item" type="button" ><a class="dropdown-item" href="">Settings</a></button>

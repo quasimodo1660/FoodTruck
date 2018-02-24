@@ -5,9 +5,7 @@
     <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">         <!-- Font Awesome, http://fontawesome.io/ -->                           <!-- Bootstrap styles, https://getbootstrap.com/ -->
     <link rel="stylesheet" href="{% static 'css/tooplate-style.css' %}">      
 {% endblock %}
-{% block user %}
-{{user.username}} {% avatar user 40 class="img-circle img-responsive rounded-circle" id="user_avatar" %}
-{% endblock %}
+
 {% block content %}
 <form action='dish/add/' method="post">
     {% csrf_token %}  
