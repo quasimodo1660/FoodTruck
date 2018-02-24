@@ -7,7 +7,6 @@ from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 
 
-import zipcode
 import re
 from datetime import datetime
 

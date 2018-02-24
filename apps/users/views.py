@@ -1,5 +1,4 @@
 from django.shortcuts import render,HttpResponse,redirect
-import zipcode
 from .forms import *
 from django.contrib import messages
 from django.http import JsonResponse

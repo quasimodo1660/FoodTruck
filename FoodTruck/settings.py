@@ -34,7 +34,6 @@ INSTALLED_APPS = [
     'apps.users',
     'apps.home',
     'apps.lunchbox',
-    'zipcode',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

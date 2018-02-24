@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import *
-import zipcode
 from django.core.exceptions import ValidationError
 
 
@@ -32,6 +31,4 @@ class ProfileForm(forms.ModelForm):
             raise ValidationError('Postal code must be 5 digits')
         if not ZIPCODE_REGEX.match(value):
             raise ValidationError('Postal code must be 5 digits')
-        if not zipcode.isequal(str(value)):
-            raise ValidationError('Invalid postal code')
         return self.cleaned_data['postal_code']
