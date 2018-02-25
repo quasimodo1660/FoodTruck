@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load staticfiles %}
+
+{% block head %}
+<base href='/'>
+{% endblock%}
+{% block content %}
+<p>I here</p>
+<app-root></app-root>
+{% endblock %}
+{% block javascript %}
+<script type="text/javascript" src="{% static 'inline.bundle.js' %}"></script>
+<script type="text/javascript" src="{% static 'polyfills.bundle.js' %}"></script>
+<script type="text/javascript" src="{% static 'styles.bundle.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendor.bundle.js' %}"></script>
+<script type="text/javascript" src="{% static 'main.bundle.js' %}"></script>
+{% endblock %}

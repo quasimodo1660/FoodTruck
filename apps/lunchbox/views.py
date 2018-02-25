@@ -46,4 +46,6 @@ def show(request,id):
     lunchbox=Lunchbox.objects.get(pk=int(id))
     user=request.user
     return render(request,'lunchbox/showOne.html',{lunchbox:lunchbox,user:user})
-   
+
+def showAn(request,id):
+    return render(request,'Client/dist/index.html')

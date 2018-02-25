@@ -23,6 +23,7 @@
             {% endif %}
         {% endfor %}
         <a href="/lunchbox/{{lunchbox.id}}">{{lunchbox.title}}</a>
+        <a href="/lunchbox/angular/{{lunchbox.id}}">test</a>
         </div>
     {% endfor %}
     </div>
@@ -34,4 +35,4 @@
 <script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
 <script src="{% static 'js/masonry.pkgd.min.js' %}"></script>
 <script src="{% static 'js/showImg.js' %}"></script>
-{% endblock %}·
+{% endblock %}
