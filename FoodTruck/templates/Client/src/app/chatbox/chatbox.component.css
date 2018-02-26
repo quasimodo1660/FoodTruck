@@ -19,7 +19,7 @@
     /* transform: translateX(-50%) translateY(-50%); */
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
     background-color: #f8f8f8;
-    overflow: hidden;
+    overflow: auto;
   }
   
   .top_menu {
@@ -52,7 +52,7 @@
   .top_menu .title {
     text-align: center;
     color: #bcbdc0;
-    font-size: 20px;
+    font-size: 15px;
   }
   
   .messages {
