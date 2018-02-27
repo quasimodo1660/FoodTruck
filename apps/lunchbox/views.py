@@ -13,7 +13,7 @@ from rest_framework import viewsets
 
 # Create your views here.
 def index(request):
-    return render(request,'lunchbox/create.html')
+   pass
 
 
 def add(request):
@@ -34,6 +34,16 @@ def uplaods(request):
             data = {'is_valid': False}
         return JsonResponse(data)
 
+# complie by Frank
+def next(request):
+    if request.method =='POST':
+        print request.POST
+        print request.POST['title']
+        print request.user
+        Lunchbox.objects.create(user=request.user,title = request.POST['title'],description = request.POST['des'])
+        category = Category.objects.all().name      
+        return render(request,'lunchbox/add.html')
+# end of Frank's code
 
 class LunchboxViewSet(viewsets.ModelViewSet):
     queryset = Lunchbox.objects.all().order_by('-updated_at')

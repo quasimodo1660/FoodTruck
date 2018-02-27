@@ -3,21 +3,59 @@
 {% block javascript %}
   <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
+ 
   <script src="{% static 'js/jquery-file-upload/vendor/jquery.ui.widget.js' %}"></script>
   <script src="{% static 'js/jquery-file-upload/jquery.iframe-transport.js' %}"></script>
   <script src="{% static 'js/jquery-file-upload/jquery.fileupload.js' %}"></script>
-
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAD1BgNBjRye5nHsUPtz-EukHsXe4anQhc&libraries=places"></script>
+  <script src="{% static 'lunchbox/js/show.js' %}"></script> 
+  <script src="{% static 'lunchbox/js/main.js' %}"></script> 
+  <script src="{% static 'lunchbox/js/dropzone.js' %}"></script> 
+  <script src="{% static 'lunchbox/js/jquery.popSelect.min.js' %}"></script>
  
+ 
+  <script src=" http://malsup.github.com/jquery.form.js"></script> 
   <script src="{% static 'lunchbox/js/progress-bar-upload.js' %}"></script>
+  <script>
+  function ShowDiv() {
+    document.getElementById("myDiv").style.display = "";
+    document.getElementById("myDiv2").style.display = "";
+
+}
+  </script>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
   
+  <script src="{% static 'lunchbox/js/tag.js' %}"></script> 
+  <script>
+     var languages = ["牛肉","鸡肉","en","es","it",];
+ 
+  $('#langtabs').tabSelect({
+    tabElements: languages,
+    selectedTabs: [ ]
+  });
+  $('#langtabs2').tabSelect({
+    tabElements: languages,
+    selectedTabs: [ ]
+  });
+  
+
+  
+  </script>
+
 {% endblock %}
+
+{% block css%}
+<link rel="stylesheet" href="{% static 'lunchbox/css/tag.css' %}">
+
+{% endblock %}
+
 
 {% block content %}
 <div class='container'>
 <div class='row'>
-    <div class='col-lg-7'>
+    <div class='col-md-7'>
       <div class='row'>
-            <form method="post"  action="/dish/update/">
+            <form method="post"  action="/dish/next/" id="post-form">
               <div class='form-row'>
                 {% csrf_token %}
                
@@ -26,10 +64,10 @@
                 <input type = 'hidden' id = 'city' name = 'city' value="">
         
                 <div class="form-group col-lg-12">
-                        <input type="text" class="form-control" name="title" placeholder="Enter title" style="border:none">
+                        <input type="text" class="form-control" name="title" placeholder="Enter title" style="border:none" id ='post-title'>
                 </div>
                 <div class="form-group col-lg-12">
-                        <textarea class="form-control" name="des" placeholder="Enter description" style="border:none"></textarea>
+                        <textarea class="form-control" name="des" placeholder="Enter description" style="border:none" id ='post-description'></textarea>
                 </div>
                 <div class="form-group col-lg-12">
                         <input type="date" class="form-control date" name="time" style="border:none">
@@ -47,74 +85,82 @@
                 </div>
                 </div>
               </div>
-                <input type="submit" class="btn btn-primary" name='b1' value='draft'>
-                <input type="submit" class="btn btn-primary" name='b2' value='save'>
+                
+                <input type="submit" class="btn btn-primary" name='b2' value='Next'  onclick="ShowDiv()"> 
             </form>
+          
+         
           </div>
+
             <hr>
             <!-- multiple images upload with progress bar -->
            
-            <div class='row'>
-                  <div style="margin-bottom: 20px;">
-                        <button type="button" class="btn btn-primary js-upload-photos">
-                          <span class="glyphicon glyphicon-cloud-upload"></span> Upload photos
-                        </button>
-                     
-                      <input id="fileupload" type="file" name="file" multiple
-                             style="display: none;"
-                             data-url="/dish/uplaods/"
-                             data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>        
-                  </div>
-                      <table id="gallery" class="table table-bordered">
-                        <thead>
-                          <tr>
-                            <th>Photo</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                      </table>
-                  
-                      <div class="modal fade" id="modal-progress" data-backdrop="static" data-keyboard="false">
-                        <div class="modal-dialog">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h4 class="modal-title">Uploading...</h4>
-                            </div>
-                            <div class="modal-body">
-                              <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
-                              </div>
-                            </div>
+            <div class='row'  style="display:none;" id="myDiv" >
+                <div style="margin-bottom: 20px;">
+                    <button type="button" class="btn btn-primary js-upload-photos">
+                      <span class="glyphicon glyphicon-cloud-upload"></span> Upload photos
+                    </button>
+                 
+                  <input id="fileupload" type="file" name="file" multiple
+                         style="display: none;"
+                         data-url="/dish/uplaods/"
+                         data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>        
+              </div>
+                  <table id="gallery" class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Photo</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+              
+                  <div class="modal fade" id="modal-progress" data-backdrop="static" data-keyboard="false">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title">Uploading...</h4>
+                        </div>
+                        <div class="modal-body">
+                          <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
                           </div>
                         </div>
                       </div>
                     </div>
-                <!-- end of multiple images upload with progress bar -->
+                  </div>
+                </div>
+            <!-- end of multiple images upload with progress bar -->
         </div>
-        <div class='col-lg-5'>
-                <table class="table">
-                        <tbody>
-                            <tr>
-                                <th scope="row">Step 1</th>
-                                <td><input type="text" class="form-control" name="step1" style="border:none"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Step 2</th>
-                                <td><input type="text" class="form-control" name="step2" style="border:none"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Step 3</th>
-                                <td><input type="text" class="form-control" name="step3" style="border:none"></td>
-                            </tr>
-                        </tbody>
-                </table>
+            <!-- add category tags -->
+        <div id="myDiv2" style="display:none;" class='col-lg-5'>
+            <hr>
+          <h3>Add tags!</h3>
+          <h5>Categoty1</h5>
+          <div class="demo">
+              <span id="langtabs">
+              </span>
+          </div>
+          <h5>Categoty2</h5>
+          <div class="demo">
+              <span id="langtabs2">
+              </span>
+          </div>
+
+
+            <!-- end of adding category tags -->
+              
+              
+              
+              </body>
         </div>
+        
     </div>
 </div>
 
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAD1BgNBjRye5nHsUPtz-EukHsXe4anQhc&libraries=places"></script>
 
-<script src="{% static 'lunchbox/js/main.js' %}"></script> 
+
+
 {% endblock %}
