@@ -9,7 +9,8 @@ class LunchboxSerializer(serializers.HyperlinkedModelSerializer):
     # user = serializers.PrimaryKeyRelatedField(many=False, queryset=User.objects.all())
     images = serializers.StringRelatedField(many=True)
     tags = serializers.StringRelatedField(many=True)
+    reviews = serializers.StringRelatedField(many=True)
     class Meta:
         model=Lunchbox
-        fields = ('url','user','title','description','lon','lat','offertime','images','tags')
+        fields = ('url','user','title','description','lon','lat','offertime','images','tags','reviews','like')
         read_only_fields = ('url','images')

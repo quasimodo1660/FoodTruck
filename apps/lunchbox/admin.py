@@ -29,3 +29,7 @@ class LunchboxAdmin(ImportExportModelAdmin,admin.ModelAdmin):
 @admin.register(LunchboxImage)
 class LunchboxAdmin(admin.ModelAdmin):
     list_display=('user','lunchbox','image')
+
+@admin.register(Review)
+class ReviewAdmin(ImportExportModelAdmin,admin.ModelAdmin):
+    list_display=('user','lunchbox','score','content','updated_at','created_at')

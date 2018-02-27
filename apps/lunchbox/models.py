@@ -41,6 +41,7 @@ class Lunchbox(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
     public  = models.BooleanField(default = False)
+    like = models.IntegerField(default=0)
     def __unicode__(self):
         return self.title
 
@@ -62,6 +63,22 @@ class LunchboxImage(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
     def __unicode__(self):
         return iri_to_uri(self.image)
+
+
+class Review(models.Model):
+    user= models.ForeignKey(User,related_name='reviews')
+    lunchbox= models.ForeignKey(Lunchbox,related_name='reviews')
+    score = models.IntegerField(default=0)
+    content = models.TextField(max_length = 500, blank=True)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+    def __unicode__(self):
+        return self.content
+
+
+
+
+
 
 
 # @receiver(post_save,sender=Lunchbox)

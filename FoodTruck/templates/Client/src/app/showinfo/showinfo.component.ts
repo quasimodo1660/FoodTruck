@@ -34,7 +34,7 @@ export class ShowinfoComponent implements OnInit {
       {
           breakpoint: 800,
           width: '100%',
-          // height: 'auto',
+          height: '500px',
           imagePercent: 80,
           thumbnailsPercent: 20,
           thumbnailsMargin: 20,
@@ -71,9 +71,9 @@ export class ShowinfoComponent implements OnInit {
         this.images=data['images'];
         for(var j in this.images){
           this.galleryImages.push({
-            small: 'http://localhost:8000/media/'+this.images[j],
-            medium: 'http://localhost:8000/media/'+this.images[j],
-            big: 'http://localhost:8000/media/'+this.images[j],
+            small: 'http://192.168.1.113:8000/media/'+this.images[j],
+            medium: 'http://192.168.1.113:8000/media/'+this.images[j],
+            big: 'http://192.168.1.113:8000/media/'+this.images[j],
           })
         }
       console.log(this.galleryImages) 
