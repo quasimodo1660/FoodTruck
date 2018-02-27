@@ -16,6 +16,8 @@ import { HttpService } from './http.service';
 import { HttpClientModule } from '@angular/common/http';
 
 import { NgxGalleryModule } from 'ngx-gallery';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { NgxGalleryModule } from 'ngx-gallery';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    NgxGalleryModule
+    NgxGalleryModule,
+    NgbModule.forRoot()
   ],
   providers: [HttpService],
   bootstrap: [AppComponent]
