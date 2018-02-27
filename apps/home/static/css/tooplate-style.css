@@ -5,7 +5,29 @@ Template 2094 Mason
 http://www.tooplate.com/view/2094-mason
 
 */
-
+/* Emily css */
+.showAllLunchImg {
+	position: relative;
+   }
+   
+   .showAllLunchLink {
+	opacity: 0;
+	position: absolute;
+	text-align: center;
+	top: 90%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+   }
+   
+   .showAllLunchImg:hover .content_img {
+	opacity: 0.3;
+   }
+   
+   .showAllLunchImg:hover .showAllLunchLink {
+	opacity: 1;
+   }
+/* end of Emily css */
 .content_img {
 	width: 300px;
 }

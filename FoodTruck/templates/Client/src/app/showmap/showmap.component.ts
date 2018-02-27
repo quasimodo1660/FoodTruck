@@ -8,14 +8,14 @@ import { HttpService } from '../http.service';
   styleUrls: ['./showmap.component.css']
 })
 export class ShowmapComponent implements OnInit {
-  // lat;
-  // lng;
+  lat;
+  lng;
   zoom: number = 15;
   id;
   lunchbox: any;
   title: string = 'Pick up location';
-  lat: number = 37.3;
-  lng: number = -121.9;
+  // lat: number = 37.3;
+  // lng: number = -121.9;
   
 
   constructor(
@@ -31,8 +31,8 @@ export class ShowmapComponent implements OnInit {
     this._httpService.getLunbox(this._route.params['value'].id).subscribe(data=>{
         this.lunchbox=data;
         console.log(this.lunchbox)
-        // this.lat=this.lunchbox.lat;
-        // this.lng=this.lunchbox.lon;
+        this.lat=this.lunchbox.lat;
+        this.lng=this.lunchbox.lon;
       })
   };
 

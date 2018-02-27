@@ -13,22 +13,26 @@
 
 
 <div class="container-fluid">
-<div class="tm-body tm-gallery-container">                    
-    <div class="grid">
-    {% for lunchbox in all_lunchboxes %}
-         <div class="grid-item">
-        {% for image in LIS %}
-            {% if image.lunchbox.id == lunchbox.id %}
-            <img class="content_img" src="/media/{{ image.image }}" alt="{{ lunchbox.title }}"><br>
-            {% endif %}
-        {% endfor %}
-        <a href="/lunchbox/{{lunchbox.id}}">{{lunchbox.title}}</a>
-        <a href="/lunchbox/angular/{{lunchbox.id}}">test</a>
+        <div class="tm-body tm-gallery-container">                    
+            <div class="grid">
+                
+            {% for lunchbox in all_lunchboxes %}
+                 <div class="grid-item">
+                <div class="showAllLunchImg">
+                    {% for image in LIS %}
+                        {% if image.lunchbox.id == lunchbox.id %}
+                        <a href="/lunchbox/angular/{{lunchbox.id}}"><img class="content_img" src="/media/{{ image.image }}" alt="{{ lunchbox.title }}" id="{{ lunchbox.title }}"></a><br>
+                        {% endif %}
+                    {% endfor %}
+                    <div class="showAllLunchLink">
+                        <p>{{ lunchbox.title }}</p >
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
         </div>
-    {% endfor %}
-    </div>
-</div>
-</div>
+        </div>
+        </div>
 {% endblock %}
 
 {% block javascript %}
