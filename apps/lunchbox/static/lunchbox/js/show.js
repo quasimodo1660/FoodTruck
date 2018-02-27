@@ -25,12 +25,12 @@ function showDiv() {
 
  var languages = ["d","fr","en","es","it",];
  
- $('#langtabs').tabSelect({
-   tabElements: languages,
-   selectedTabs: [ ]
- });
- $('#langtabs2').tabSelect({
-   tabElements: languages,
-   selectedTabs: [ ]
- });
+//  $('#langtabs').tabSelect({
+//    tabElements: languages,
+//    selectedTabs: [ ]
+//  });
+//  $('#langtabs2').tabSelect({
+//    tabElements: languages,
+//    selectedTabs: [ ]
+//  });
  

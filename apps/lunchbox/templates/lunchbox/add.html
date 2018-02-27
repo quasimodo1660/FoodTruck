@@ -23,7 +23,7 @@
 
 }
   </script>
-  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+  
   
   <script src="{% static 'lunchbox/js/tag.js' %}"></script> 
   <script>
@@ -103,7 +103,7 @@
                  
                   <input id="fileupload" type="file" name="file" multiple
                          style="display: none;"
-                         data-url="/dish/uplaods/"
+                         data-url="/lunchbox/uplaods/"
                          data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>        
               </div>
                   <table id="gallery" class="table table-bordered">
