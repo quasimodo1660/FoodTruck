@@ -12,6 +12,10 @@ import { NaviCoComponent } from './navi-co/navi-co.component';
 import { ReviewComponent } from './review/review.component';
 import { ShowapiComponent } from './showapi/showapi.component';
 
+import { HttpService } from './http.service';
+import { HttpClientModule } from '@angular/common/http';
+
+import { NgxGalleryModule } from 'ngx-gallery';
 
 @NgModule({
   declarations: [
@@ -27,9 +31,11 @@ import { ShowapiComponent } from './showapi/showapi.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
+    NgxGalleryModule
   ],
-  providers: [],
+  providers: [HttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

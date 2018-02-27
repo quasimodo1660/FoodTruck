@@ -1,3 +1,11 @@
-<p>
-  showinfo works!
-</p>
+<div class='row'>
+  <div class='col-8'>
+      <h1>{{lunchbox.title}}</h1>
+      <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+  </div>
+  <div class='col-4'>
+     <h4>Description</h4>
+     <p>{{lunchbox.description}}</p>
+     <hr>
+  </div>
+</div>
