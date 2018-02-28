@@ -1,5 +1,4 @@
 from django.conf.urls import url
-
 from . import views     
 
 urlpatterns = [
@@ -10,5 +9,7 @@ urlpatterns = [
     url(r'^(?P<id>\d+)$', views.show),
     url(r'^angular/(?P<id>\d+)$',views.showAn),
     url(r'^next/',views.next),
+    url(r'^getUser/',views.getUser),
+    url(r'^addReview/',views.createReview)
 ]
 

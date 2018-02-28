@@ -36,6 +36,7 @@ class Lunchbox(models.Model):
     lat = models.FloatField(null=True)
     description = models.TextField(max_length = 500, blank=True)
     city = models.CharField(max_length=150)
+    ingredient = models.ManyToManyField(Tag,related_name='lunchboxes_ingredient')
     tags = models.ManyToManyField(Tag,related_name='lunchboxes')
     offertime = models.DateTimeField(null=True)
     created_at = models.DateTimeField(auto_now_add = True)
@@ -72,9 +73,11 @@ class Review(models.Model):
     content = models.TextField(max_length = 500, blank=True)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
-    def __unicode__(self):
-        return self.content
-
+    # class Meta:
+    #     unique_together = ('user','lunchbox','score', 'content')
+    #     ordering = ['created_at']
+    # def __unicode__(self):
+    #     return '%d: %s' % (self.created_at, self.content)
 
 
 

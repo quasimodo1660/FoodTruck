@@ -22,10 +22,13 @@ from apps.users import views as UV
 from apps.lunchbox import views as LV
 from rest_framework.authtoken import views
 
+
 router = routers.DefaultRouter()
 router.register(r'users', UV.UserViewSet)
 router.register(r'groups', UV.GroupViewSet)
 router.register(r'lunchbox',LV.LunchboxViewSet)
+router.register(r'review',LV.ReviewViewSet)
+router.register(r'images',LV.LunchboxImageViewSet)
 
 
 urlpatterns = [

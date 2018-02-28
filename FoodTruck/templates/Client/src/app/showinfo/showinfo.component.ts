@@ -71,12 +71,11 @@ export class ShowinfoComponent implements OnInit {
         this.images=data['images'];
         for(var j in this.images){
           this.galleryImages.push({
-            small: 'http://192.168.1.113:8000/media/'+this.images[j],
-            medium: 'http://192.168.1.113:8000/media/'+this.images[j],
-            big: 'http://192.168.1.113:8000/media/'+this.images[j],
+            small: this.images[j]['image'],
+            medium: this.images[j]['image'],
+            big: this.images[j]['image'],
           })
         }
-      console.log(this.galleryImages) 
     })
   };
 }
