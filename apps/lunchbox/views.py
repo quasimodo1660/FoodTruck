@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.views import View
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render,HttpResponse,redirect
 from .forms import *
 from django.contrib.auth.models import User
 from .models import *
@@ -22,7 +22,18 @@ def index(request):
 
 
 def add(request):
-    return render(request,'lunchbox/add.html')
+    category = Category.objects.all()
+    tag1 = Tag.objects.filter(category=Category.objects.get(id=1))
+    tag2 = Tag.objects.filter(category=Category.objects.get(id=2))
+    tag3 = Tag.objects.filter(category=Category.objects.get(id=3))
+    tag4 = Tag.objects.filter(category=Category.objects.get(id=4))
+    tag5 = Tag.objects.filter(category=Category.objects.get(id=5))
+    tag6 = Tag.objects.filter(category=Category.objects.get(id=6))
+    tag7 = Tag.objects.filter(category=Category.objects.get(id=7))
+    tag8 = Tag.objects.filter(category=Category.objects.get(id=8))
+    
+    return render(request,'lunchbox/add.html',{'category':category,'tag1':tag1,
+    'tag2':tag2,'tag3':tag3,'tag4':tag4,'tag5':tag5,'tag6':tag6,'tag7':tag7,'tag8':tag8,})
 
 def update(request):
     print request.user
@@ -32,22 +43,32 @@ def update(request):
 
 def uplaods(request):
     if request.method =='POST':
-        photo = LunchboxImage.objects.create(user=request.user,lunchbox = Lunchbox.objects.last(),image=request.FILES['file'])
+        print request.POST['lunchBoxID2']
+        photo = LunchboxImage.objects.create(user=request.user,lunchbox = Lunchbox.objects.get(pk=request.POST['lunchBoxID2']),image=request.FILES['file'])
         if photo:
             data = {'is_valid': True, 'name': photo.image.name, 'url': photo.image.url}
         else:
             data = {'is_valid': False}
         return JsonResponse(data)
 
+
 # complie by Frank
 def next(request):
+    lunchbox=Lunchbox.objects.create(user=request.user,title = request.POST['title'],description = request.POST['des'],location = request.POST['loc'],offertime = request.POST['time'],lon = request.POST['lng'],lat= request.POST['lat'])
+    if lunchbox:
+        data={'lID':lunchbox.id}
+    else:
+        data={'errors':'Something wrong'}
+    return JsonResponse(data)
+
+def tag(request):
     if request.method =='POST':
-        print request.POST
-        print request.POST['title']
-        print request.user
-        Lunchbox.objects.create(user=request.user,title = request.POST['title'],description = request.POST['des'])
-        category = Category.objects.all().name      
-        return render(request,'lunchbox/add.html')
+        print request.POST['lunchboxID']
+        for x in request.POST.getlist('foo'):
+            this_tag = Tag.objects.get(id=x)
+            this_lunchbox = Lunchbox.objects.get(id = request.POST['lunchboxID'])
+            this_lunchbox.tags.add(this_tag)
+        return redirect('/')
 # end of Frank's code
 
 

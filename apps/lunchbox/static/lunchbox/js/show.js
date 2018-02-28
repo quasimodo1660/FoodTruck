@@ -12,18 +12,28 @@
 $('#post-form').on('submit', function(event){
     event.preventDefault();
     console.log("form submitted!")  // sanity check
-    create_post();
+    console.log('Sending Ajax request to', $(this).attr('action'))
+    console.log('Submitting the following data', $(this).serialize())
+    $.ajax({
+        url: $(this).attr('action'), /* Where should this go? */
+        method: 'post', /* Which HTTP verb? */
+        data: $(this).serialize(), /* Any data to send along? */
+        success: function(serverResponse) { /* What code should we run when the server responds? */
+          if(serverResponse['errors'])
+            console.log(serverResponse['errors'])
+          else{
+            $('#lunchboxID').val(serverResponse['lID'])
+            $('#lunchBoxID2').val(serverResponse['lID'])
+          }          
+        }
+      })
 });
-function create_post() {
-    console.log("create post is working!") // sanity check
-    console.log($('#post-title').val())
-    console.log($('#post-description').val())
-};
+
 function showDiv() {
     document.getElementById('welcomeDiv').style.display = "block";
  }
 
- var languages = ["d","fr","en","es","it",];
+ //var languages = ["d","fr","en","es","it",];
  
 //  $('#langtabs').tabSelect({
 //    tabElements: languages,

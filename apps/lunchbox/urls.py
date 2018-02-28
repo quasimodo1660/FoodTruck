@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^angular/(?P<id>\d+)$',views.showAn),
     url(r'^next/',views.next),
     url(r'^getUser/',views.getUser),
-    url(r'^addReview/',views.createReview)
+    url(r'^addReview/',views.createReview),
+    url(r'^tag/',views.tag)
 ]
 
