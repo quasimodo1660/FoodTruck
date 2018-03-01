@@ -16,7 +16,7 @@
     </div>
     </div>
     <div id="addLunboxButton" >
-            <a href='/lunchbox/add'><img src="{% static '1.png' %}" style=" position: fixed;bottom: 10px;right: 10px; width:3%;z-index: 1000"></a>
+        <a href='/lunchbox/add'><img src="{% static '1.png' %}" style=" position: fixed;bottom: 10px;right: 10px; width:3%;z-index: 1000"></a>
     </div>
 
 
@@ -32,10 +32,12 @@
                         {% endif %}
                     {% endfor %}
                     <div class="showAllLunchLink">
-                        <p>{{ lunchbox.title }}</p >
-                        <div class='lunchboxAvatar'>{% avatar lunchbox.user 60 class="img-circle img-responsive rounded-circle" id="user_avatar" %}</div>
-                        <button class='lunchboxButton'><i class="fas fa-credit-card"></i>Order</button>
-                    </div>
+                            {% avatar lunchbox.user 70 class="img-circle img-responsive rounded-circle" id="user_avatar" %}<br>
+    
+                            <p>{{ lunchbox.title }}</p >
+                            
+                            <button class='lunchboxButton btn orange'><i class="fas fa-credit-card"></i>Order</button>
+                        </div>
                 </div>           
             </div>
             {% endfor %}

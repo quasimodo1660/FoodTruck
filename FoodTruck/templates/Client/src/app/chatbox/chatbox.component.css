@@ -8,10 +8,11 @@
   }
   
   .chat_window {
-    /* position: absolute; */
-    width: 200px;
+    
+    width:400px;
+    z-index: 5000;
     /* max-width: 100%; */
-    height:calc(100%);
+    height:calc(90%);
     border-radius: 10px;
     background-color: #fff;
     left: 50%;
@@ -24,7 +25,7 @@
   
   .top_menu {
     background-color: #fff;
-    width: 200px;
+    width: 400px;
     padding: 20px 0 15px;
     box-shadow: 0 1px 30px rgba(0, 0, 0, 0.1);
   }
@@ -172,16 +173,17 @@
     height: 50px;
     display: inline-block;
     border-radius: 50px;
-    background-color: #a3d063;
-    border: 2px solid #a3d063;
+    background-color: orange;
+    border: 2px solid orange;
     color: #fff;
     cursor: pointer;
     transition: all 0.2s linear;
     text-align: center;
     float:right;
+    margin-left: 10px;
   }
   .bottom_wrapper .send_message:hover {
-    color: #a3d063;
+    color: white;
     background-color: #fff;
   }
   .bottom_wrapper .send_message .text {
@@ -194,4 +196,9 @@
   .message_template {
     display: none;
   }
-  
+  #aT{
+   
+    margin : auto;
+    position : absolute;
+   
+  }

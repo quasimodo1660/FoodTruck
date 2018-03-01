@@ -12,3 +12,8 @@ app-review{
 app-showmap{
     width:100%;
 }
+app-chatbox{
+    position: fixed;
+    bottom: 10px;right: 10px; 
+    z-index: 5000;
+}
