@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { HttpService } from '../http.service';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
-import 'hammerjs';
+import '../hammer';
 
 
 @Component({
@@ -26,7 +26,7 @@ export class ShowinfoComponent implements OnInit {
     this.galleryOptions = [
       {
           width: '100%', 
-          height: '100%',
+          height:'700px',
           thumbnailsColumns: 4,
           imageAnimation: NgxGalleryAnimation.Slide
       },
@@ -34,7 +34,7 @@ export class ShowinfoComponent implements OnInit {
       {
           breakpoint: 800,
           width: '100%',
-          height: '500px',
+          height: '100%',
           imagePercent: 80,
           thumbnailsPercent: 20,
           thumbnailsMargin: 20,

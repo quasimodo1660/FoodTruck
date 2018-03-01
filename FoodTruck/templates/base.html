@@ -30,7 +30,7 @@
         <li class="divider"></li>
         <li><a href="{% url 'logout' %}"><span class="grey-text text-darken-3">Log out</span></a></li></a></li>
       </ul>
-    <nav>
+      <nav style="position: -webkit-sticky;position: sticky;top: 0; z-index:2147483647">
         <div class="nav-wrapper grey lighten-5 blue-text text-darken-2">
           &nbsp;&nbsp;&nbsp;&nbsp;
           <a href="/" class="brand-logo" style="font-family:audiowide;font-size:2em"><img class="responsive-img" src="https://i.imgur.com/Keg7X6S.png" width="40" height="40"><span class="black-text"> BENTOMAN</span></a>
@@ -43,7 +43,7 @@
             <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="material-icons right"><span class="grey-text text-darken-3">arrow_drop_down</span></i></a></li>
             {% else %}
             <li><a href="/accounts/login"><span class="grey-text text-darken-3">Log in</span> </a></li>
-            <li><a href="/accounts/signup"><span class="grey-text text-darken-3">Sgin up</span> </a></li>
+            <li><a href="/accounts/signup"><span class="grey-text text-darken-3">Sign up</span> </a></li>
             {% endif %}  
           </ul>
         </div>

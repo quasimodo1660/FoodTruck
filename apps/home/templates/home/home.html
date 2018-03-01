@@ -7,15 +7,16 @@
 {% endblock %}
 
 {% block content %}
+
 <div id="ShowArea" class="jumbotron" class="loginWrapper">
-        <img class="imgShowArea" src="{% static 'icons8-close-window-48.png' %}"; onClick="closead()">
+        <img class="imgShowArea" src="{% static '2.png' %}" style="width:2%;right: 20px; " >
     <div style="text-align:center;">
             <img src="https://i.imgur.com/yoX0Fqs.png" style="width:350px;margin:auto;">
-            <h1 class="wordShowArea">Authentic homemade bento around you</h1>
+            <h2 class="wordShowArea" style="font-size: 4vh;margin-top:0px">Authentic homemade bentos around you</h2>
     </div>
     </div>
-    <div id="addLunboxButton" style="position:absolute;right:0px;">
-            <a href='/lunchbox/add'><img src="{% static '60745.png' %}"></a>
+    <div id="addLunboxButton" >
+            <a href='/lunchbox/add'><img src="{% static '1.png' %}" style=" position: fixed;bottom: 10px;right: 10px; width:3%;z-index: 1000"></a>
     </div>
 
 
@@ -44,6 +45,14 @@
 {% endblock %}
 
 {% block javascript %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $(".imgShowArea").click(function(){
+        $("#ShowArea").slideUp()
+    });
+});
+</script>
 <script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
 <script src="{% static 'js/masonry.pkgd.min.js' %}"></script>
 <script src="{% static 'js/showImg.js' %}"></script>

@@ -1,12 +1,13 @@
+<hr>
 <div class='row'>
-    <form class="needs-validation" (submit)="onSubmit()" novalidate>
+    <form class="needs-validation col s12" (submit)="onSubmit()" novalidate>
         <div class="form-group">
             <label for="exampleInputPassword1">Review:</label>
             <textarea class="form-control" name='review.content' [(ngModel)]='review.content'></textarea>
         </div>
         <div class="form-group">
             <label for="exampleFormControlSelect1">Stars</label>
-            <select class="form-control" id="exampleFormControlSelect1" name='review.score' [(ngModel)]='review.score'>
+            <select class="form-control materialize-textarea" id="exampleFormControlSelect1" name='review.score' [(ngModel)]='review.score'>
               <option>1</option>
               <option>2</option>
               <option>3</option>
@@ -14,7 +15,7 @@
               <option>5</option>
             </select>
           </div>
-        <button type="submit" class="btn btn-primary" >Add a review</button> 
+        <button type="submit" class="btn btn-primary orange" >Add a review</button> 
     </form>
 </div>
 <div class='row'>

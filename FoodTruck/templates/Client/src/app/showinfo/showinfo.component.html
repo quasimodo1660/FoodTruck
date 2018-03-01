@@ -1,20 +1,4 @@
-<div class='row'>
-  <div class='col-8'>
-      <h1>{{lunchbox.title}}</h1>
+
+      <h1 style="text-align:center;">{{lunchbox.title}}</h1>
       <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
-  </div>
-  <div class='col-4'>
-     <h4>Description</h4>
-     <p>{{lunchbox.description}}</p>
-     <hr>
-     <ng-template #t let-fill="fill">
-        <span *ngIf="fill === 100" class="star full">&hearts;</span>
-        <span *ngIf="fill === 0" class="star">&hearts;</span>
-        <span *ngIf="fill < 100 && fill > 0" class="star">
-          <span class="half" [style.width.%]="fill">&hearts;</span>&hearts;
-        </span>
-      </ng-template>
-      
-      <ngb-rating [(rate)]="currentRate" [starTemplate]="t" [readonly]="true" max="10"></ngb-rating>
-  </div>
-</div>
+      <hr>

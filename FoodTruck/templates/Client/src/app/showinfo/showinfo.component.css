@@ -1,0 +1,5 @@
+.ngx-gallery{
+    width:100%;
+    height: calc(width * 0.75);
+    z-index:-1;
+}

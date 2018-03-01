@@ -12,8 +12,10 @@ export class ShowmapComponent implements OnInit {
   lng;
   zoom: number = 15;
   id;
-  lunchbox: any;
+  lunchbox={};
   title: string = 'Pick up location';
+  tags:any;
+  
   // lat: number = 37.3;
   // lng: number = -121.9;
   
@@ -31,8 +33,9 @@ export class ShowmapComponent implements OnInit {
     this._httpService.getLunbox(this._route.params['value'].id).subscribe(data=>{
         this.lunchbox=data;
         console.log(this.lunchbox)
-        this.lat=this.lunchbox.lat;
-        this.lng=this.lunchbox.lon;
+        this.lat=this.lunchbox['lat'];
+        this.lng=this.lunchbox['lon'];
+        this.tags=this.lunchbox['tags'];
       })
   };
 
