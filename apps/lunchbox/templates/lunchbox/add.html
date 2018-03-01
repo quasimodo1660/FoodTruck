@@ -44,7 +44,7 @@
   })
  
   </script>
-  
+  <!-- <script src="{% static 'js/materialize.min.js' %}"></script> -->
   
   
   
@@ -80,12 +80,13 @@
                 <div class="form-group col-lg-12">
                     <img src="https://cdn2.iconfinder.com/data/icons/food-94/24/_recipe_book-256.png" alt='' style="width:4%;">
                     Any description for the bento?
-                        <textarea class="form-control" name="des" placeholder="Enter description" style="border:none" id ='post-description'></textarea>
+                        <textarea class="form-control materialize-textarea" name="des" placeholder="Enter description" style="border:none" id ='post-description'></textarea>
                 </div>
                 <div class="form-group col-lg-12">
                     <img src="https://cdn2.iconfinder.com/data/icons/pittogrammi/142/10-256.png" alt='' style="width:4%;">
                     When is the bento ready for pickup?
                         <input type="date" class="form-control date" name="time" style="border:none">
+                        <input type="text" class="form-control timepicker" name="time" style="border:none">
                 </div>
                 <div class="form-group col-lg-12">
                     <img src="https://cdn.iconscout.com/public/images/icon/premium/png-256/address-blue-circle-location-map-marker-navigation-icon-3cf4dd8920833a09-256x256.png" alt='' style="width:4%;">
