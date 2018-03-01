@@ -10,7 +10,7 @@ http://www.tooplate.com/view/2094-mason
 	position: relative;
    }
    
-   .showAllLunchLink {
+.showAllLunchLink {
 	opacity: 0;
 	position: absolute;
 	text-align: center;
@@ -18,19 +18,25 @@ http://www.tooplate.com/view/2094-mason
 	left: 50%;
 	transform: translate(-50%, -50%);
 	-ms-transform: translate(-50%, -50%);
-   }
-   
-   .showAllLunchImg:hover .content_img {
+}
+
+.showAllLunchImg:hover .content_img {
 	opacity: 0.3;
-   }
-   
-   .showAllLunchImg:hover .showAllLunchLink {
+}
+
+.showAllLunchImg:hover .showAllLunchLink {
 	opacity: 1;
-   }
+}
+.lunchboxAvatar {
+	position: absolute;
+	margin-top:2px;
+	margin-left: 2px;
+}
 /* end of Emily css */
 .content_img {
-	width: 300px;
+	width: 270px;
 }
+
 
 
 
@@ -250,7 +256,7 @@ body {
 }
 
 /* fluid 5 columns */
-.grid-item { margin: 5px; }
+.grid-item { margin: 5px; border-radius: 30px }
 
 /* Firefox hack 
    https://css-tricks.com/snippets/css/css-hacks-targeting-firefox/

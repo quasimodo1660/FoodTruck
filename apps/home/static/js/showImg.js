@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    console.log('here');
+    console.log('showImg working');
     // init Masonry
     // https://codepen.io/craigwheeler/pen/MYjBga
     var $grid = $('.grid').masonry({
@@ -12,7 +12,7 @@ $(document).ready(function(){
         
         itemSelector: '.grid-item',
         isFitWidth: true,
-        columnWidth: 1
+        columnWidth: 5
     });
     // layout Masonry after each image loads
     $grid.imagesLoaded().progress( function() {

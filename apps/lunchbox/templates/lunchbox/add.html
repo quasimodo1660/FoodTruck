@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block javascript %}
   <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
@@ -50,18 +51,18 @@
 {% endblock %}
 
 {% block css%}
-
 <link rel="stylesheet" href="{% static 'lunchbox/css/dropzone.css' %}">
 <link rel="stylesheet" href="{% static 'lunchbox/css/basic.css' %}">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.11.1/slimselect.min.css" rel="stylesheet"></link>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 {% endblock %}
 
 
 {% block content %}
-
+<br><br>
 <div class='container'>
 <div class='row'>
-    <div class='col-md-7'>
+    <div class='col-md-7' style="overflow:auto">
       <div class='row'>
             <form method="post"  action="/lunchbox/next/" id="post-form">
               <div class='form-row'>
@@ -72,19 +73,23 @@
                 <input type = 'hidden' id = 'city' name = 'city' value="">
         
                 <div class="form-group col-lg-12">
-                  <p>What's the name of the lunchbox?</p>
+                    <img src="https://image.flaticon.com/icons/png/128/601/601684.png" alt='' style="width:4%;">
+                  What's the name of the bento?
                         <input type="text" class="form-control" name="title" placeholder="Enter title" style="border:none" id ='post-title'>
                 </div>
                 <div class="form-group col-lg-12">
-                    <p>Any description about the lunchbox?</p>
+                    <img src="https://cdn2.iconfinder.com/data/icons/food-94/24/_recipe_book-256.png" alt='' style="width:4%;">
+                    Any description for the bento?
                         <textarea class="form-control" name="des" placeholder="Enter description" style="border:none" id ='post-description'></textarea>
                 </div>
                 <div class="form-group col-lg-12">
-                    <p>When is the lunchbox ready for pickup?</p>
+                    <img src="https://cdn2.iconfinder.com/data/icons/pittogrammi/142/10-256.png" alt='' style="width:4%;">
+                    When is the bento ready for pickup?
                         <input type="date" class="form-control date" name="time" style="border:none">
                 </div>
                 <div class="form-group col-lg-12">
-                    <p>What's the address for pickup?</p>
+                    <img src="https://cdn.iconscout.com/public/images/icon/premium/png-256/address-blue-circle-location-map-marker-navigation-icon-3cf4dd8920833a09-256x256.png" alt='' style="width:4%;">
+                    And your address is?
                         <input type="text" class="form-control" name="loc" placeholder="Enter location" id='loc' style="border:none" id = "post-location">
                 </div>
                 <div class="form-group col-lg-12">
@@ -94,8 +99,7 @@
                         <span id="place-address"></span>
                 </div>
                 </div>
-              </div>
-                
+              </div> 
                 <input type="submit" class="btn btn-primary" name='b2' value='Next'  onclick="ShowDiv()"> 
             </form>
             
@@ -103,16 +107,19 @@
          
           </div>
 
-            <hr>
+            <br>
             <!-- multiple images upload with progress bar -->
            
-            <div class='row'  style="display:none;" id="myDiv" >
+            <div class='row'  style="display:none; " id="myDiv" >
                 
-                <form action="/lunchbox/uplaods/" class="dropzone dz-clickable">
+                <form action="/lunchbox/uplaods/" class="dropzone needsclick dz-clickable" style="border:2px dashed #1e90ff;border-radius:10px">
                   {% csrf_token %}
                   <input type = 'hidden' id ='lunchBoxID2' name = 'lunchBoxID2' value="">
                   <div class="dz-default dz-message">
-                    <span><h5>Click and upload images for your lunchbox!</h5></span>
+                    <span>
+                      <h5>Click and upload images for your bento</h5>
+                      <img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-128.png" alt='' style="width:10%;">
+                    </span>
                   </div>
                 </form>
                 <input type="file" multiple="multiple" class="dz-hidden-input" style="visibility: hidden; position: absolute; top: 0px; left: 0px; height: 0px; width: 0px;">
@@ -124,9 +131,10 @@
         </div>
             <!-- add category tags -->
         <div id="myDiv2" style="display:none;" class='col-lg-5'>
-
-          <h5>Add tags!</h5>
-          <br>
+            <img src="http://iconshow.me/media/images/ui/iOS7-optimized-icon/png/128/05.tag.png" alt='' style="width:6%;">
+           Add more tags!
+          
+          <br><br>
 
           <form method="post"  action="/lunchbox/tag/">
               {% csrf_token %}
@@ -267,7 +275,7 @@
                                                      </div>
                                                    </div>
                 <br>
-                  <input type="submit" value="Publish!" class="btn btn-primary">
+                  <input type="submit" value="Publish" class="btn btn-primary">
           </form>
 
         </div>

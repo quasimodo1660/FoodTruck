@@ -7,15 +7,14 @@
 {% endblock %}
 
 {% block content %}
-<div class='row float-right'>
+<!-- <div class='row float-right'>
         <a href='/lunchbox/add'><button class='btn btn-primary' style='margin-right:2em'>add a lunchbox</button></a>
-</div>
+</div> -->
 
 
 <div class="container-fluid">
         <div class="tm-body tm-gallery-container">                    
-            <div class="grid">
-                
+            <div class="grid">               
             {% for lunchbox in all_lunchboxes %}
                  <div class="grid-item">
                 <div class="showAllLunchImg">
@@ -26,10 +25,13 @@
                     {% endfor %}
                     <div class="showAllLunchLink">
                         <p>{{ lunchbox.title }}</p >
+                        <div class='lunchboxAvatar'>{% avatar lunchbox.user 60 class="img-circle img-responsive rounded-circle" id="user_avatar" %}</div>
+                        <button class='lunchboxButton'><i class="fas fa-credit-card"></i>Order</button>
                     </div>
                 </div>
-            {% endfor %}
+            
             </div>
+            {% endfor %}
         </div>
         </div>
         </div>
