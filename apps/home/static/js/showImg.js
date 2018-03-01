@@ -21,3 +21,20 @@ $(document).ready(function(){
 
 
 });
+// emily's. for close button.
+var targetArea = document.getElementById("ShowArea").style;
+
+function closead() {
+    targetArea.display = 'none';
+}
+
+// for add button
+var bodyfrm = (document.compatMode.toLowerCase() == "css1compat") ? document.documentElement : document.body;
+
+var addbutton = document.getElementById("addLunboxButton").style;
+addbutton.top = (bodyfrm.clientHeight - 530 - 22) + "px";
+
+function moveR() {
+    addbutton.top = (bodyfrm.scrollTop + bodyfrm.clientHeight - 530 - 22) + "px";
+}
+setInterval("moveR();", 80);

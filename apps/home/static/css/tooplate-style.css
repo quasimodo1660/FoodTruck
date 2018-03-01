@@ -6,6 +6,24 @@ http://www.tooplate.com/view/2094-mason
 
 */
 /* Emily css */
+.jumbotron {
+	background-image: linear-gradient(rgba(110, 106, 106, 0.705), rgba(204, 203, 200, 0.541)), url("hummus.jpg");
+	background-position: center;
+	background-size: cover;
+	height: 500px;
+}
+
+.wordShowArea {
+	font-family: montserrat;
+	vertical-align: middle;
+    /* margin-top: 6%; */
+}
+
+.imgShowArea{
+	position:absolute;
+	top:90px;
+	right:0;
+}
 .showAllLunchImg {
 	position: relative;
    }
