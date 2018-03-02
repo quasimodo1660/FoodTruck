@@ -35,7 +35,7 @@ class Lunchbox(models.Model):
     lon = models.FloatField(null=True)
     lat = models.FloatField(null=True)
     description = models.TextField(max_length = 500, blank=True)
-    city = models.CharField(max_length=150)
+    city = models.CharField(max_length=150,blank=True)
     ingredient = models.ManyToManyField(Tag,related_name='lunchboxes_ingredient')
     tags = models.ManyToManyField(Tag,related_name='lunchboxes')
     offertime = models.DateTimeField(null=True)
