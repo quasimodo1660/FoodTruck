@@ -14,7 +14,7 @@ from rest_framework import mixins
 from rest_framework.decorators import detail_route, list_route
 from django.utils.decorators import method_decorator
 import json
-
+from datetime import datetime
 
 # Create your views here.
 def index(request):
@@ -54,7 +54,8 @@ def uplaods(request):
 
 # complie by Frank
 def next(request):
-    lunchbox=Lunchbox.objects.create(user=request.user,title = request.POST['title'],description = request.POST['des'],location = request.POST['loc'],offertime = request.POST['time'],lon = request.POST['lng'],lat= request.POST['lat'])
+    offerTime1=datetime.strptime(request.POST['time'],'%d %B, %Y').strftime('%Y-%m-%d')
+    lunchbox=Lunchbox.objects.create(user=request.user,title = request.POST['title'],description = request.POST['des'],location = request.POST['loc'],offertime = offerTime1,lon = request.POST['lng'],lat= request.POST['lat'])
     if lunchbox:
         data={'lID':lunchbox.id}
     else:
@@ -98,6 +99,17 @@ def createReview(request):
             data={'succes':'Add a review'}
         else:
             data={'errors':'Something wrong'}
+        return JsonResponse(data)       
+        
+@csrf_exempt
+def addLike(request,id):
+    if request.method=='GET':
+        lunchbox=Lunchbox.objects.get(pk=id)
+        print lunchbox.like
+        lunchbox.like+=1
+        lunchbox.save()
+        print lunchbox.like
+        data={'succes':'Add like by 1'}
         return JsonResponse(data)       
         
 

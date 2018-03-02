@@ -1,27 +1,12 @@
+{% extends 'base.html' %}
 {% load widget_tweaks %}
-<!DOCTYPE html>
-<html lang="en">
-   <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">  
-        <title>Registration Form</title>
-        <meta name="description" content="fill_me_in" >
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-   </head>
-   <body>     
-        <nav id="nav_top" class="navbar navbar-inverse navbar-static-top">
-                <div class="container" id="main_container">
-                        <a class="navbar-brand" href="http://api.jquery.com">Register</a>
-                </div>
-        </nav>
+{% load static %}
+{% block content %}
         <div class="container">
                 <div class="row">
                     <div class="col-md-4">
-                        <h3>Your Information</h3>
+                      <br><br>
+                        <h3>Registration</h3>
                         <small id="emailHelp" class="form-text text-muted">We'll never share your information with anyone else.</small><br>
                         {% for message in messages %}
                         <div class="alert {{ message.tags }} alert-dismissible" role="alert">
@@ -90,17 +75,23 @@
                         {% endif %}
                       </div>
                     {% endfor %}
-                  <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                  <button type="submit" class="btn btn-primary btn-block orange">Submit</button>
                       </form>
-                        <h3>Back to <a href="/">Log in</a></h3>
+                      <br><h6>Already a registered user? <a href="/accounts/login">Login</a> here</h6>
+                       
                     </div>
+
+                    <div class="col-md-4">
+                     
+                      <img  style = "width:400px; margin-top:60px; margin-left:160px " src="{% static 'art2_meitu_1.png' %}"  >
+                    </div>
+
                     <div class="col-md-6" id="right_main">
                       
                     </div>
-                    {% load static %}
+                  
                     <script src="{% static 'user/js/main.js' %}"></script> 
 
-   </body>
-</html>
-
+ 
+                    {% endblock %}
 

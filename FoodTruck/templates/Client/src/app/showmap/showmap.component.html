@@ -9,14 +9,7 @@
     <p>{{lunchbox.description}}</p>
     <hr>
     <h5 class="left-align">Average rating</h5>
-    <ng-template #t let-fill="fill">
-       <span *ngIf="fill === 100" class="star full">&hearts;</span>
-       <span *ngIf="fill === 0" class="star">&hearts;</span>
-       <span *ngIf="fill < 100 && fill > 0" class="star">
-         <span class="half" [style.width.%]="fill">&hearts;</span>&hearts;
-       </span>
-     </ng-template>
-     <ngb-rating [(rate)]="currentRate" [starTemplate]="t" [readonly]="true" max="10"></ngb-rating>
+    <p>{{lunchbox.stars}}</p>
      <hr>
      <h5 class="left-align">Category</h5>
      <ng-container *ngFor='let i of tags'>
@@ -28,6 +21,6 @@
      <h5 class="left-align">Pick up time</h5>
      <p>{{lunchbox.offertime | date: 'MMM-dd-yy'}}</p>
     <hr>
-     <button class="btn waves-effect waves-light pulse orange"><i class="fas fa-thumbs-up"></i> {{lunchbox.like}} like</button>
+     <button class="btn waves-effect waves-light pulse orange" (click)="addLike()"><i class="fas fa-thumbs-up"></i> {{lunchbox.like}} like</button>
      
 </div>

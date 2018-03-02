@@ -20,6 +20,6 @@ io.sockets.on('connection',function(socket){
     })
     socket.on('newMessage', function(data) {
         console.log(data);
-        socket.broadcast.emit( "my_broadcast_event",{message:data.message});
+        socket.broadcast.emit( "my_broadcast_event",{message:data.message,user:data.name});
     })
 })

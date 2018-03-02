@@ -36,6 +36,7 @@ export class ChatboxComponent implements OnInit {
   }
   newMessage(){
     this.socket.emit('newMessage',{
+      username:this.name[0].toUpperCase(),
       message:this.message
     },)
     this.messages.push({me:true,content:this.message,name:this.name[0].toUpperCase()});

@@ -16,4 +16,7 @@ export class HttpService {
     console.log(review);  
     return this._http.post('http://192.168.1.113:8000/lunchbox/addReview/', review)
   }
+  addLike(id){
+    return this._http.get('http://192.168.1.113:8000/lunchbox/addLike/'+id)
+  }
 }

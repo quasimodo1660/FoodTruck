@@ -1,11 +1,19 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
-
+{% load static %}
 
 {% block content %}
-        <div class="container">
-                <div class="row login">
-                    <div class="col-md-4">
+<br><br>
+        <div class="container" style="width:40%">
+               
+                    
+                      <br>
+                      <img  style = "width:50%;display: block;
+
+                      max-width: 100%;
+                      margin:0 auto; " src="{% static 'art.png' %}"  >
+                      <h4>Login</h4>
+                        
                         {% for message in messages %}
                         <div class="alert {{ message.tags }} alert-dismissible" role="alert">
                           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -47,11 +55,13 @@
                         {% endif %}
                       </div>
                     {% endfor %}
-                    <button type="submit" class="btn btn-primary btn-block" style="background-color:#01218E">Submit</button>
+                    <button type="submit" class="btn btn-primary btn-block orange" style="background-color:#01218E">Submit</button>
+                    <br>
+                    <h6>Not a menber yet? <a href="/accounts/signup">Register</a> now</h6>
                 </form>
-                        <h3>Not a menber, please <a href="/register">register</a></h3>
-                    </div>               
-                </div>
+                       
+                    
+               
             </div>
 
           
