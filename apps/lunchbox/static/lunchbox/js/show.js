@@ -28,7 +28,7 @@ $('#post-form').on('submit', function(event){
         }
       })
 });
-
+//this should change
 function showDiv() {
     document.getElementById('welcomeDiv').style.display = "block";
  }
