@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'import_export',
     'rest_framework',
     'rest_framework.authtoken',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -55,6 +56,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'FoodTruck.urls'
@@ -70,6 +73,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -126,6 +132,14 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert-danger',
 }
 
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+
 # RESTFUL API AUTHENTICATION 
 # REST_FRAMEWORK = {
 #     # 'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -160,6 +174,9 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'FoodTruck/templates/Client/dist')
 )
 
+
+LOGIN_URL = '/accounts/login'
+LOGOUT_URL = '/accounts/logout'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/accounts/login'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  
@@ -167,3 +184,11 @@ IMPORT_EXPORT_USE_TRANSACTIONS = True
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 CORS_ORIGIN_ALLOW_ALL = True
+
+
+# Social Login stuff
+SOCIAL_AUTH_GITHUB_KEY = 'ac77c98671ba65492224'
+SOCIAL_AUTH_GITHUB_SECRET = '0cac3a635a59189ef4a27ccbbcc778fa24045d64'
+
+SOCIAL_AUTH_FACEBOOK_KEY = '1476225505834163' 
+SOCIAL_AUTH_FACEBOOK_SECRET = '1b258e6a7292d4e5bffc0ad3d5e32845'
