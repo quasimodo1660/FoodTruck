@@ -17,7 +17,7 @@ export class ChatboxComponent implements OnInit {
   
 
   constructor(private _httpService:HttpService) { 
-    this.socket = socketIO('http://192.168.1.113:6789');
+    this.socket = socketIO('http://localhost:6789');
     this.message='';
   }
 

@@ -18,31 +18,32 @@ def index(request):
     return HttpResponse('sb')
 
 def signup(request):
+    print request
     if request.method == 'POST':
         user_form = UserForm(request.POST)
-        profile_form = ProfileForm(request.POST)
-        if user_form.is_valid() and profile_form.is_valid():
+        # profile_form = ProfileForm(request.POST)
+        if user_form.is_valid():
             uf=user_form.save(commit=False)
             uf.set_password(uf.password)
             uf.save()
-            pf=profile_form.save(commit=False)
-            pf.user=uf
-            pf.save()
+            # pf=profile_form.save(commit=False)
+            # pf.user=uf
+            # pf.save()
             login(request,uf)
             return redirect('/')
         else:
             if request.is_ajax(): 
-                return JsonResponse({'success' : False, 'user_errors' : user_form.errors,'zip':profile_form.errors})
+                return JsonResponse({'success' : False, 'user_errors' : user_form.errors})
             else:
                 messages.error(request, 'Please correct the error below.')
                 return redirect('/accounts/signup')
             
     else:
         user_form = UserForm()
-        profile_form = ProfileForm()
+        # profile_form = ProfileForm()
     return render(request, 'user/regit.html', {
         'user_form': user_form,
-        'profile_form': profile_form
+        # 'profile_form': profile_form
     })
 
 def show(request):
