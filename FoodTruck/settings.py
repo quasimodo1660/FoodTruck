@@ -46,7 +46,15 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'social_django',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.facebook',
 ]
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -76,6 +84,7 @@ TEMPLATES = [
 
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -136,8 +145,10 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.github.GithubOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
     'social_core.backends.facebook.FacebookOAuth2',
-
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.google.GoogleOAuth',
     'django.contrib.auth.backends.ModelBackend',
+    "allauth.account.auth_backends.AuthenticationBackend",
 )
 
 # RESTFUL API AUTHENTICATION 
@@ -187,8 +198,44 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Social Login stuff
+
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = "none"
+SOCIALACCOUNT_QUERY_EMAIL = True
+
+
+
 SOCIAL_AUTH_GITHUB_KEY = 'ac77c98671ba65492224'
 SOCIAL_AUTH_GITHUB_SECRET = '0cac3a635a59189ef4a27ccbbcc778fa24045d64'
 
 SOCIAL_AUTH_FACEBOOK_KEY = '1476225505834163' 
 SOCIAL_AUTH_FACEBOOK_SECRET = '1b258e6a7292d4e5bffc0ad3d5e32845'
+
+SOCIAL_AUTH_GOOGLE_KEY = '137209279459-dd5c0l86q2d5vch1fjlrq4893909lgp9.apps.googleusercontent.com' 
+SOCIAL_AUTH_GOOGLE_SECRET = 'lGQjE-wr1WQAP5iW6NdqqeI0'
+
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'METHOD': 'oauth2',
+        'SCOPE': ['email', 'public_profile', 'user_friends'],
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'INIT_PARAMS': {'cookie': True},
+        'FIELDS': [
+            'id',
+            'email',
+            'name',
+            'first_name',
+            'last_name',
+            'verified',
+            'locale',
+            'timezone',
+            'link',
+            'gender',
+            'updated_time',
+        ],
+        'EXCHANGE_TOKEN': True,
+        'LOCALE_FUNC': 'path.to.callable',
+        'VERIFIED_EMAIL': False,
+        'VERSION': 'v2.5',
+    }
+}

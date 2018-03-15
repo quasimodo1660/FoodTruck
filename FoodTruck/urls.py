@@ -41,7 +41,8 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls')),
     url(r'^api-token-auth/', views.obtain_auth_token),
     url(r'^avatar/', include('avatar.urls')),
-    url(r'^oauth/', include('social_django.urls', namespace='social')),  # <--social login
+    url(r'^oauth/', include('social_django.urls', namespace='social')), # <--social login
+    url(r'^accounts/', include('allauth.urls')), # <--social login
 ]
 
 

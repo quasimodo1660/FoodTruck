@@ -2,6 +2,16 @@
 {% load widget_tweaks %}
 {% load static %}
 
+{% load socialaccount %}
+{% providers_media_js %}
+
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'user/css/bootstrap-social.css' %}">  
+<link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+{% endblock %}  
+
+
 {% block content %}
 <br><br>
         <div class="container" style="width:40%">
@@ -61,8 +71,19 @@
                 </form>
                        
                     
-                <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br> 
-                <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
+               
+                <a href="{% provider_login_url "facebook" method="oauth2" %}" class="btn btn-block btn-facebook btn-social" style="background-color:#3b5998;text-align:center">
+                    <i class="fab fa-facebook fa-2x"></i>Sign in with Facebook
+                   </a>
+                 
+                <a href="/accounts/google/login" class="btn btn-block btn-google btn-social" style="text-align:center">
+                    <i class="fab fa-google fa-2x"></i>Sign in with Google
+                   </a>
+                
+                  <a href="/accounts/github/login" class="btn btn-block btn-github btn-social" style="text-align:center">
+                    <i class="fab fa-github fa-2x"></i>Sign in with GitHub
+                   </a>
+                 
             </div>
 
           
