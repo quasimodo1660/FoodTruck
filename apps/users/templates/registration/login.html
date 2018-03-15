@@ -13,16 +13,16 @@
 
 
 {% block content %}
-<br><br>
+<br>
         <div class="container" style="width:40%">
                
                     
-                      <br>
+                      
                       <img  style = "width:50%;display: block;
 
                       max-width: 100%;
                       margin:0 auto; " src="{% static 'art.png' %}"  >
-                      <h4>Login</h4>
+                      <h5 style="text-align:center">Welcome to BentoMan</h5>
                         
                         {% for message in messages %}
                         <div class="alert {{ message.tags }} alert-dismissible" role="alert">
@@ -66,11 +66,11 @@
                       </div>
                     {% endfor %}
                     <button type="submit" class="btn btn-primary btn-block orange" style="background-color:#01218E">Submit</button>
-                    <br>
-                    <h6>Not a menber yet? <a href="/accounts/signup">Register</a> now</h6>
+                    
+                    
                 </form>
                        
-                    
+                <p style="text-align:center"><strong>-- OR --</strong></p> 
                
                 <a href="{% provider_login_url "facebook" method="oauth2" %}" class="btn btn-block btn-facebook btn-social" style="background-color:#3b5998;text-align:center">
                     <i class="fab fa-facebook fa-2x"></i>Sign in with Facebook
