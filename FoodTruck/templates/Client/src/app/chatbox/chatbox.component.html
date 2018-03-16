@@ -1,11 +1,12 @@
 <div class="chat_window" id='cbox'>
-    <div class="top_menu">
+    <div class="top_menu" (click)=showChat()>
         <div class="buttons">
             <div class="button minimize"></div>
             <div class="button maximize"></div>
         </div>
-        <div class="title">{{users}} are online</div>
+        <div class="title">{{users}} are online<span class="new badge orange">{{nm}}</span></div>
     </div>
+    <div *ngIf='visible' [@slideInOut]>
     <ul class="messages">
         <ng-container *ngFor='let message of messages'>
                 <li *ngIf='message.me' class="message right appeared">
@@ -43,6 +44,7 @@
         </div>
     </li>
     </div>
+</div>
 </div>
 
 
