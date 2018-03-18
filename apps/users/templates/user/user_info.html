@@ -2,104 +2,32 @@
 {% load avatar_tags %}
 {% load widget_tweaks %}
 {% load static %}
+
 {% block content %}
 <br>
         <div class="container">
-            <a href="{% url 'avatar_change' %}">Change your avatar</a>
-            <div class="col-3 float-left pr-4" role="navigation">
-                
-               
-                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
-                    <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="{% url 'password_change' %}" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
-                    <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
-                  </div>
-                </div>
-                <div class="col-9 float-left">
-    
+          <div class='row'>
+            <div class="col-lg-3 s12 m4 l3">
+                {% if user.socialaccount_set.all.0.get_avatar_url %}
+                <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="responsive-img z-depth-4">
+                {% else %}
+                {% avatar user 500 class="responsive-img z-depth-4" id="user_avatar" %}
+                {% endif %}
+                <h5 class='blue-grey-text text-darken-3'>{{user.get_full_name }}</h5>
+                <h5 class='blue-grey-text text-darken-3'>{{user.username }}</h5>
+                <h6 class='blue-grey-text text-lighten-3'>{{user.email }}</h6><br>
+                <a href="#!" class="collection-item">Add a bio</a>
+                <hr>
 
-                   
-                
-                  
-                      <div class="panel-heading">
-                        <h3 class="panel-title">{{user.first_name}} {{user.last_name}}</h3>
-                      </div>
-                      <div class="panel-body">
-                        <div class="row">
-                          <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://randomuser.me/api/portraits/women/90.jpg" class="img-circle img-responsive"> </div>
-                                     
-                         
-                          <div class=" col-md-9 col-lg-9 "> 
-                            <table class="table table-user-information">
-                              <tbody>
-                                <tr>
-                                            <td>Account ID:</td>
-                                            <td>{{user.id}}</td>
-                                </tr>
-                                <tr>
-                                  <td>Register date:</td>
-                                  <td>{{user.created_at}}</td>
-                                </tr>
-                                <tr>
-                                  <td>Date of Birth</td>
-                                  <td>{{user.dob}}</td>
-                                </tr>
-                             
-                                   <tr>
-                                       <tr>
-                                 
-                                <tr>
-                                  <td>Email</td>
-                                  <td><a href="mailto:{{user.email_address}}">{{user.email_address}}</a></td>
-                                </tr>
-                                  <td>Phone Number</td>
-                                  <td>{{user.phone}}</td>
-                                     
-                                </tr>
-                               
-                              </tbody>
-                            </table>
-                            
-                            
-                          </div>
-                        </div>
-                      </div>
-                           <div class="panel-footer">
-                                  <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary "><i class="glyphicon glyphicon-envelope"></i></a>
-                                  <span>
-                                      <a href="edit.html" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
-                                      
-                                  </span>
-                              </div>
-                      
-                    </div>
-                    <div class="row"> 
-                      <form enctype="multipart/form-data" action="/uploadFile/" method="post">  
-                         <input type="file" name="myfile"/>  
-                        
-                         <input type="submit" value="upload"/>  
-                      </form> 
-                     </div>
-             
             </div>
-           
-              <script>
-                jQuery(document).ready(function() {
-                  jQuery.timeago.settings.allowFuture = true;
-                  jQuery("abbr.timeago").timeago();
-                  
-                  
-                  $('.comment_row').on('click','.edit_icon',function(){
-                          $(this).closest('.comment_row').find('.edit_row').slideDown();
-  
-                  })
-                  $('.comment_row').on('click','.comment_icon',function(){
-                          $(this).closest('.comment_row').find('.comment_row').slideDown();
-  
-                  })
-  
-                });
-          </script>
-         
-         
+            <div class="col-lg-9 s12 m8 l9">
+                <a class="waves-effect waves-light btn pulse orange"><i class="material-icons left">cloud</i>button</a>
+            </div>
+            
+          </div>
+          <div class='row'>
+            <div class='col s3'></div>
+            <div class='col s8'></div>
+          </div>
+           </div>
 {% endblock %}

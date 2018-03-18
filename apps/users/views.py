@@ -46,9 +46,9 @@ def signup(request):
         # 'profile_form': profile_form
     })
 
-def show(request):
+def show(request,id):
     user=request.user
-    return render(request,'user/user_info.html',{'user':user})
+    return render(request,'user/user_info.html',{user:user})
 
 
 

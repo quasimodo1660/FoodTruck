@@ -10,8 +10,8 @@
   <title>BENTOMAN</title>
   <meta name="description" content="fill_me_in" >
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="http://code.jquery.com/jquery-3.3.1.slim.js" integrity="sha256-fNXJFIlca05BIO2Y5zh1xrShK3ME+/lYZ0j+ChxX2DA=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -25,7 +25,7 @@
 </head>
 <body>
     <ul id="dropdown1" class="dropdown-content">
-        <li><a href="/accounts/profile"><span class="grey-text text-darken-3">Profile</span></a></li>
+        <li><a href="/accounts/profile/{{user.id}}"><span class="grey-text text-darken-3">Profile</span></a></li>
         <li><a href="#!"><span class="grey-text text-darken-3">Settings</span></a></li>
         <li class="divider"></li>
         <li><a href="{% url 'logout' %}"><span class="grey-text text-darken-3">Log out</span></a></li></a></li>
@@ -42,7 +42,7 @@
             {% if user.socialaccount_set.all.0.get_avatar_url %}
             <li><a href="#!"><img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="img-circle img-responsive rounded-circle" style="width:2.25em"><span class="grey-text text-darken-3"> {{user.get_full_name }}</span></a></li>
             {% else %}
-            <li><a href="#!">{% avatar user 35 class="img-circle img-responsive rounded-circle" id="user_avatar" %} <span class="grey-text text-darken-3">{{user.get_full_name }}</span></a></li>
+            <li><a href="#!">{% avatar user 35 class="img-circle img-responsive rounded-circle" id="user_avatar" %} <span class="grey-text text-darken-3">{{user.username }}</span></a></li>
             {% endif %}
             <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="material-icons right"><span class="grey-text text-darken-3">arrow_drop_down</span></i></a></li>
             {% else %}
@@ -58,7 +58,7 @@
     {% block content %}
     {% endblock %}
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="{% static 'js/materialize.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
     <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
     {% block javascript %}
     {% endblock %}

@@ -19,6 +19,7 @@ import { NgxGalleryModule } from 'ngx-gallery';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AgmCoreModule } from '@agm/core';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { AgmCoreModule } from '@agm/core';
     ShowinfoComponent,
     NaviCoComponent,
     ReviewComponent,
-    ShowapiComponent
+    ShowapiComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
