@@ -6,3 +6,7 @@ from django.contrib.auth.models import User
 @admin.register(UserAvater)
 class UserAvaterAdmin(admin.ModelAdmin):
     list_display = ('user','image')
+
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ('user','bio','postal_code','phone')

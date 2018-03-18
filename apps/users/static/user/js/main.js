@@ -81,35 +81,35 @@ $(document).ready(function(){
     //================================================================================
     //                             ZIPCODE VALIDATION  
     //================================================================================  
-    $('#id_postal_code').closest('.form-group').append('<div class="invalid-feedback"></div>');
-    $( "#id_postal_code" ).on('keyup change', function (event){
-        var ZIPCODE_REGEX=/^\d{5}$/;
-        var pc=$("#id_postal_code").val();
-        if (pc.length==0){
-            $(this).addClass('is-invalid');
-            $(this).siblings('.invalid-feedback').text('This field is required.');
-        }
-        else if(pc.length<5 || !(ZIPCODE_REGEX.test(pc))){
-            $(this).addClass('is-invalid');
-            $(this).siblings('.invalid-feedback').text('Postal code must be 5 digits.');
-        }
-        else{
-            $(this).removeClass('is-invalid');
-            $(this).addClass('is-valid');  
-            $.ajax({ 
-                url: '/accounts/signup', /* Where should this go? */
-                method: 'post', /* Which HTTP verb? */
-                data: $(this).serialize(),
-                success: function(results) {
-                    console.log(results);
-                   if(results.zip.postal_code){
-                    $( "#id_postal_code").addClass('is-invalid');
-                    $( "#id_postal_code").siblings('.invalid-feedback').text(results.zip.postal_code[0]);
-                   }
-                }
-            });
-        }
-      });
+    // $('#id_postal_code').closest('.form-group').append('<div class="invalid-feedback"></div>');
+    // $( "#id_postal_code" ).on('keyup change', function (event){
+    //     var ZIPCODE_REGEX=/^\d{5}$/;
+    //     var pc=$("#id_postal_code").val();
+    //     if (pc.length==0){
+    //         $(this).addClass('is-invalid');
+    //         $(this).siblings('.invalid-feedback').text('This field is required.');
+    //     }
+    //     else if(pc.length<5 || !(ZIPCODE_REGEX.test(pc))){
+    //         $(this).addClass('is-invalid');
+    //         $(this).siblings('.invalid-feedback').text('Postal code must be 5 digits.');
+    //     }
+    //     else{
+    //         $(this).removeClass('is-invalid');
+    //         $(this).addClass('is-valid');  
+    //         $.ajax({ 
+    //             url: '/accounts/signup', /* Where should this go? */
+    //             method: 'post', /* Which HTTP verb? */
+    //             data: $(this).serialize(),
+    //             success: function(results) {
+    //                 console.log(results);
+    //                if(results.zip.postal_code){
+    //                 $( "#id_postal_code").addClass('is-invalid');
+    //                 $( "#id_postal_code").siblings('.invalid-feedback').text(results.zip.postal_code[0]);
+    //                }
+    //             }
+    //         });
+    //     }
+    //   });
     
     //================================================================================
     //                            AJAX PART
@@ -143,5 +143,19 @@ $(document).ready(function(){
             }
         }
     });
-
+    //================================================================================
+    //                            UPDATE PROFILE PART
+    //================================================================================  
+    $( "#icon_post" ).on('keyup change', function (event){
+        var ZIPCODE_REGEX=/^\d{5}$/;
+        var pc=$("#icon_post").val();
+        if(pc.length<5 || !(ZIPCODE_REGEX.test(pc))){
+            $(this).addClass('invalid')
+            $(this).siblings('label').attr('data-error','Postal code should be 5 digits.')
+        }
+        else{
+            $(this).removeClass('invalid')
+        }
+      });
+    
 });
