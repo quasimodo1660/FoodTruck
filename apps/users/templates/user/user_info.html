@@ -37,18 +37,18 @@
                     <div>
                       <div id="test4">
                         <br>
-                          <form class="col s12">
+                          <form method="post" action="/accounts/update" class="col s12" id='profileUpdateForm'>{% csrf_token %}
                               <div class='row'>
                                   <h6 class="blue-grey-text text-lighten-4 left-align">We'll never share your information with anyone else.</h6>
                               </div>
                               <div class="row">
                                   <div class="input-field col s6">
                                     <i class="material-icons prefix">account_circle</i>
-                                    <input id="icon_prefix" type="text" class="validate" value="{{user.first_name}}">
+                                    <input id="icon_prefix" name="fn" type="text" class="validate" value="{{user.first_name}}">
                                     <label for="icon_prefix">First Name</label>
                                   </div>
                                   <div class="input-field col s6">
-                                    <input id="icon_lastname" type="tel" class="validate" value="{{user.last_name}}">
+                                    <input id="icon_lastname" type="tel" name="ln" class="validate" value="{{user.last_name}}">
                                     <label for="icon_ln">Last Name</label>
                                   </div>
                                 </div>
@@ -62,24 +62,24 @@
                               <div class="row">
                                 <div class="input-field col s6">
                                   <i class="material-icons prefix">mail_outline</i>
-                                  <input id="icon_post" type="text" class="validate" value="{{user.profile.postal_code}}">
+                                  <input id="icon_post" type="text" class="validate" name="zip" value="{{user.profile.postal_code}}">
                                   <label for="icon_post">postal code</label>
                                 </div>
                                 <div class="input-field col s6">
                                   <i class="material-icons prefix">phone</i>
-                                  <input id="icon_telephone" type="tel" class="validate" value="{{user.profile.phone}}">
+                                  <input id="icon_telephone" type="tel" class="validate" name="phone" value="{{user.profile.phone}}">
                                   <label for="icon_telephone">Telephone</label>
                                 </div>
                               </div>
                               <div class='row'>
                                 <div class="input-field col s12">
                                     <i class="material-icons prefix">mode_edit</i>
-                                    <textarea id="icon_prefix2" class="materialize-textarea" value="{{user.profile.bio}}"></textarea>
+                                    <textarea id="icon_prefix2" class="materialize-textarea" name='bio' value="{{user.profile.bio}}"></textarea>
                                     <label for="icon_prefix2">Bio</label>
                                   </div>
                                 </div>
-                              
-                                <input type="submit" class="btn btn-primary orange" name='b2' value='Update'  onclick="update()"> 
+                                
+                                <input type="submit" class="btn btn-primary orange" id='b2' value='Update'> 
                                 
                             </form>
                            

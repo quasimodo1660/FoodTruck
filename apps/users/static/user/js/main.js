@@ -157,5 +157,25 @@ $(document).ready(function(){
             $(this).removeClass('invalid')
         }
       });
-    
+      $('#profileUpdateForm').on('submit', function(event){
+        event.preventDefault();
+        $('<div id="mid" class="progress"><div class="indeterminate orange"></div></div>').insertBefore('#b2')
+        console.log("form submitted!")  // sanity check
+        console.log('Sending Ajax request to', $(this).attr('action'))
+        console.log('Submitting the following data', $(this).serialize())
+        $.ajax({
+            url: $(this).attr('action'), /* Where should this go? */
+            method: 'post', /* Which HTTP verb? */
+            data: $(this).serialize(), /* Any data to send along? */
+            success: function(serverResponse) { /* What code should we run when the server responds? */
+              if(serverResponse['errors'])
+                console.log(serverResponse['errors'])
+              else{
+                $('#mid').remove()
+                $('#profileUpdateForm').append('<h6 id="miss" class="blue-grey-text text-lighten-4 left-align">Update at '+new Date($.now())+'</h6>')
+                $('#miss').delay(3000).fadeOut()
+              }          
+            }
+          })
+    });
 });

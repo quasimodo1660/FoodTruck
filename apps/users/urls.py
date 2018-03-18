@@ -3,5 +3,5 @@ from . import views           # This line is new!
 urlpatterns = [
     url(r'^signup$', views.signup),
     url(r'^profile/(?P<id>\d+)$', views.show),
-    url(r'test',views.index)
+    url(r'update',views.update)
 ]

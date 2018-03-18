@@ -12,10 +12,25 @@ import avatar
 
 
 
-def index(request):
-    print request.user
-    print request.user.profile.postal_code
-    return HttpResponse('sb')
+def update(request):
+    print request.POST
+    user=User.objects.get(pk=request.user.id)
+    if request.POST['fn']!=user.first_name:
+        user.first_name=request.POST['fn']
+    if request.POST['ln']!=user.last_name:
+        user.last_name=request.POST['ln']
+    if request.POST['zip']!=user.profile.postal_code:
+        user.profile.postal_code=request.POST['zip']
+    if request.POST['phone']!=user.profile.phone:
+        user.profile.phone=request.POST['phone']
+    if request.POST['bio']!=user.profile.bio:
+        user.profile.bio=request.POST['bio']
+    user.save()
+    if user:
+        data={'success':'updated'}
+    else:
+        data={'errors':'Something wrong'}
+    return JsonResponse(data)
 
 def signup(request):
     print request
