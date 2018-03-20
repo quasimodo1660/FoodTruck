@@ -91,7 +91,7 @@
                           <div class="col s12 m6">
                         <div class="card small">
                             <div class="card-image waves-effect waves-block waves-light">
-                                <a href='/lunchbox/angular/{{bento.id}}'><img src="/media/{{bento.images.first.image}}"></a>
+                                <a href='/lunchbox/angular/{{bento.id}}'><span class="new badge orange top-align" data-badge-caption=" like" style='position: absolute;top:0px;right:0px;'>{{bento.like}}</span><img src="/media/{{bento.images.first.image}}" class='responsive-img'></a>
                               </div>
                               <div class="card-content">
                                 <span class="card-title activator grey-text text-darken-4">{{bento.title}}<i class="material-icons right">more_vert</i></span>
