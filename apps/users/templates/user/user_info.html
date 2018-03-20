@@ -101,9 +101,27 @@
                                   <a href="#">Edit</a>
                                   <a href="#">Delete</a>
                               </div>
-                              <div class="card-reveal">
-                                  <span class="card-title grey-text text-darken-4">{{bento.title}}<i class="material-icons right">close</i></span>
-                                  <p>{{bento.description}}</p>
+                              <div class="card-reveal s12 m8 offset-m2 l6 offset-l3" style="overflow:auto">
+                                  <span class="card-title grey-text text-darken-4">Reviews<i class="material-icons right">close</i></span>
+                                 
+                                  {% for review in bento.reviews.all%}
+                                  
+                          
+                                      <ul class="collection">
+                                          <li class="collection-item avatar">
+                                              {% if review.user.socialaccount_set.all.0.get_avatar_url %}
+                                              <img src="{{ review.user.socialaccount_set.all.0.get_avatar_url }}" class="circle responsive-img z-depth-4">
+                                              {% else %}
+                                              {% avatar review.user class="responsive-img z-depth-4 circle" id="review.user_avatar" %}
+                                              {% endif %}
+                                            <span class="title">{{review.user.username}}</span>
+                                            <p>{{review.content}}
+                                            </p>
+                                            <a href="#!" class="secondary-content">{{review.score}}</a>
+                                          </li>
+                                      </ul>
+                                  {% endfor %}
+                                
                               </div>
                         </div>
                           </div>
