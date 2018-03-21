@@ -127,7 +127,24 @@
                           </div>
                       {% endfor %}
                       </div>
-                      <div id="test6">Test 3</div>
+                      <div id="test6">
+                         
+                        {% for review in user.reviews.all%}
+                       
+                        <ul class="collection">
+                        <li class="collection-item avatar">
+                            <img src="/media/{{review.lunchbox.images.first.image}}" alt="" class="circle responsive-img">
+                            <span class="title">{{review.lunchbox.title}}</span><hr>
+                            <p>First Line <br>
+                               {{review.content}}
+                            </p>
+              
+                        </li>
+                      </ul>
+                   
+                        {% endfor %}
+                     
+                      </div>
                     </div>
                 
             </div>
