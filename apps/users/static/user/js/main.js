@@ -202,11 +202,11 @@ $(document).ready(function(){
     //================================================================================
     //                            FRIENDSHIP PART
     //================================================================================  
-    $('#followForm').on('submit', function(event){
+    $('.followForm').on('submit', function(event){
         event.preventDefault();
-        console.log("form submitted!")  // sanity check
-        console.log('Sending Ajax request to', $(this).attr('action'))
-        console.log('Submitting the following data', $(this).serialize())
+        // console.log("form submitted!")  // sanity check
+        // console.log('Sending Ajax request to', $(this).attr('action'))
+        // console.log('Submitting the following data', $(this).serialize())
         $.ajax({
             url: $(this).attr('action'), /* Where should this go? */
             method: 'post', /* Which HTTP verb? */
@@ -215,9 +215,8 @@ $(document).ready(function(){
               if(serverResponse['errors'])
                 console.log(serverResponse['errors'])
               else{
-                $('#mid').remove()
-                $('#profileUpdateForm').append('<h6 id="miss" class="blue-grey-text text-lighten-4 left-align">Update at '+new Date($.now())+'</h6>')
-                $('#miss').delay(3000).fadeOut()
+                $(this).find('#fB').val(serverResponse['success'])
+                $('#followers').text(serverResponse['data'])
               }          
             }
           })

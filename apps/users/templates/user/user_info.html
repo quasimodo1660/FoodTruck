@@ -27,10 +27,14 @@
                 <a href="#!" class="collection-item">Settings</a><hr>
                 {% else %}
                 <hr>
-                <form method="post" action="/accounts/friends" class="col s12" id='followForm'>{% csrf_token %}
+                
+                <form method="post" action="/accounts/friends" class="col s12 followForm">{% csrf_token %}
                     <input type="hidden" name="puser" value="{{puser.id}}">
-                    <input type="submit" class="col waves-effect waves-light btn orange" id='fB' value='Follow'> 
-
+                    {% if puser in user.profile.following.all %}
+                    <input type="submit" class="col waves-effect waves-light btn orange" id='fB' value='unfolow'> 
+                    {% else %}
+                    <input type="submit" class="col waves-effect waves-light btn orange" id='fB' value='folow'> 
+                    {% endif %}
                 </form>
   
                 {% endif %}
@@ -47,7 +51,7 @@
                         {% endif %}
                         <li class="tab"><a class="active blue-grey-text text-darken-3" href="#test5"><span class="badge badge-light">{{puser.lunchboxes.all|length}}</span>Bentoes</a></li>
                         <li class="tab"><a class="blue-grey-text text-darken-3" href="#test6"><span class="badge badge-light">{{puser.reviews.all|length}}</span>Reviews</a></li>
-                        <li class="tab"><a class="active blue-grey-text text-darken-3" href="#test7"><span class="badge badge-light">{{puser.lunchboxes.all|length}}</span>Followers</a></li>
+                        <li class="tab"><a class="active blue-grey-text text-darken-3" href="#test7"><span id='followers' class="badge badge-light">{{puser.followers.all|length}}</span>Followers</a></li>
                         <li class="tab"><a class="blue-grey-text text-darken-3" href="#test8"><span class="badge badge-light">{{puser.profile.following.all|length}}</span>Following</a></li>
                       </ul>
                     </div>
@@ -62,37 +66,37 @@
                               <div class="row">
                                   <div class="input-field col s6">
                                     <i class="material-icons prefix">account_circle</i>
-                                    <input id="icon_prefix" name="fn" type="text" class="validate" value="{{user.first_name}}">
+                                    <input id="icon_prefix" name="fn" type="text" class="validate" value="{{puser.first_name}}">
                                     <label for="icon_prefix">First Name</label>
                                   </div>
                                   <div class="input-field col s6">
-                                    <input id="icon_lastname" type="tel" name="ln" class="validate" value="{{user.last_name}}">
+                                    <input id="icon_lastname" type="tel" name="ln" class="validate" value="{{puser.last_name}}">
                                     <label for="icon_ln">Last Name</label>
                                   </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12">
                                       <i class="material-icons prefix">email</i>
-                                      <input disabled value="{{user.email}}" id="disabled" type="text" class="validate">
+                                      <input disabled value="{{puser.email}}" id="disabled" type="text" class="validate">
                                       <label for="disabled">Email</label>
                                     </div>
                                   </div>
                               <div class="row">
                                 <div class="input-field col s6">
                                   <i class="material-icons prefix">mail_outline</i>
-                                  <input id="icon_post" type="text" class="validate" name="zip" value="{{user.profile.postal_code}}">
+                                  <input id="icon_post" type="text" class="validate" name="zip" value="{{puser.profile.postal_code}}">
                                   <label for="icon_post">postal code</label>
                                 </div>
                                 <div class="input-field col s6">
                                   <i class="material-icons prefix">phone</i>
-                                  <input id="icon_telephone" type="tel" class="validate" name="phone" value="{{user.profile.phone}}">
+                                  <input id="icon_telephone" type="tel" class="validate" name="phone" value="{{puser.profile.phone}}">
                                   <label for="icon_telephone">Telephone</label>
                                 </div>
                               </div>
                               <div class='row'>
                                 <div class="input-field col s12">
                                     <i class="material-icons prefix">mode_edit</i>
-                                    <textarea id="icon_prefix2" class="materialize-textarea" name='bio' value="{{user.profile.bio}}"></textarea>
+                                    <textarea id="icon_prefix2" class="materialize-textarea" name='bio'>{{puser.profile.bio}}</textarea>
                                     <label for="icon_prefix2">Bio</label>
                                   </div>
                                 </div>
@@ -180,6 +184,34 @@
                    
                         {% endfor %}
                       </ul>
+                      </div>
+                      <div id="test7">
+                        <ul class="collection">
+                        {% for f in puser.followers.all%}
+                        <li class="collection-item avatar">
+                            {% if f.user.socialaccount_set.all.0.get_avatar_url %}
+                            <a href='/accounts/profile/{{f.user.id}}'><img src="{{ f.user.socialaccount_set.all.0.get_avatar_url }}" class="circle responsive-img z-depth-4 hoverable"></a>
+                            {% else %}
+                            <a href='/accounts/profile/{{f.user.id}}'>{% avatar f.user class="responsive-img z-depth-4 circle" id="review.user_avatar" %}</a>
+                            {% endif %}
+                            <span class="title">{{f.user.username}}</span>
+                            {% if user != f.user %}
+                            <form method="post" action="/accounts/friends" class='followForm'>{% csrf_token %}
+                              <input type="hidden" name="puser" value="{{f.user.id}}">
+                              {% if f.user in user.profile.following.all %}
+                              <span><input type="submit" class="secondary-content waves-effect waves-light btn btn-small orange" id='fB' value='unfolow'></span>
+                              {% else %}
+                              <span><input type="submit" class="secondary-content waves-effect waves-light btn btn-small orange" id='fB' value='folow'></span>
+                              {% endif %}
+                          </form>
+                          {% endif %}
+                            <p>{{f.bio}}</p>
+                            
+                  
+                          </li>
+                        {% endfor %}
+                        </ul>
+
                       </div>
                     </div>
                 

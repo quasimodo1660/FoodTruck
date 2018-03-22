@@ -40,7 +40,7 @@ class Profile(models.Model):
     birth_date = models.DateField(null=True, blank=True)
     postal_code= models.CharField(max_length=10, blank=True)
     phone = models.CharField(max_length=15, blank=True)
-    following = models.ManyToManyField(User,related_name='followers')
+    following = models.ManyToManyField(User,related_name='followers',blank=True)
     
 
 @receiver(post_save, sender=User)

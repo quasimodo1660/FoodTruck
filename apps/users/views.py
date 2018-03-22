@@ -14,20 +14,22 @@ import avatar
 def update(request):
     print request.POST
     user=User.objects.get(pk=request.user.id)
+    userProfile=Profile.objects.get(user_id=request.user.id)
     if request.POST['fn']!=user.first_name:
         user.first_name=request.POST['fn']
     if request.POST['ln']!=user.last_name:
         user.last_name=request.POST['ln']
-    if request.POST['zip']!=user.profile.postal_code:
-        user.profile.postal_code=request.POST['zip']
-    if request.POST['phone']!=user.profile.phone:
-        user.profile.phone=request.POST['phone']
-    if request.POST['bio']!=user.profile.bio:
-        user.profile.bio=request.POST['bio']
-    user.save()
-    if user:
+    if request.POST['zip']!=userProfile.postal_code:
+        userProfile.postal_code=request.POST['zip']
+    if request.POST['phone']!=userProfile.phone:
+        userProfile.phone=request.POST['phone']
+    if request.POST['bio']!=userProfile.bio:
+        userProfile.bio=request.POST['bio']
+    try:
+        user.save()
+        userProfile.save()
         data={'success':'updated'}
-    else:
+    except:
         data={'errors':'Something wrong'}
     return JsonResponse(data)
 
@@ -72,9 +74,13 @@ def friendShip(request):
     puser=User.objects.get(pk=request.POST['puser'])
     if puser in user.profile.following.all():
         user.profile.following.remove(puser)
-    # request.user.profile.following.add(User.objects.get(pk=request.POST['puser']))
-    print request.user.profile.following.all()
-    return HttpResponse('sbb')
+        data=puser.followers.count()
+        respone='follow'
+    else:
+        user.profile.following.add(puser)
+        respone='unfollow'
+        data=puser.followers.count()
+    return JsonResponse({'success':respone,'data':data})
 
 class UserViewSet(viewsets.ModelViewSet):
     """
