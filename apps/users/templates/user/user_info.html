@@ -19,11 +19,23 @@
                 {% else %}
                 {% avatar puser 500 class="responsive-img z-depth-4" id="user_avatar" %}
                 {% endif %}
-                <h5 class='blue-grey-text text-darken-3'>{{puser.get_full_name }}</h5>
+                
                 <h5 class='blue-grey-text text-darken-3'>{{puser.username }}</h5>
+                {% if user == puser %}   
+                <h5 class='blue-grey-text text-darken-3'>{{puser.get_full_name }}</h5>
                 <h6 class='blue-grey-text text-lighten-3'>{{puser.email }}</h6><br>
-                <a href="#!" class="collection-item">Add a bio</a>
+                <a href="#!" class="collection-item">Settings</a><hr>
+                {% else %}
                 <hr>
+                <form method="post" action="/accounts/friends" class="col s12" id='followForm'>{% csrf_token %}
+                    <input type="hidden" name="puser" value="{{puser.id}}">
+                    <input type="submit" class="col waves-effect waves-light btn orange" id='fB' value='Follow'> 
+
+                </form>
+  
+                {% endif %}
+                
+                
 
             </div>
             <div class="col-lg-9 s12 m8 l9">
@@ -33,8 +45,10 @@
                         {% if user == puser %}    
                         <li class="tab"><a class="blue-grey-text text-darken-3" href="#test4">Profile</a></li>
                         {% endif %}
-                        <li class="tab"><a class="active blue-grey-text text-darken-3" href="#test5">Bentoes</a></li>
-                        <li class="tab"><a class="blue-grey-text text-darken-3" href="#test6">Reviews</a></li>
+                        <li class="tab"><a class="active blue-grey-text text-darken-3" href="#test5"><span class="badge badge-light">{{puser.lunchboxes.all|length}}</span>Bentoes</a></li>
+                        <li class="tab"><a class="blue-grey-text text-darken-3" href="#test6"><span class="badge badge-light">{{puser.reviews.all|length}}</span>Reviews</a></li>
+                        <li class="tab"><a class="active blue-grey-text text-darken-3" href="#test7"><span class="badge badge-light">{{puser.lunchboxes.all|length}}</span>Followers</a></li>
+                        <li class="tab"><a class="blue-grey-text text-darken-3" href="#test8"><span class="badge badge-light">{{puser.profile.following.all|length}}</span>Following</a></li>
                       </ul>
                     </div>
                     <div>

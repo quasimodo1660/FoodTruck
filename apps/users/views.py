@@ -67,7 +67,14 @@ def show(request,id):
     print puser
     return render(request,'user/user_info.html',{'user':user,'puser':puser})
 
-
+def friendShip(request):
+    user=request.user
+    puser=User.objects.get(pk=request.POST['puser'])
+    if puser in user.profile.following.all():
+        user.profile.following.remove(puser)
+    # request.user.profile.following.add(User.objects.get(pk=request.POST['puser']))
+    print request.user.profile.following.all()
+    return HttpResponse('sbb')
 
 class UserViewSet(viewsets.ModelViewSet):
     """
