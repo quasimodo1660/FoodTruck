@@ -11,7 +11,6 @@ import avatar
 
 
 
-
 def update(request):
     print request.POST
     user=User.objects.get(pk=request.user.id)

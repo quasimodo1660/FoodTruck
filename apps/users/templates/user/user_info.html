@@ -3,6 +3,7 @@
 {% load widget_tweaks %}
 {% load static %}
 
+
 {% block css %}
 <link rel="stylesheet" href="{% static 'user/css/userInfo.css' %}">
 {% endblock %}
@@ -30,8 +31,8 @@
                     <div class="card-tabs">
                       <ul class="tabs tabs-fixed-width">
                         <li class="tab"><a class="blue-grey-text text-darken-3" href="#test4">Profile</a></li>
-                        <li class="tab"><a class="active blue-grey-text text-darken-3" href="#test5">My Bentoes</a></li>
-                        <li class="tab"><a class="blue-grey-text text-darken-3" href="#test6">My reviews</a></li>
+                        <li class="tab"><a class="active blue-grey-text text-darken-3" href="#test5">Bentoes</a></li>
+                        <li class="tab"><a class="blue-grey-text text-darken-3" href="#test6">Reviews</a></li>
                       </ul>
                     </div>
                     <div>
@@ -89,7 +90,7 @@
                       {% for bento in user.lunchboxes.all%}
                     
                           <div class="col s12 m6">
-                        <div class="card small">
+                        <div class="card small hoverable">
                             <div class="card-image waves-effect waves-block waves-light">
                                 <a href='/lunchbox/angular/{{bento.id}}'><span class="new badge orange top-align" data-badge-caption=" like" style='position: absolute;top:0px;right:0px;'>{{bento.like}}</span><img src="/media/{{bento.images.first.image}}" class='responsive-img'></a>
                               </div>
@@ -128,22 +129,32 @@
                       {% endfor %}
                       </div>
                       <div id="test6">
-                         
+                          <ul class="collection hoverable">
                         {% for review in user.reviews.all%}
                        
-                        <ul class="collection">
+                        
                         <li class="collection-item avatar">
                             <img src="/media/{{review.lunchbox.images.first.image}}" alt="" class="circle responsive-img">
-                            <span class="title">{{review.lunchbox.title}}</span><hr>
-                            <p>First Line <br>
+                            <span class="title">{{review.lunchbox.title}}</span><br>
+                            {% with ''|center:review.score as range %}
+                            {% for _ in range %}
+                            <span><i class="material-icons orange-text">star</i></span>
+                            {% endfor %}
+                            {% endwith %}
+                              <br>
+                              <p>
                                {{review.content}}
                             </p>
-              
+                            <hr>
+                           
+                            <span><a href="#" class='orange-text hoverable'>Edit</a></span>&nbsp;&nbsp;&nbsp;
+                            <span><a href="#" class='orange-text hoverable'>Delete</a></span>
+                             
                         </li>
-                      </ul>
+                      
                    
                         {% endfor %}
-                     
+                      </ul>
                       </div>
                     </div>
                 
