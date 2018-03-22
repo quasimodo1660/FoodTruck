@@ -29,6 +29,8 @@ class Tag(models.Model):
 
 
 class Lunchbox(models.Model):
+    class Meta:
+        ordering=['updated_at']
     user = models.ForeignKey(User,related_name='lunchboxes')
     title = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
@@ -42,7 +44,7 @@ class Lunchbox(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
     public  = models.BooleanField(default = False)
-    like = models.IntegerField(default=0)
+    like = models.IntegerField(default=0)   
     def __unicode__(self):
         return self.title
 

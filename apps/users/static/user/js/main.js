@@ -178,4 +178,25 @@ $(document).ready(function(){
             }
           })
     });
+     //================================================================================
+    //                            TIME AGO PART
+    //================================================================================  
+    jQuery.timeago.settings.allowFuture = true;
+    jQuery("abbr.timeago").timeago();
+    
+    $('.message_row').on('click','.edit_icon',function(){
+            $(this).closest('.message_row').find('.edit_row').slideDown();
+
+    })
+    $('.message_row').on('click','.comment_icon',function(){
+            $(this).closest('.message_row').find('.comment').slideDown();
+
+    })
+
+    
+    $('.message_row').on('click','.com_edit_icon',function(){
+            console.log('ddddd');
+            $(this).closest('.message_row').find('.com_edit_row').slideDown();
+
+    })
 });

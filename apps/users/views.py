@@ -62,7 +62,10 @@ def signup(request):
 
 def show(request,id):
     user=request.user
-    return render(request,'user/user_info.html',{user:user})
+    puser=User.objects.get(pk=id)
+    print user
+    print puser
+    return render(request,'user/user_info.html',{'user':user,'puser':puser})
 
 
 

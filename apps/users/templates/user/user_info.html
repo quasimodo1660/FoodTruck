@@ -14,14 +14,14 @@
         <div class="container">
           <div class='row'>
             <div class="col-lg-3 s12 m4 l3">
-                {% if user.socialaccount_set.all.0.get_avatar_url %}
-                <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="responsive-img z-depth-4">
+                {% if puser.socialaccount_set.all.0.get_avatar_url %}
+                <img src="{{ puser.socialaccount_set.all.0.get_avatar_url }}" class="responsive-img z-depth-4">
                 {% else %}
-                {% avatar user 500 class="responsive-img z-depth-4" id="user_avatar" %}
+                {% avatar puser 500 class="responsive-img z-depth-4" id="user_avatar" %}
                 {% endif %}
-                <h5 class='blue-grey-text text-darken-3'>{{user.get_full_name }}</h5>
-                <h5 class='blue-grey-text text-darken-3'>{{user.username }}</h5>
-                <h6 class='blue-grey-text text-lighten-3'>{{user.email }}</h6><br>
+                <h5 class='blue-grey-text text-darken-3'>{{puser.get_full_name }}</h5>
+                <h5 class='blue-grey-text text-darken-3'>{{puser.username }}</h5>
+                <h6 class='blue-grey-text text-lighten-3'>{{puser.email }}</h6><br>
                 <a href="#!" class="collection-item">Add a bio</a>
                 <hr>
 
@@ -30,12 +30,15 @@
              
                     <div class="card-tabs">
                       <ul class="tabs tabs-fixed-width">
+                        {% if user == puser %}    
                         <li class="tab"><a class="blue-grey-text text-darken-3" href="#test4">Profile</a></li>
+                        {% endif %}
                         <li class="tab"><a class="active blue-grey-text text-darken-3" href="#test5">Bentoes</a></li>
                         <li class="tab"><a class="blue-grey-text text-darken-3" href="#test6">Reviews</a></li>
                       </ul>
                     </div>
                     <div>
+                      {% if user == puser %}    
                       <div id="test4">
                         <br>
                           <form method="post" action="/accounts/update" class="col s12" id='profileUpdateForm'>{% csrf_token %}
@@ -86,8 +89,9 @@
                            
                         
                       </div>
+                      {% endif %}
                       <div id="test5">
-                      {% for bento in user.lunchboxes.all%}
+                      {% for bento in puser.lunchboxes.all %}
                     
                           <div class="col s12 m6">
                         <div class="card small hoverable">
@@ -96,24 +100,28 @@
                               </div>
                               <div class="card-content">
                                 <span class="card-title activator grey-text text-darken-4">{{bento.title}}<i class="material-icons right">more_vert</i></span>
-        
+                                <p><small class="blue-grey-text text-lighten-3"><abbr  class='timeago' title='{{bento.updated_at|date:'Y-m-d H:i' }}'></abbr ></small></p><br>
                               </div>
+                              {% if user == puser %}    
                               <div class="card-action">
                                   <a href="#">Edit</a>
                                   <a href="#">Delete</a>
                               </div>
+                              {% endif %}
                               <div class="card-reveal s12 m8 offset-m2 l6 offset-l3" style="overflow:auto">
-                                  <span class="card-title grey-text text-darken-4">Reviews<i class="material-icons right">close</i></span>
-                                 
+
+                                  <span class="card-title grey-text text-darken-4">Description<i class="material-icons right">close</i></span>
+                                  <p>{{bento.description}}</p><hr>
+                                  <span class="card-title grey-text text-darken-4">Review</span>
                                   {% for review in bento.reviews.all%}
                                   
                           
-                                      <ul class="collection">
+                                      <ul class="collection hoverable">
                                           <li class="collection-item avatar">
                                               {% if review.user.socialaccount_set.all.0.get_avatar_url %}
-                                              <img src="{{ review.user.socialaccount_set.all.0.get_avatar_url }}" class="circle responsive-img z-depth-4">
+                                              <a href='/accounts/profile/{{review.user.id}}'><img src="{{ review.user.socialaccount_set.all.0.get_avatar_url }}" class="circle responsive-img z-depth-4 hoverable"></a>
                                               {% else %}
-                                              {% avatar review.user class="responsive-img z-depth-4 circle" id="review.user_avatar" %}
+                                              <a href='/accounts/profile/{{review.user.id}}'>{% avatar review.user class="responsive-img z-depth-4 circle" id="review.user_avatar" %}</a>
                                               {% endif %}
                                             <span class="title">{{review.user.username}}</span>
                                             <p>{{review.content}}
@@ -121,6 +129,8 @@
                                             <a href="#!" class="secondary-content">{{review.score}}</a>
                                           </li>
                                       </ul>
+                                      {% empty %}
+                                      <p>No review yep, click <a href='/accounts/profile/{{review.user.id}}'>here</a> to add a review.</p>
                                   {% endfor %}
                                 
                               </div>
@@ -129,13 +139,13 @@
                       {% endfor %}
                       </div>
                       <div id="test6">
-                          <ul class="collection hoverable">
-                        {% for review in user.reviews.all%}
+                          <ul class="collection">
+                        {% for review in puser.reviews.all%}
                        
                         
-                        <li class="collection-item avatar">
-                            <img src="/media/{{review.lunchbox.images.first.image}}" alt="" class="circle responsive-img">
-                            <span class="title">{{review.lunchbox.title}}</span><br>
+                        <li class="collection-item hoverable avatar">
+                            <a href='/lunchbox/angular/{{review.lunchbox.id}}'><img src="/media/{{review.lunchbox.images.first.image}}" alt="" class="circle responsive-img">
+                            <span class="title blue-grey-text text-darken-3">{{review.lunchbox.title}}</span></a><br>
                             {% with ''|center:review.score as range %}
                             {% for _ in range %}
                             <span><i class="material-icons orange-text">star</i></span>
@@ -145,13 +155,14 @@
                               <p>
                                {{review.content}}
                             </p>
+                            <small class="secondary-content blue-grey-text text-lighten-3"><abbr  class='timeago' title='{{review.updated_at|date:'Y-m-d H:i' }}'></abbr ></small>
+                            {% if user == puser %}    
                             <hr>
-                           
                             <span><a href="#" class='orange-text hoverable'>Edit</a></span>&nbsp;&nbsp;&nbsp;
                             <span><a href="#" class='orange-text hoverable'>Delete</a></span>
-                             
+                            {% endif %}
                         </li>
-                      
+                        
                    
                         {% endfor %}
                       </ul>
@@ -166,5 +177,6 @@
 {% endblock %}
 
 {% block javascript %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.1/jquery.timeago.js"></script>  
 <script src="{% static 'user/js/main.js' %}"></script> 
 {% endblock %}
