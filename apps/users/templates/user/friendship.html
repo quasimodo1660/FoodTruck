@@ -1,0 +1,32 @@
+{% load avatar_tags %}
+{% load static %}
+
+    
+          <ul class="collection">
+          {% for f in puser.profile.following.all %}
+          <li class="collection-item avatar">
+              {% if f.socialaccount_set.all.0.get_avatar_url %}
+              <a href='/accounts/profile/{{f.id}}'><img src="{{ f.socialaccount_set.all.0.get_avatar_url }}" class="circle responsive-img z-depth-4 hoverable">
+              {% else %}
+              <a href='/accounts/profile/{{f.id}}'>{% avatar f class="responsive-img z-depth-4 circle" id="review.user_avatar" %}
+              {% endif %}
+              <span class="title">{{f.username}}</span></a>
+              {% if user != f %}
+              <form method="post" action="/accounts/friends" class='followForm'>{% csrf_token %}
+                <input type="hidden" name="puser" value="{{f.id}}">
+                <input type="hidden" name="needchangeB" value="{{puser.id}}">
+                {% if f in user.profile.following.all %}
+                <span><input type="submit" class="col s2 secondary-content waves-effect waves-light btn btn-small orange" id='fB' value='unfollow'></span>
+                {% else %}
+                <span><input type="submit" class="col s2 secondary-content waves-effect waves-light btn btn-small orange" id='fB' value='follow'></span>
+                {% endif %}
+            </form>
+            {% endif %}
+              <p>{{f.profile.bio}}</p>
+              
+    
+            </li>
+            {% empty %}
+            <p>dasdf</p>
+          {% endfor %}
+          </ul>

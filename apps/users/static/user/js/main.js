@@ -204,9 +204,11 @@ $(document).ready(function(){
     //================================================================================  
     $('.followForm').on('submit', function(event){
         event.preventDefault();
+        var me=this
         // console.log("form submitted!")  // sanity check
         // console.log('Sending Ajax request to', $(this).attr('action'))
         // console.log('Submitting the following data', $(this).serialize())
+        // setInterval(function() {
         $.ajax({
             url: $(this).attr('action'), /* Where should this go? */
             method: 'post', /* Which HTTP verb? */
@@ -215,10 +217,17 @@ $(document).ready(function(){
               if(serverResponse['errors'])
                 console.log(serverResponse['errors'])
               else{
-                $(this).find('#fB').val(serverResponse['success'])
-                $('#followers').text(serverResponse['data'])
+                if($(me).find('#fB').val()=='follow')
+                    $(me).find('#fB').val('unfollow')
+                else
+                    $(me).find('#fB').val('follow')
+                // $('#followers').text(serverResponse['followers'])
+                // $('#following').text(serverResponse['following'])
+                $('#test8').html(serverResponse)
               }          
             }
           })
+        // },1000)
     });
+
 });

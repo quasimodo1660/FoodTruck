@@ -70,17 +70,20 @@ def show(request,id):
     return render(request,'user/user_info.html',{'user':user,'puser':puser})
 
 def friendShip(request):
+    # print 'needchangeB' in request.POST
     user=request.user
+    tuser=User.objects.get(pk=request.POST['needchangeB'])
     puser=User.objects.get(pk=request.POST['puser'])
     if puser in user.profile.following.all():
-        user.profile.following.remove(puser)
-        data=puser.followers.count()
+        user.profile.following.remove(puser)       
         respone='follow'
     else:
         user.profile.following.add(puser)
         respone='unfollow'
-        data=puser.followers.count()
-    return JsonResponse({'success':respone,'data':data})
+    data=tuser.followers.count()
+    data1=tuser.profile.following.count()
+    # return JsonResponse({'success':respone,'followers':data,'following':data1})
+    return render(request,'user/friendship.html',{'puser':tuser})
 
 class UserViewSet(viewsets.ModelViewSet):
     """

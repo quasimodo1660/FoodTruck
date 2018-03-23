@@ -30,10 +30,11 @@
                 
                 <form method="post" action="/accounts/friends" class="col s12 followForm">{% csrf_token %}
                     <input type="hidden" name="puser" value="{{puser.id}}">
+                    <input type="hidden" name="needchangeB" value="{{puser.id}}">
                     {% if puser in user.profile.following.all %}
-                    <input type="submit" class="col waves-effect waves-light btn orange" id='fB' value='unfolow'> 
+                    <input type="submit" class="col waves-effect waves-light btn orange" id='fB' value='unfollow'> 
                     {% else %}
-                    <input type="submit" class="col waves-effect waves-light btn orange" id='fB' value='folow'> 
+                    <input type="submit" class="col waves-effect waves-light btn orange" id='fB' value='follow'> 
                     {% endif %}
                 </form>
   
@@ -43,7 +44,7 @@
 
             </div>
             <div class="col-lg-9 s12 m8 l9">
-             
+
                     <div class="card-tabs">
                       <ul class="tabs tabs-fixed-width">
                         {% if user == puser %}    
@@ -52,7 +53,7 @@
                         <li class="tab"><a class="active blue-grey-text text-darken-3" href="#test5"><span class="badge badge-light">{{puser.lunchboxes.all|length}}</span>Bentoes</a></li>
                         <li class="tab"><a class="blue-grey-text text-darken-3" href="#test6"><span class="badge badge-light">{{puser.reviews.all|length}}</span>Reviews</a></li>
                         <li class="tab"><a class="active blue-grey-text text-darken-3" href="#test7"><span id='followers' class="badge badge-light">{{puser.followers.all|length}}</span>Followers</a></li>
-                        <li class="tab"><a class="blue-grey-text text-darken-3" href="#test8"><span class="badge badge-light">{{puser.profile.following.all|length}}</span>Following</a></li>
+                        <li class="tab"><a class="blue-grey-text text-darken-3" href="#test8"><span id='following' class="badge badge-light">{{puser.profile.following.all|length}}</span>Following</a></li>
                       </ul>
                     </div>
                     <div>
@@ -185,23 +186,26 @@
                         {% endfor %}
                       </ul>
                       </div>
+
+                      <!-- <div id='dynamic_friendship'> -->
                       <div id="test7">
                         <ul class="collection">
                         {% for f in puser.followers.all%}
                         <li class="collection-item avatar">
                             {% if f.user.socialaccount_set.all.0.get_avatar_url %}
-                            <a href='/accounts/profile/{{f.user.id}}'><img src="{{ f.user.socialaccount_set.all.0.get_avatar_url }}" class="circle responsive-img z-depth-4 hoverable"></a>
+                            <a href='/accounts/profile/{{f.user.id}}'><img src="{{ f.user.socialaccount_set.all.0.get_avatar_url }}" class="circle responsive-img z-depth-4 hoverable">
                             {% else %}
-                            <a href='/accounts/profile/{{f.user.id}}'>{% avatar f.user class="responsive-img z-depth-4 circle" id="review.user_avatar" %}</a>
+                            <a href='/accounts/profile/{{f.user.id}}'>{% avatar f.user class="responsive-img z-depth-4 circle" id="review.user_avatar" %}
                             {% endif %}
-                            <span class="title">{{f.user.username}}</span>
+                            <span class="title">{{f.user.username}}</span></a>
                             {% if user != f.user %}
                             <form method="post" action="/accounts/friends" class='followForm'>{% csrf_token %}
                               <input type="hidden" name="puser" value="{{f.user.id}}">
+                              <input type="hidden" name="needchangeB" value="{{puser.id}}">
                               {% if f.user in user.profile.following.all %}
-                              <span><input type="submit" class="secondary-content waves-effect waves-light btn btn-small orange" id='fB' value='unfolow'></span>
+                              <span><input type="submit" class="col s2 secondary-content waves-effect waves-light btn btn-small orange" id='fB' value='unfollow'></span>
                               {% else %}
-                              <span><input type="submit" class="secondary-content waves-effect waves-light btn btn-small orange" id='fB' value='folow'></span>
+                              <span><input type="submit" class="col s2 secondary-content waves-effect waves-light btn btn-small orange" id='fB' value='follow'></span>
                               {% endif %}
                           </form>
                           {% endif %}
@@ -213,6 +217,36 @@
                         </ul>
 
                       </div>
+                      <div id="test8">
+                          <ul class="collection">
+                          {% for f in puser.profile.following.all %}
+                          <li class="collection-item avatar">
+                              {% if f.socialaccount_set.all.0.get_avatar_url %}
+                              <a href='/accounts/profile/{{f.id}}'><img src="{{ f.socialaccount_set.all.0.get_avatar_url }}" class="circle responsive-img z-depth-4 hoverable">
+                              {% else %}
+                              <a href='/accounts/profile/{{f.id}}'>{% avatar f class="responsive-img z-depth-4 circle" id="review.user_avatar" %}
+                              {% endif %}
+                              <span class="title">{{f.username}}</span></a>
+                              {% if user != f %}
+                              <form method="post" action="/accounts/friends" class='followForm'>{% csrf_token %}
+                                <input type="hidden" name="puser" value="{{f.id}}">
+                                <input type="hidden" name="needchangeB" value="{{puser.id}}">
+                                {% if f in user.profile.following.all %}
+                                <span><input type="submit" class="col s2 secondary-content waves-effect waves-light btn btn-small orange" id='fB' value='unfollow'></span>
+                                {% else %}
+                                <span><input type="submit" class="col s2 secondary-content waves-effect waves-light btn btn-small orange" id='fB' value='follow'></span>
+                                {% endif %}
+                            </form>
+                            {% endif %}
+                              <p>{{f.profile.bio}}</p>
+                              
+                    
+                            </li>
+                          {% endfor %}
+                          </ul>
+  
+                        </div>
+                      <!-- </div> end of dynamic_friendship -->
                     </div>
                 
             </div>
