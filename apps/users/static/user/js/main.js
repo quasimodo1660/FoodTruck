@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    $('.modal').modal();
     //================================================================================
     //                             UESRNAME FIELD VALIDATION  
     //================================================================================
@@ -221,13 +222,44 @@ $(document).ready(function(){
                     $(me).find('#fB').val('unfollow')
                 else
                     $(me).find('#fB').val('follow')
-                // $('#followers').text(serverResponse['followers'])
-                // $('#following').text(serverResponse['following'])
-                $('#test8').html(serverResponse)
+                $('#followers').text(serverResponse['followers'])
+                $('#following').text(serverResponse['following'])
+               
               }          
             }
           })
         // },1000)
+        
     });
+    $('.dM').click(function(event){
+        event.preventDefault();
+        $(this).closest('.collection-item').addClass('clicked_me')
+        $('#modal1').find('.rID').val($(this).siblings('.rID').val())
+    })
 
+    $(".q").click(function(event){
+        event.preventDefault();
+        $('.clicked_me').addClass('dismiss_me');
+        var me=this
+        $.ajax({
+            url: $('#modal1').find('.rID').val(), /* Where should this go? */
+            method: 'get', /* Which HTTP verb? */
+            // data: $(this).serialize(), /* Any data to send along? */
+            success: function(serverResponse) { /* What code should we run when the server responds? */          
+                if(serverResponse['errors'])
+                console.log(serverResponse['errors'])
+                else{
+                    $('.dismiss_me').fadeOut()
+                    $('#reviews_total').text(serverResponse['count'])
+                }
+            }
+            
+          })
+       
+    })
+
+    $('.d').click(function(event){
+        event.preventDefault();
+        $('.collection-item').removeClass('clicked_me')
+    })
 });

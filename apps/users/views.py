@@ -82,8 +82,8 @@ def friendShip(request):
         respone='unfollow'
     data=tuser.followers.count()
     data1=tuser.profile.following.count()
-    # return JsonResponse({'success':respone,'followers':data,'following':data1})
-    return render(request,'user/friendship.html',{'puser':tuser})
+    return JsonResponse({'success':respone,'followers':data,'following':data1})
+    
 
 class UserViewSet(viewsets.ModelViewSet):
     """

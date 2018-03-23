@@ -112,7 +112,16 @@ def addLike(request,id):
         data={'succes':'Add like by 1'}
         return JsonResponse(data)       
         
-
+# REVIEW STUFF
+def deleteReview(request,id):
+    if request.method=='GET':
+        try:
+            Review.objects.get(pk=id).delete()
+            count=User.objects.get(pk=request.user.id).reviews.count()
+            data={'success':'review deleted','count':count}
+        except:
+            data={'errors':'Something wrong'}
+        return JsonResponse(data)
 
 
 

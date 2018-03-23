@@ -51,7 +51,7 @@
                         <li class="tab"><a class="blue-grey-text text-darken-3" href="#test4">Profile</a></li>
                         {% endif %}
                         <li class="tab"><a class="active blue-grey-text text-darken-3" href="#test5"><span class="badge badge-light">{{puser.lunchboxes.all|length}}</span>Bentoes</a></li>
-                        <li class="tab"><a class="blue-grey-text text-darken-3" href="#test6"><span class="badge badge-light">{{puser.reviews.all|length}}</span>Reviews</a></li>
+                        <li class="tab"><a class="blue-grey-text text-darken-3" href="#test6"><span id='reviews_total' class="badge badge-light">{{puser.reviews.all|length}}</span>Reviews</a></li>
                         <li class="tab"><a class="active blue-grey-text text-darken-3" href="#test7"><span id='followers' class="badge badge-light">{{puser.followers.all|length}}</span>Followers</a></li>
                         <li class="tab"><a class="blue-grey-text text-darken-3" href="#test8"><span id='following' class="badge badge-light">{{puser.profile.following.all|length}}</span>Following</a></li>
                       </ul>
@@ -174,17 +174,32 @@
                               <p>
                                {{review.content}}
                             </p>
-                            <small class="secondary-content blue-grey-text text-lighten-3"><abbr  class='timeago' title='{{review.updated_at|date:'Y-m-d H:i' }}'></abbr ></small>
-                            {% if user == puser %}    
+                            <input type="hidden" class='rID' value="/lunchbox/deleteReview/{{review.id}}">             
+                            {% if user == puser %}  
                             <hr>
-                            <span><a href="#" class='orange-text hoverable'>Edit</a></span>&nbsp;&nbsp;&nbsp;
-                            <span><a href="#" class='orange-text hoverable'>Delete</a></span>
+                            <a href="#" class='orange-text'>EDIT</a>&nbsp;&nbsp;&nbsp;
+                            <a href="#modal1" class='orange-text modal-trigger dM'>DELETE</a>
+                
                             {% endif %}
+                            <small class="secondary-content blue-grey-text text-lighten-3"><abbr  class='timeago' title='{{review.updated_at|date:'Y-m-d H:i' }}'></abbr ></small>
                         </li>
                         
                    
                         {% endfor %}
+                        <div id="modal1" class="samll modal" style="height:25%">
+                            <div class="modal-content">
+                              <h4>Delete review</h4>
+                              <p>This review will be delete.</p>
+                              <input type="hidden" class='rID'>
+                            </div>
+                            <div class="modal-footer">
+                              <a href="#!" class="d modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+                              <a href="#!" class="q modal-action modal-close waves-effect waves-green btn-flat">Agree</a>                             
+                            </div>
+                          </div>
                       </ul>
+                       <!-- Modal Structure -->
+  
                       </div>
 
                       <!-- <div id='dynamic_friendship'> -->

@@ -13,5 +13,6 @@ urlpatterns = [
     url(r'^addReview/',views.createReview),
     url(r'^tag/',views.tag),
     url(r'^addLike/(?P<id>\d+)$',views.addLike),
+    url(r'^deleteReview/(?P<id>\d+)$',views.deleteReview),
 ]
 
