@@ -23,4 +23,8 @@
 .input-field .prefix.active {
     color:orange;
   }
+
+.modal {
+  height: 45%;
+}
        

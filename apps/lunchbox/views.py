@@ -114,7 +114,7 @@ def addLike(request,id):
         
 # REVIEW STUFF
 def deleteReview(request,id):
-    if request.method=='GET':
+    if request.method=='DELETE':
         try:
             Review.objects.get(pk=id).delete()
             count=User.objects.get(pk=request.user.id).reviews.count()
@@ -122,7 +122,9 @@ def deleteReview(request,id):
         except:
             data={'errors':'Something wrong'}
         return JsonResponse(data)
-
+    if request.method=='POST':
+        print request.POST
+        return HttpResponse('sbb')
 
 
 

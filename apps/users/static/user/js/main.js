@@ -243,7 +243,7 @@ $(document).ready(function(){
         var me=this
         $.ajax({
             url: $('#modal1').find('.rID').val(), /* Where should this go? */
-            method: 'get', /* Which HTTP verb? */
+            method: 'delete', /* Which HTTP verb? */
             // data: $(this).serialize(), /* Any data to send along? */
             success: function(serverResponse) { /* What code should we run when the server responds? */          
                 if(serverResponse['errors'])
@@ -261,5 +261,10 @@ $(document).ready(function(){
     $('.d').click(function(event){
         event.preventDefault();
         $('.collection-item').removeClass('clicked_me')
+    })
+
+    $('.edit_review').click(function(event){
+        event.preventDefault();
+        $('#modal2').find('form').attr("action", $(this).siblings('.rID').val());
     })
 });

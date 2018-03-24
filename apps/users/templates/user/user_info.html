@@ -149,7 +149,7 @@
                                           </li>
                                       </ul>
                                       {% empty %}
-                                      <p>No review yep, click <a href='/accounts/profile/{{review.user.id}}'>here</a> to add a review.</p>
+                                      <p>No review yep, click <a href='/lunchbox/angular/{{bento.id}}'>here</a> to add a review.</p>
                                   {% endfor %}
                                 
                               </div>
@@ -177,29 +177,60 @@
                             <input type="hidden" class='rID' value="/lunchbox/deleteReview/{{review.id}}">             
                             {% if user == puser %}  
                             <hr>
-                            <a href="#" class='orange-text'>EDIT</a>&nbsp;&nbsp;&nbsp;
+                            <a href="#modal2" class='orange-text modal-trigger edit_review'>EDIT</a>&nbsp;&nbsp;&nbsp;
                             <a href="#modal1" class='orange-text modal-trigger dM'>DELETE</a>
                 
                             {% endif %}
                             <small class="secondary-content blue-grey-text text-lighten-3"><abbr  class='timeago' title='{{review.updated_at|date:'Y-m-d H:i' }}'></abbr ></small>
                         </li>
-                        
-                   
+                        {% empty %}
+                        <p>No review yep, click <a href='/'>here</a> to explore.</p>
                         {% endfor %}
-                        <div id="modal1" class="samll modal" style="height:25%">
+                        <div id="modal1" class="modal fade" style="height:25%">
                             <div class="modal-content">
                               <h4>Delete review</h4>
                               <p>This review will be delete.</p>
                               <input type="hidden" class='rID'>
                             </div>
                             <div class="modal-footer">
-                              <a href="#!" class="d modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
-                              <a href="#!" class="q modal-action modal-close waves-effect waves-green btn-flat">Agree</a>                             
+                              <a href="#!" class="d modal-action modal-close waves-effect waves-green btn-flat orange-text">Cancel</a>
+                              <a href="#!" class="q modal-action modal-close waves-effect waves-green btn-flat orange-text">Submit</a>                             
                             </div>
                           </div>
+
+                          
                       </ul>
                        <!-- Modal Structure -->
-  
+                       <div id="modal2" class="modal fade">
+                          <div class="modal-content">
+                            <h4>Edit review</h4>
+                            
+                            <form method="post" action="">{% csrf_token %}
+                              <input type="hidden" class='rID'>
+                 
+                              <div class="form-group">
+                                  <label for="exampleFormControlSelect1">Stars</label>
+                                  <select class="form-control" name="stars">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                  </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1">content</label>
+                                    <textarea class="form-control" name='content' rows="5"></textarea>
+                                  </div>
+                           
+                          </div>
+                          
+                          <div class="modal-footer">
+                            <button class="d modal-action modal-close waves-effect waves-green btn-flat orange-text">Cancel</button>
+                            <button type='submit' class="btn-flat orange-text">Submit</button>                             
+                          </div>
+                        </form>
+                        </div>
                       </div>
 
                       <!-- <div id='dynamic_friendship'> -->
