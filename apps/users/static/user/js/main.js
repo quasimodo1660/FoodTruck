@@ -233,13 +233,13 @@ $(document).ready(function(){
     });
     $('.dM').click(function(event){
         event.preventDefault();
-        $(this).closest('.collection-item').addClass('clicked_me')
+        // $(this).closest('.collection-item').addClass('clicked_me')
         $('#modal1').find('.rID').val($(this).siblings('.rID').val())
     })
 
     $(".q").click(function(event){
         event.preventDefault();
-        $('.clicked_me').addClass('dismiss_me');
+        // $('.clicked_me').addClass('dismiss_me');
         var me=this
         $.ajax({
             url: $('#modal1').find('.rID').val(), /* Where should this go? */
@@ -249,7 +249,8 @@ $(document).ready(function(){
                 if(serverResponse['errors'])
                 console.log(serverResponse['errors'])
                 else{
-                    $('.dismiss_me').fadeOut()
+                    var target='#review_'+ $('#modal1').find('.rID').val().replace('/lunchbox/deleteReview/','')
+                    $(target).fadeOut()
                     $('#reviews_total').text(serverResponse['count'])
                 }
             }
@@ -260,11 +261,39 @@ $(document).ready(function(){
 
     $('.d').click(function(event){
         event.preventDefault();
-        $('.collection-item').removeClass('clicked_me')
+        // $('.collection-item').removeClass('clicked_me')
     })
 
     $('.edit_review').click(function(event){
         event.preventDefault();
+        $('#modal2').find('.rID').val($(this).siblings('.rID').val())
         $('#modal2').find('form').attr("action", $(this).siblings('.rID').val());
+        $('#edit_stars').val($(this).siblings('.review_stars').val())
+        $('#edit_content').val($(this).siblings('p').text())
+    })
+
+    $("#edit_review_form").on('submit',function(event){
+        event.preventDefault();
+        // $('.clicked_me').addClass('dismiss_me');
+        var me=this
+        $.ajax({
+            url: $(this).attr('action'), /* Where should this go? */
+            method: 'post', /* Which HTTP verb? */
+            data: $(this).serialize(), /* Any data to send along? */
+            success: function(serverResponse) { /* What code should we run when the server responds? */
+              if(serverResponse['errors'])
+                console.log(serverResponse['errors'])
+              else{
+                var target='#review_'+ $('#modal2').find('.rID').val().replace('/lunchbox/deleteReview/','')
+                var stars=''
+                for(var i=0;i<serverResponse['stars'];i++)
+                    stars+='<span><i class="material-icons orange-text">star</i></span>'
+                $(target).find('div').html(stars)
+                $(target).find('.review_stars').val(serverResponse['stars'])
+                $(target).find('p').text(serverResponse['content'])
+              }          
+            }
+          })
+       
     })
 });

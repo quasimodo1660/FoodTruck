@@ -123,8 +123,16 @@ def deleteReview(request,id):
             data={'errors':'Something wrong'}
         return JsonResponse(data)
     if request.method=='POST':
-        print request.POST
-        return HttpResponse('sbb')
+        review=Review.objects.get(pk=id)
+        review.score=request.POST['stars']
+        review.content=request.POST['content']
+        try:
+            review.save()
+            data={'success':'review edited','stars':review.score,'content':review.content}
+        except:
+            data={'errors':'Something wrong'}
+        return JsonResponse(data)
+        
 
 
 
