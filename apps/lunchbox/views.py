@@ -35,11 +35,16 @@ def add(request):
     return render(request,'lunchbox/add.html',{'category':category,'tag1':tag1,
     'tag2':tag2,'tag3':tag3,'tag4':tag4,'tag5':tag5,'tag6':tag6,'tag7':tag7,'tag8':tag8,})
 
-def update(request):
-    print request.user
-    print request.POST
-    print request.FILES
-    return HttpResponse('sbb')
+def update(request,id):
+    bento=Lunchbox.objects.get(pk=id)
+    if request.method=='DELETE':
+        bento.display=False
+        try:
+            bento.save()
+            data={'success':'hide a bento'}
+        except:
+            data={'errors':'Something wrong'}
+        return JsonResponse(data)
 
 def uplaods(request):
     if request.method =='POST':

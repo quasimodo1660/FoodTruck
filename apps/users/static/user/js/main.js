@@ -296,4 +296,30 @@ $(document).ready(function(){
           })
        
     })
+
+    $('.dB').click(function(event){
+        event.preventDefault();
+        // $(this).closest('.collection-item').addClass('clicked_me')
+        $('#modal3').find('.bID').val($(this).siblings('.bID').val())
+    })
+
+    $('.dBS').click(function(event){
+        event.preventDefault();
+        $.ajax({
+            url: ('/lunchbox/update/'+ $('#modal3').find('.bID').val()), /* Where should this go? */
+            method: 'delete', /* Which HTTP verb? */
+            // data: $(this).serialize(), /* Any data to send along? */
+            success: function(serverResponse) { /* What code should we run when the server responds? */          
+                if(serverResponse['errors'])
+                console.log(serverResponse['errors'])
+                else{
+                    var target='#bento_'+ $('#modal3').find('.bID').val()
+                    $(target).fadeOut()
+                    var q=$('#bento_total').text()
+                    $('#bento_total').text(q-1)
+                }
+            }
+            
+          })
+    })
 });

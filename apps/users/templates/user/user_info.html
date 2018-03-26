@@ -2,7 +2,7 @@
 {% load avatar_tags %}
 {% load widget_tweaks %}
 {% load static %}
-
+{% load extras_tag %}
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'user/css/userInfo.css' %}">
@@ -50,7 +50,9 @@
                         {% if user == puser %}    
                         <li class="tab"><a class="blue-grey-text text-darken-3" href="#test4">Profile</a></li>
                         {% endif %}
-                        <li class="tab"><a class="active blue-grey-text text-darken-3" href="#test5"><span class="badge badge-light">{{puser.lunchboxes.all|length}}</span>Bentoes</a></li>
+                        <li class="tab"><a class="active blue-grey-text text-darken-3" href="#test5"><span id='bento_total' class="badge badge-light">
+                        {{ puser.lunchboxes.all|count_true }}
+                        </span>Bentoes</a></li>
                         <li class="tab"><a class="blue-grey-text text-darken-3" href="#test6"><span id='reviews_total' class="badge badge-light">{{puser.reviews.all|length}}</span>Reviews</a></li>
                         <li class="tab"><a class="active blue-grey-text text-darken-3" href="#test7"><span id='followers' class="badge badge-light">{{puser.followers.all|length}}</span>Followers</a></li>
                         <li class="tab"><a class="blue-grey-text text-darken-3" href="#test8"><span id='following' class="badge badge-light">{{puser.profile.following.all|length}}</span>Following</a></li>
@@ -109,11 +111,14 @@
                         
                       </div>
                       {% endif %}
+
+
+
                       <div id="test5">
-                      {% for bento in puser.lunchboxes.all %}
-                    
-                          <div class="col s12 m6">
-                        <div class="card small hoverable">
+                      {% for bento in puser.lunchboxes.all reversed %}
+                          {% if bento.display %}
+                          <div class="col s12 m6" id="bento_{{bento.id}}">
+                            <div class="card small hoverable">
                             <div class="card-image waves-effect waves-block waves-light">
                                 <a href='/lunchbox/angular/{{bento.id}}'><span class="new badge orange top-align" data-badge-caption=" like" style='position: absolute;top:0px;right:0px;'>{{bento.like}}</span><img src="/media/{{bento.images.first.image}}" class='responsive-img'></a>
                               </div>
@@ -123,8 +128,9 @@
                               </div>
                               {% if user == puser %}    
                               <div class="card-action">
-                                  <a href="#">Edit</a>
-                                  <a href="#">Delete</a>
+                                  <a href="/lunchbox/edit/{{bento.id}}" class='orange-text'>EDIT</a>
+                                  <a href="#modal3" class='orange-text modal-trigger dB'>DELETE</a>
+                                  <input type="hidden" class='bID' value="{{bento.id}}">
                               </div>
                               {% endif %}
                               <div class="card-reveal s12 m8 offset-m2 l6 offset-l3" style="overflow:auto">
@@ -148,19 +154,36 @@
                                             <a href="#!" class="secondary-content">{{review.score}}</a>
                                           </li>
                                       </ul>
+                                      
                                       {% empty %}
-                                      <p>No review yep, click <a href='/lunchbox/angular/{{bento.id}}'>here</a> to add a review.</p>
-                                  {% endfor %}
+                                      <p>No review yep, click <a href='/lunchbox/angular/{{bento.id}}'>here</a> to add a review.</p>                                     
+                                    {% endfor %}
                                 
                               </div>
                         </div>
                           </div>
+                          {% endif %}
                       {% endfor %}
+                      <div id="modal3" class="modal fade" style="height:25%">
+                          <div class="modal-content">
+                            <h4>Delete bento</h4>
+                            <p>This bento will be delete.</p>
+                            <input type="hidden" class='bID'>
+                          </div>
+                          <div class="modal-footer">
+                            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat orange-text">Cancel</a>
+                            <a href="#!" class="dBS modal-action modal-close waves-effect waves-green btn-flat orange-text">Submit</a>                             
+                          </div>
+                        </div>
+
+
                       </div>
+
+
                       <div id="test6">
                           <ul class="collection">
                         {% for review in puser.reviews.all%}
-                       
+                       {% if review.lunchbox.display %}
                         
                         <li class="collection-item hoverable avatar" id="review_{{review.id}}">
                             <a href='/lunchbox/angular/{{review.lunchbox.id}}'><img src="/media/{{review.lunchbox.images.first.image}}" alt="" class="circle responsive-img">
@@ -184,8 +207,10 @@
                             {% endif %}
                             <small class="secondary-content blue-grey-text text-lighten-3"><abbr  class='timeago' title='{{review.updated_at|date:'Y-m-d H:i' }}'></abbr ></small>
                         </li>
+                        {% endif %}
                         {% empty %}
                         <p>No review yep, click <a href='/'>here</a> to explore.</p>
+                        
                         {% endfor %}
                         <div id="modal1" class="modal fade" style="height:25%">
                             <div class="modal-content">

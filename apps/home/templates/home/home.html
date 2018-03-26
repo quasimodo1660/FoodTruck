@@ -24,6 +24,7 @@
         <div class="tm-body tm-gallery-container">                    
             <div class="grid">               
             {% for lunchbox in all_lunchboxes %}
+                {% if lunchbox.display %}
                  <div class="grid-item">
                 <div class="showAllLunchImg">
                     {% for image in LIS %}
@@ -40,6 +41,7 @@
                         </div>
                 </div>           
             </div>
+            {% endif %}
             {% endfor %}
         </div>
         </div>

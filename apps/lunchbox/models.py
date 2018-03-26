@@ -44,6 +44,7 @@ class Lunchbox(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
     public  = models.BooleanField(default = False)
+    display  = models.BooleanField(default = True)
     like = models.IntegerField(default=0)   
     def __unicode__(self):
         return self.title
