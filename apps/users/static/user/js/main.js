@@ -288,6 +288,8 @@ $(document).ready(function(){
                 var stars=''
                 for(var i=0;i<serverResponse['stars'];i++)
                     stars+='<span><i class="material-icons orange-text">star</i></span>'
+                for(var j=0;j< 5-serverResponse['stars'];j++)
+                    stars+='<span><i class="material-icons orange-text">star_border</i></span>'
                 $(target).find('div').html(stars)
                 $(target).find('.review_stars').val(serverResponse['stars'])
                 $(target).find('p').text(serverResponse['content'])

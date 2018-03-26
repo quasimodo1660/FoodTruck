@@ -30,7 +30,7 @@ class Tag(models.Model):
 
 class Lunchbox(models.Model):
     class Meta:
-        ordering=['updated_at']
+        ordering=['-updated_at']
     user = models.ForeignKey(User,related_name='lunchboxes')
     title = models.CharField(max_length=255)
     location = models.CharField(max_length=255)

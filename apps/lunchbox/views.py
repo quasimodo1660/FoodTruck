@@ -45,6 +45,8 @@ def update(request,id):
         except:
             data={'errors':'Something wrong'}
         return JsonResponse(data)
+    if request.method=='GET':
+        return HttpResponse('sbb')
 
 def uplaods(request):
     if request.method =='POST':

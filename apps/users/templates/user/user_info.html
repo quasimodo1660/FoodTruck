@@ -15,9 +15,9 @@
           <div class='row'>
             <div class="col-lg-3 s12 m4 l3">
                 {% if puser.socialaccount_set.all.0.get_avatar_url %}
-                <img src="{{ puser.socialaccount_set.all.0.get_avatar_url }}" class="responsive-img z-depth-4">
+                <img src="{{ puser.socialaccount_set.all.0.get_avatar_url }}" class="hoverable responsive-img z-depth-3">
                 {% else %}
-                {% avatar puser 500 class="responsive-img z-depth-4" id="user_avatar" %}
+                {% avatar puser 500 class="hoverable responsive-img z-depth-3" id="user_avatar" %}
                 {% endif %}
                 
                 <h5 class='blue-grey-text text-darken-3'>{{puser.username }}</h5>
@@ -50,9 +50,7 @@
                         {% if user == puser %}    
                         <li class="tab"><a class="blue-grey-text text-darken-3" href="#test4">Profile</a></li>
                         {% endif %}
-                        <li class="tab"><a class="active blue-grey-text text-darken-3" href="#test5"><span id='bento_total' class="badge badge-light">
-                        {{ puser.lunchboxes.all|count_true }}
-                        </span>Bentoes</a></li>
+                        <li class="tab"><a class="active blue-grey-text text-darken-3" href="#test5"><span id='bento_total' class="badge badge-light">{{ puser.lunchboxes.all|count_true }}</span>Bentoes</a></li>
                         <li class="tab"><a class="blue-grey-text text-darken-3" href="#test6"><span id='reviews_total' class="badge badge-light">{{puser.reviews.all|length}}</span>Reviews</a></li>
                         <li class="tab"><a class="active blue-grey-text text-darken-3" href="#test7"><span id='followers' class="badge badge-light">{{puser.followers.all|length}}</span>Followers</a></li>
                         <li class="tab"><a class="blue-grey-text text-darken-3" href="#test8"><span id='following' class="badge badge-light">{{puser.profile.following.all|length}}</span>Following</a></li>
@@ -115,7 +113,7 @@
 
 
                       <div id="test5">
-                      {% for bento in puser.lunchboxes.all reversed %}
+                      {% for bento in puser.lunchboxes.all %}
                           {% if bento.display %}
                           <div class="col s12 m6" id="bento_{{bento.id}}">
                             <div class="card small hoverable">
@@ -128,7 +126,7 @@
                               </div>
                               {% if user == puser %}    
                               <div class="card-action">
-                                  <a href="/lunchbox/edit/{{bento.id}}" class='orange-text'>EDIT</a>
+                                  <a href="/lunchbox/update/{{bento.id}}" class='orange-text'>EDIT</a>
                                   <a href="#modal3" class='orange-text modal-trigger dB'>DELETE</a>
                                   <input type="hidden" class='bID' value="{{bento.id}}">
                               </div>
@@ -183,7 +181,7 @@
                       <div id="test6">
                           <ul class="collection">
                         {% for review in puser.reviews.all%}
-                       {% if review.lunchbox.display %}
+                        {% if review.lunchbox.display %}
                         
                         <li class="collection-item hoverable avatar" id="review_{{review.id}}">
                             <a href='/lunchbox/angular/{{review.lunchbox.id}}'><img src="/media/{{review.lunchbox.images.first.image}}" alt="" class="circle responsive-img">
@@ -194,6 +192,11 @@
                             <span><i class="material-icons orange-text">star</i></span>
                             {% endfor %}
                             {% endwith %}
+                            {% blank_star review.score as range1 %}
+                            {% for _ in range1 %}
+                            <span><i class="material-icons orange-text">star_border</i></span>
+                            {% endfor%}
+                            
                           </div>
                             
                               <p>{{review.content}}</p>
@@ -257,9 +260,10 @@
                           </div>
                         </form>
                         </div>
+                        </div>
                 
 
-                      <!-- <div id='dynamic_friendship'> -->
+                    
                       <div id="test7">
                         <ul class="collection">
                         {% for f in puser.followers.all%}
