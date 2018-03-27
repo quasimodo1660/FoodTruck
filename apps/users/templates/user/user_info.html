@@ -126,7 +126,7 @@
                               </div>
                               {% if user == puser %}    
                               <div class="card-action">
-                                  <a href="/lunchbox/update/{{bento.id}}" class='orange-text'>EDIT</a>
+                                 
                                   <a href="#modal3" class='orange-text modal-trigger dB'>DELETE</a>
                                   <input type="hidden" class='bID' value="{{bento.id}}">
                               </div>
@@ -187,11 +187,11 @@
                             <a href='/lunchbox/angular/{{review.lunchbox.id}}'><img src="/media/{{review.lunchbox.images.first.image}}" alt="" class="circle responsive-img">
                             <span class="title blue-grey-text text-darken-3">{{review.lunchbox.title}}</span></a><br>
                             <div>
-                            {% with ''|center:review.score as range %}
+                            {% full_star review.score as range %}
                             {% for _ in range %}
                             <span><i class="material-icons orange-text">star</i></span>
                             {% endfor %}
-                            {% endwith %}
+                           
                             {% blank_star review.score as range1 %}
                             {% for _ in range1 %}
                             <span><i class="material-icons orange-text">star_border</i></span>

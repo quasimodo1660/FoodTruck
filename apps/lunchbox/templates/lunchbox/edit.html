@@ -1,130 +1,102 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load extras_tag %}
 
-{% block javascript %}
-  <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
-  <script src="{% static 'js/bootstrap.min.js' %}"></script>
- 
-  <script src="{% static 'js/jquery-file-upload/vendor/jquery.ui.widget.js' %}"></script>
-  <script src="{% static 'js/jquery-file-upload/jquery.iframe-transport.js' %}"></script>
-  <script src="{% static 'js/jquery-file-upload/jquery.fileupload.js' %}"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAD1BgNBjRye5nHsUPtz-EukHsXe4anQhc&libraries=places"></script>
-  <script src="{% static 'lunchbox/js/show.js' %}"></script> 
-  <script src="{% static 'lunchbox/js/main.js' %}"></script> 
-  <script src="{% static 'lunchbox/js/dropzone.js' %}"></script> 
-  <script src="{% static 'lunchbox/js/jquery.popSelect.min.js' %}"></script>
- 
- 
-  <script src=" http://malsup.github.com/jquery.form.js"></script> 
-  <script src="{% static 'lunchbox/js/progress-bar-upload.js' %}"></script>
-  <script src="{% static 'lunchbox/js/pic.js' %}"></script>
-  <script>
-  function ShowDiv() {
-    document.getElementById("myDiv").style.display = "";
-    document.getElementById("myDiv2").style.display = "";
-}
-  </script>
-  <script src="{% static 'lunchbox/js/pic.js' %}"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.11.1/slimselect.min.js"></script>
-  <script>
-  new SlimSelect({
-  select: '#slim-multi-select', 
-})
-  new SlimSelect({
-    select: '#slim-multi-select2', 
-  })
-  new SlimSelect({
-    select: '#slim-multi-select3', 
-  })
-  new SlimSelect({
-    select: '#slim-multi-select4', 
-  })
-  new SlimSelect({
-    select: '#slim-multi-select6', 
-  })
-  $(document).ready(function(){
-    $('.datepicker').pickadate({
-    selectMonths: true, // Creates a dropdown to control month
-    selectYears: 15, // Creates a dropdown of 15 years to control year,
-    today: 'Today',
-    clear: 'Clear',
-    close: 'Ok',
-    closeOnSelect: false // Close upon selecting a date,
-  });
-})
-  </script>
-  <script src="{% static 'js/materialize.min.js' %}"></script>
-  
-  
-  
-{% endblock %}
+
 
 {% block css%}
 <link rel="stylesheet" href="{% static 'lunchbox/css/dropzone.css' %}">
 <link rel="stylesheet" href="{% static 'lunchbox/css/basic.css' %}">
+<link rel="stylesheet" href="{% static 'css/tooplate-style1.css' %}"> 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.11.1/slimselect.min.css" rel="stylesheet"></link>
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"> -->
 {% endblock %}
 
 
 {% block content %}
-<br>
 <div class='container'>
 <div class='row'>
-    <div class='col-md-7' style="overflow:auto">
-        <h5>Create Your Bento Box:</h5><hr>
-      <div class='row'>
+    <div class='col-lg-12' style="overflow:auto">
+        <h4 style="text-align: center">Edit Your Bento Box:</h4><hr>
+        <div class='row'>
           
-            <form method="post"  action="/lunchbox/next/" id="post-form">
+            <form class='col-lg-12' method="post"  action="/lunchbox/update/{{bento.id}}" id="update_info_form">
               <div class='form-row'>
                 {% csrf_token %}
-                <input type = 'hidden' id ='lng' name = 'lng' value="">
-                <input type = 'hidden' id = 'lat' name = 'lat' value="">
+                <input type = 'hidden' id ='lng' name = 'lng' value="{{bento.lon}}">
+                <input type = 'hidden' id = 'lat' name = 'lat' value="{{bento.lat}}">
                 <input type = 'hidden' id = 'city' name = 'city' value="">
         
-                <div class="form-group col-lg-12">
-                    <img src="https://image.flaticon.com/icons/png/128/601/601684.png" alt='' style="width:4%;">
+                <div class="form-group col-lg-6">
+                    <img src="https://image.flaticon.com/icons/png/128/601/601684.png" alt='' style="width:20px;">
                   What's the name of the bento?
-                        <input type="text" class="form-control" name="title" placeholder="Enter title" style="border:none" id ='post-title'>
+                        <input type="text" class="form-control" name="title" placeholder="Enter title" style="border:none" id ='post-title' value="{{bento.title}}">
                 </div>
-                <div class="form-group col-lg-12">
-                    <img src="https://cdn2.iconfinder.com/data/icons/food-94/24/_recipe_book-256.png" alt='' style="width:4%;">
-                    Any description for the bento?
-                        <textarea class="form-control materialize-textarea" name="des" placeholder="Enter description" style="border:none" id ='post-description'></textarea>
-                </div>
-                <div class="form-group col-lg-12">
-                    <img src="https://cdn2.iconfinder.com/data/icons/pittogrammi/142/10-256.png" alt='' style="width:4%;">
+                <div class="form-group col-lg-6">
+                    <img src="https://cdn2.iconfinder.com/data/icons/pittogrammi/142/10-256.png" alt='' style="width:20px;">
                     When is the bento ready for pickup?
-                        <input type="text" class="form-control datepicker" name="time" style="border:none">
+                   <br>
+                        <input type="text" class="col-md-3 datepicker" name="date" id='date' style="border:none" value="{{bento.offertime|date:'Y-m-d'}}">
+                        <input type="text" class="col-md-3 timepicker" name="time1" id='time1' style="border:none" value="{{bento.offertime|date:'g:i A'}}">
+                        <input type="hidden" name='time' id='time' value='2018-3-29 14:20'>
                 </div>
                 <div class="form-group col-lg-12">
-                    <img src="https://cdn.iconscout.com/public/images/icon/premium/png-256/address-blue-circle-location-map-marker-navigation-icon-3cf4dd8920833a09-256x256.png" alt='' style="width:4%;">
-                    And your address is?
-                        <input type="text" class="form-control" name="loc" placeholder="Enter location" id='loc' style="border:none" id = "post-location">
+                    <img src="https://cdn.iconscout.com/public/images/icon/premium/png-256/address-blue-circle-location-map-marker-navigation-icon-3cf4dd8920833a09-256x256.png" alt='' style="width:20px;">
+                    And your pickup address is?
+                        <input type="text" class="form-control" name="loc" placeholder="Enter location" id='loc' style="border:none" id = "post-location" value="{{bento.location}}">
                 </div>
                 <div class="form-group col-lg-12">
-                <div id="infowindow-content">
-                        <img src="" width="16" height="16" id="place-icon">
-                        <span id="place-name"  class="title"></span><br>
-                        <span id="place-address"></span>
-                </div>
+                    <div id="infowindow-content">
+                            <img src="" width="16" height="16" id="place-icon">
+                            <span id="place-name"  class="title"></span><br>
+                            <span id="place-address"></span>
+                    </div>
+                    </div>
+                <div class="form-group col-lg-12">
+                    <img src="https://cdn2.iconfinder.com/data/icons/food-94/24/_recipe_book-256.png" alt='' style="width:20px;">
+                    Any description for the bento?
+                        <textarea class="form-control materialize-textarea" name="des" placeholder="Enter description" style="border:none" id ='post-description'>{{bento.description}}</textarea>
                 </div>
               </div> 
-                <input type="submit" class="btn btn-primary orange" name='b2' value='Next'  onclick="ShowDiv()"> 
-            </form>
-            
-          
-         
+              <div class="right">
+              <a href="/accounts/profile/{{bento.user.id}}" class="waves-effect btn-flat orange-text">Cancel</a>
+              <button type='submit' class="btn-flat orange-text">Submit</button>  
+            </div>
+            </form>        
           </div>
-
-            <br>
+<hr>
+ 
             <!-- multiple images upload with progress bar -->
-           
-            <div class='row'  style="display:none; " id="myDiv" >
+           <div class='row'>
+             <div class='col-lg-6 col-sm-6'>
+                <div class="container-fluid">
+                    <div class="tm-body tm-gallery-container">                    
+                        <div class="grid">               
+                        {% for lunchbox in bento.images.all %}
+                            
+                             <div class="grid-item">
+                              <div class="showAllLunchImg">
+                                    <img class="edit_content_img" src="/media/{{ lunchbox.image }}" alt="{{ lunchbox.title }}" id="{{ lunchbox.title }}"><br>
+                                <div class="showAllLunchLink">      
+                                    <a class="btn-floating btn-large waves-effect waves-light orange"><i class="material-icons">clear</i></a>
+                                    </div>
+                            </div>           
+                        </div>
+                       
+                        {% endfor %}
+                    </div>
+                    </div>
+                    </div>
+
+
+
+
+             </div>
+            <div class='col-lg-6 col-sm-6' id="myDiv" >
                 
                 <form action="/lunchbox/uplaods/" class="dropzone needsclick dz-clickable" style="border:2px dashed #1e90ff;border-radius:10px">
                   {% csrf_token %}
-                  <input type = 'hidden' id ='lunchBoxID2' name = 'lunchBoxID2' value="">
+                  <input type = 'hidden' id ='lunchBoxID2' name = 'lunchBoxID2' value="{{bento.id}}">
                   <div class="dz-default dz-message">
                     <span>
                       <h5>Click and upload images for your bento</h5>
@@ -140,7 +112,7 @@
             <!-- end of multiple images upload with progress bar -->
         </div>
             <!-- add category tags -->
-        <div id="myDiv2" style="display:none;" class='col-lg-5'>
+        <div id="myDiv2"  class='col-lg-12'>
             <img src="http://iconshow.me/media/images/ui/iOS7-optimized-icon/png/128/05.tag.png" alt='' style="width:6%;">
            Add more tags!
           
@@ -285,7 +257,10 @@
                                                      </div>
                                                    </div>
                 <br>
-                  <input type="submit" value="Publish" class="btn btn-primary orange">
+                <div class="right">
+                    <a href="/accounts/profile/{{bento.user.id}}" class="waves-effect btn-flat orange-text">Cancel</a>
+                    <button type='submit' class="btn-flat orange-text">Submit</button>  
+                  </div>
           </form>
 
         </div>
@@ -302,7 +277,67 @@
 </div>
 
 
+{% endblock %}
+{% block javascript %}
+  <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+ 
+ 
+  <script src="{% static 'js/jquery-file-upload/vendor/jquery.ui.widget.js' %}"></script>
+  <script src="{% static 'js/jquery-file-upload/jquery.iframe-transport.js' %}"></script>
+  <script src="{% static 'js/jquery-file-upload/jquery.fileupload.js' %}"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAD1BgNBjRye5nHsUPtz-EukHsXe4anQhc&libraries=places"></script>
+  <script src="{% static 'lunchbox/js/show.js' %}"></script> 
+  <script src="{% static 'lunchbox/js/main.js' %}"></script> 
+  <script src="{% static 'lunchbox/js/dropzone.js' %}"></script> 
+  <script src="{% static 'lunchbox/js/jquery.popSelect.min.js' %}"></script>
+  <script src="{% static 'lunchbox/js/edit.js' %}"></script> 
+ 
+  <script src=" http://malsup.github.com/jquery.form.js"></script> 
+  <script src="{% static 'lunchbox/js/progress-bar-upload.js' %}"></script>
+  <script src="{% static 'lunchbox/js/pic.js' %}"></script>
+  <script>
+  function ShowDiv() {
+    document.getElementById("myDiv").style.display = "";
+    document.getElementById("myDiv2").style.display = "";
+}
+  </script>
+  <script src="{% static 'lunchbox/js/pic.js' %}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.11.1/slimselect.min.js"></script>
+  <script>
+  new SlimSelect({
+  select: '#slim-multi-select', 
+})
+  new SlimSelect({
+    select: '#slim-multi-select2', 
+  })
+  new SlimSelect({
+    select: '#slim-multi-select3', 
+  })
+  new SlimSelect({
+    select: '#slim-multi-select4', 
+  })
+  new SlimSelect({
+    select: '#slim-multi-select6', 
+  })
+  $(document).ready(function(){
+    $('.datepicker').pickadate({
+    format:'yyyy-mm-dd',
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 15, // Creates a dropdown of 15 years to control year,
+    today: 'Today',
+    clear: 'Clear',
+    close: 'Ok',
+    closeOnSelect: false // Close upon selecting a date,
+  });
+  $('.timepicker').pickatime();
+})
+  </script>
+  <script src="{% static 'js/materialize.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
-
-
+  <script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
+  <script src="{% static 'js/masonry.pkgd.min.js' %}"></script>
+  <script src="{% static 'js/showImg1.js' %}"></script>
+  
+  
 {% endblock %}

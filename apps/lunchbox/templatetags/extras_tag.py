@@ -8,3 +8,7 @@ def count_true(value):
 @register.simple_tag
 def blank_star(value):
     return range(5 - value)
+    
+@register.simple_tag
+def full_star(value):
+    return range(value)

@@ -15,6 +15,7 @@ from rest_framework.decorators import detail_route, list_route
 from django.utils.decorators import method_decorator
 import json
 from datetime import datetime
+from django.utils import timezone
 
 # Create your views here.
 def index(request):
@@ -46,7 +47,31 @@ def update(request,id):
             data={'errors':'Something wrong'}
         return JsonResponse(data)
     if request.method=='GET':
-        return HttpResponse('sbb')
+        category = Category.objects.all()
+        tag1 = Tag.objects.filter(category=Category.objects.get(id=1))
+        tag2 = Tag.objects.filter(category=Category.objects.get(id=2))
+        tag3 = Tag.objects.filter(category=Category.objects.get(id=3))
+        tag4 = Tag.objects.filter(category=Category.objects.get(id=4))
+        tag5 = Tag.objects.filter(category=Category.objects.get(id=5))
+        tag6 = Tag.objects.filter(category=Category.objects.get(id=6))
+        tag7 = Tag.objects.filter(category=Category.objects.get(id=7))
+        tag8 = Tag.objects.filter(category=Category.objects.get(id=8))
+        return render(request,'lunchbox/edit.html',{'bento':bento,'category':category,'tag1':tag1,
+    'tag2':tag2,'tag3':tag3,'tag4':tag4,'tag5':tag5,'tag6':tag6,'tag7':tag7,'tag8':tag8})
+    if request.method=='POST':
+        offertime1=request.POST['time']
+        bento.title=request.POST['title']
+        bento.description = request.POST['des']
+        bento.location = request.POST['loc']
+        bento.offertime = offertime1
+        bento.lon = request.POST['lng']
+        bento.lat= request.POST['lat']
+        try:
+            bento.save()
+            data={'success':'updated','update_at':bento.update_at}
+        except:
+            data={'errors':'Something wrong'}
+        return JsonResponse(data)
 
 def uplaods(request):
     if request.method =='POST':

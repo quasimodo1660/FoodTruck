@@ -30,7 +30,7 @@ http://www.tooplate.com/view/2094-mason
 	opacity: 0;
 	border-radius: 18px;
 }
-
+/* 
 .jumbotron {
 	background-image: linear-gradient(rgba(110, 106, 106, 0.705), rgba(204, 203, 200, 0.541)), url("giphy-downsized-large.gif");
 	background-position: center;
@@ -47,7 +47,7 @@ http://www.tooplate.com/view/2094-mason
 	position:absolute;
 	top:90px;
 	right:0;
-}
+} */
 .showAllLunchImg {
 	position: relative;
    }
@@ -59,12 +59,9 @@ http://www.tooplate.com/view/2094-mason
 }
 
 /* end of Emily css */
-.content_img {
-	width: 270px;
-}
 .edit_content_img {
-	width:160px;
-	height: auto;
+	width:180px;
+	height:100%;
 }
 
 
