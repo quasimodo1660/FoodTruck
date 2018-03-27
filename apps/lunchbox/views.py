@@ -16,6 +16,8 @@ from django.utils.decorators import method_decorator
 import json
 from datetime import datetime
 from django.utils import timezone
+from avatar.models import Avatar
+
 
 # Create your views here.
 def index(request):
@@ -112,6 +114,7 @@ def show(request,id):
     return render(request,'lunchbox/showOne.html',{lunchbox:lunchbox,user:user})
 
 def showAn(request,id):
+   
     request.session = request.user.id
     return render(request,'Client/dist/index.html')
 
@@ -180,7 +183,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all().order_by('lunchbox')
     serializer_class = ReviewSerializer
 
-@csrf_exempt
+
 class LunchboxImageViewSet(mixins.CreateModelMixin,mixins.ListModelMixin,mixins.RetrieveModelMixin,viewsets.GenericViewSet):
     queryset = LunchboxImage.objects.all().order_by('lunchbox')
     serializer_class = LunchboxImageSerializer
@@ -189,3 +192,9 @@ class LunchboxImageViewSet(mixins.CreateModelMixin,mixins.ListModelMixin,mixins.
     # @method_decorator(csrf_exempt)
     # def createReview(self,request):
     #     print 'here'
+
+class AvatarImageViewSet(mixins.CreateModelMixin,mixins.ListModelMixin,mixins.RetrieveModelMixin,viewsets.GenericViewSet):
+    queryset = Avatar.objects.all().order_by('user')
+    serializer_class = AvatarImageSerializer
+
+

@@ -29,7 +29,7 @@ router.register(r'groups', UV.GroupViewSet)
 router.register(r'lunchbox',LV.LunchboxViewSet)
 router.register(r'review',LV.ReviewViewSet)
 router.register(r'images',LV.LunchboxImageViewSet)
-
+router.register(r'avatars',LV.AvatarImageViewSet)
 
 urlpatterns = [
     url(r'^api/', include(router.urls)),
