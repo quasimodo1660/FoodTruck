@@ -32,7 +32,7 @@
         <ng-container *ngFor='let v of reviews;let i =index'>
           <tr>
             <th scope="row">{{i+1}}</th>
-            <td>{{v.user_name}}</td>
+            <a href='/accounts/profile/{{v.user_id}}'><td>{{v.user_name}}</td></a>
             <td>{{v.content}}</td>
             <td>{{v.score}}</td>
           </tr>

@@ -16,7 +16,7 @@
     </div>
     </div>
     <div id="addLunboxButton" >
-        <a href='/lunchbox/add'><img src="{% static '1.png' %}" style=" position: fixed;bottom: 10px;right: 10px; width:3%;z-index: 1000"></a>
+        <a href='/lunchbox/add' class="btn-floating btn-large orange pulse" style=" position: fixed;bottom: 10px;right: 10px;z-index: 1000"><i class="material-icons">add</i></a>
     </div>
 
 
@@ -46,9 +46,11 @@
             </div>
             {% endif %}
             {% endfor %}
+            
         </div>
         </div>
         </div>
+        <br><br>
 {% endblock %}
 
 {% block javascript %}
