@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
 {% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'user/css/userInfo.css' %}">
+{% endblock %}
+
+
 {% block content %}
         <div class="container">
                 <div class="row">
@@ -60,12 +66,13 @@
                       <img  style = "width:400px; margin-top:60px; margin-left:160px " src="{% static 'art2_meitu_1.png' %}"  >
                     </div>
 
-                    <div class="col-md-6" id="right_main">
-                      
-                    </div>
                   
-                    <script src="{% static 'user/js/main.js' %}"></script> 
-
- 
+                </div>
+                <div class='push'></div>
+                </div>
                     {% endblock %}
 
+{% block javascript %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.1/jquery.timeago.js"></script>  
+<script src="{% static 'user/js/main.js' %}"></script> 
+{% endblock %}

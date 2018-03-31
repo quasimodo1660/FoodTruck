@@ -8,9 +8,10 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from .serializers import UserSerializer, GroupSerializer
 import avatar
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
 
-
-
+@login_required
 def update(request):
     print request.POST
     user=User.objects.get(pk=request.user.id)
@@ -62,6 +63,8 @@ def signup(request):
         # 'profile_form': profile_form
     })
 
+
+@login_required
 def show(request,id):
     user=request.user
     puser=User.objects.get(pk=id)
@@ -84,6 +87,14 @@ def friendShip(request):
     data1=tuser.profile.following.count()
     return JsonResponse({'success':respone,'followers':data,'following':data1})
     
+@login_required
+def settingPofile(request,id):
+    if request.method=='GET':
+        user=User.objects.get(pk=id)
+        PCform = PasswordChangeForm(user=request.user)
+        return render(request,'user/profile.html',{'user':user,'PCform':PCform})
+    if request.method=='POST':
+        return HttpResponse('sbb')
 
 class UserViewSet(viewsets.ModelViewSet):
     """

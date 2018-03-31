@@ -158,6 +158,12 @@ $(document).ready(function(){
             $(this).removeClass('invalid')
         }
       });
+      $('#profileUpdateForm').on('keyup change',function() {
+          $('#b2').removeClass('disabled')
+      })
+
+
+
       $('#profileUpdateForm').on('submit', function(event){
         event.preventDefault();
         $('<div id="mid" class="progress"><div class="indeterminate orange"></div></div>').insertBefore('#b2')
@@ -173,6 +179,7 @@ $(document).ready(function(){
                 console.log(serverResponse['errors'])
               else{
                 $('#mid').remove()
+                $('#b2').addClass('disabled')
                 $('#profileUpdateForm').append('<h6 id="miss" class="blue-grey-text text-lighten-4 left-align">Update at '+new Date($.now())+'</h6>')
                 $('#miss').delay(3000).fadeOut()
               }          
@@ -324,4 +331,6 @@ $(document).ready(function(){
             
           })
     })
+    
+    $('.collapsible').collapsible();
 });

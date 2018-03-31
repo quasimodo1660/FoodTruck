@@ -34,3 +34,20 @@
 /* .tabs .tab a:hover, .tabs .tab a.active {
   background-color: orange;
 } */
+.active {
+  color:orange;
+}
+
+html, body {
+  height: 100%;
+}
+.container {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -120px; /* the bottom margin is the negative value of the footer's height */
+}
+.footer, .push {
+  height: 120px;
+  bottom: 0; /* .push must be the same height as .footer */
+}

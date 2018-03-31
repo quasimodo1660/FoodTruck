@@ -17,13 +17,14 @@ import json
 from datetime import datetime
 from django.utils import timezone
 from avatar.models import Avatar
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
 def index(request):
    pass
 
-
+@login_required
 def add(request):
     category = Category.objects.all()
     tag1 = Tag.objects.filter(category=Category.objects.get(id=1))
@@ -38,6 +39,7 @@ def add(request):
     return render(request,'lunchbox/add.html',{'category':category,'tag1':tag1,
     'tag2':tag2,'tag3':tag3,'tag4':tag4,'tag5':tag5,'tag6':tag6,'tag7':tag7,'tag8':tag8,})
 
+@login_required
 def update(request,id):
     bento=Lunchbox.objects.get(pk=id)
     if request.method=='DELETE':
@@ -113,8 +115,7 @@ def show(request,id):
     user=request.user
     return render(request,'lunchbox/showOne.html',{lunchbox:lunchbox,user:user})
 
-def showAn(request,id):
-   
+def showAn(request,id):   
     request.session = request.user.id
     return render(request,'Client/dist/index.html')
 

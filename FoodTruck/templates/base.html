@@ -26,9 +26,9 @@
 <body>
     <ul id="dropdown1" class="dropdown-content">
         <li><a href="/accounts/profile/{{user.id}}"><span class="grey-text text-darken-3">Profile</span></a></li>
-        <li><a href="#!"><span class="grey-text text-darken-3">Settings</span></a></li>
+        <li><a href="/accounts/setting/{{user.id}}"><span class="grey-text text-darken-3">Settings</span></a></li>
         <li class="divider"></li>
-        <li><a href="{% url 'logout' %}"><span class="grey-text text-darken-3">Log out</span></a></li></a></li>
+        <li><a href="{% url 'logout' %}"><span class="grey-text text-darken-3">Sign out</span></a></li></a></li>
       </ul>
       <nav style="position: -webkit-sticky;position: sticky;top: 0; z-index:2147483647">
         <div class="nav-wrapper grey lighten-5 blue-text text-darken-2">
@@ -57,7 +57,7 @@
 
     {% block content %}
     {% endblock %}
-    <footer class="page-footer grey lighten-5">
+    <footer class="page-footer grey lighten-5" style="bottom:0">
         <div class="container">
           <div class="row">
             <div class="col l4 s12">
@@ -67,8 +67,8 @@
             <div class="col l4 s12">
               <h5 class="grey-text text-lighten-1">Contact</h5>
               
-                <span><a class="grey-text text-darken-4" href="#!"><i class="fab fa-github"></i></a></span>&nbsp;&nbsp;&nbsp;&nbsp;
-                <span><a href="#!"><i class="fab fa-linkedin"></i></a></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                <span><a target="_blank" class="grey-text text-darken-4" href="https://github.com/quasimodo1660/BENTOMAN"><i class="fab fa-github"></i></a></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                <span><a target="_blank" href="https://www.linkedin.com/in/yubin-wang-5354b965/"><i class="fab fa-linkedin"></i></a></span>&nbsp;&nbsp;&nbsp;&nbsp;
                 <span><a class='orange-text' href="mailto:quasimodo1660@gmail.com?Subject=Hello%20Bentoman"><i class="fas fa-at"></i></a></span>
               
             </div>

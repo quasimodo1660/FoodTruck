@@ -24,7 +24,7 @@
                 {% if user == puser %}   
                 <h5 class='blue-grey-text text-darken-3'>{{puser.get_full_name }}</h5>
                 <h6 class='blue-grey-text text-lighten-3'>{{puser.email }}</h6><br>
-                <a href="#!" class="collection-item">Settings</a><hr>
+                <a href="/accounts/setting/{{puser.id}}" class="collection-item">Settings</a><hr>
                 {% else %}
                 <hr>
                 
@@ -47,72 +47,18 @@
 
                     <div class="card-tabs">
                       <ul class="tabs tabs-fixed-width">
-                        {% if user == puser %}    
-                        <li class="tab"><a class="blue-grey-text text-darken-3" href="#test4">Profile</a></li>
-                        {% endif %}
-                        <li class="tab"><a class="active blue-grey-text text-darken-3" href="#test5"><span id='bento_total' class="badge badge-light">{{ puser.lunchboxes.all|count_true }}</span>Bentoes</a></li>
-                        <li class="tab"><a class="blue-grey-text text-darken-3" href="#test6"><span id='reviews_total' class="badge badge-light">{{puser.reviews.all|length}}</span>Reviews</a></li>
-                        <li class="tab"><a class="active blue-grey-text text-darken-3" href="#test7"><span id='followers' class="badge badge-light">{{puser.followers.all|length}}</span>Followers</a></li>
-                        <li class="tab"><a class="blue-grey-text text-darken-3" href="#test8"><span id='following' class="badge badge-light">{{puser.profile.following.all|length}}</span>Following</a></li>
+                        <li class="tab"><a class="active blue-grey-text text-darken-3" href="#test-swipe-5"><span id='bento_total' class="badge badge-light">{{ puser.lunchboxes.all|count_true }}</span>Bentoes</a></li>
+                        <li class="tab"><a class="blue-grey-text text-darken-3" href="#test-swipe-6"><span id='reviews_total' class="badge badge-light">{{puser.reviews.all|length}}</span>Reviews</a></li>
+                        <li class="tab"><a class="active blue-grey-text text-darken-3" href="#test-swipe-7"><span id='followers' class="badge badge-light">{{puser.followers.all|length}}</span>Followers</a></li>
+                        <li class="tab"><a class="blue-grey-text text-darken-3" href="#test-swipe-8"><span id='following' class="badge badge-light">{{puser.profile.following.all|length}}</span>Following</a></li>
                       </ul>
                     </div>
                     <div>
-                      {% if user == puser %}    
-                      <div id="test4">
-                        <br>
-                          <form method="post" action="/accounts/update" class="col s12" id='profileUpdateForm'>{% csrf_token %}
-                              <div class='row'>
-                                  <h6 class="blue-grey-text text-lighten-4 left-align">We'll never share your information with anyone else.</h6>
-                              </div>
-                              <div class="row">
-                                  <div class="input-field col s6">
-                                    <i class="material-icons prefix">account_circle</i>
-                                    <input id="icon_prefix" name="fn" type="text" class="validate" value="{{puser.first_name}}">
-                                    <label for="icon_prefix">First Name</label>
-                                  </div>
-                                  <div class="input-field col s6">
-                                    <input id="icon_lastname" type="tel" name="ln" class="validate" value="{{puser.last_name}}">
-                                    <label for="icon_ln">Last Name</label>
-                                  </div>
-                                </div>
-                                <div class="row">
-                                    <div class="input-field col s12">
-                                      <i class="material-icons prefix">email</i>
-                                      <input disabled value="{{puser.email}}" id="disabled" type="text" class="validate">
-                                      <label for="disabled">Email</label>
-                                    </div>
-                                  </div>
-                              <div class="row">
-                                <div class="input-field col s6">
-                                  <i class="material-icons prefix">mail_outline</i>
-                                  <input id="icon_post" type="text" class="validate" name="zip" value="{{puser.profile.postal_code}}">
-                                  <label for="icon_post">postal code</label>
-                                </div>
-                                <div class="input-field col s6">
-                                  <i class="material-icons prefix">phone</i>
-                                  <input id="icon_telephone" type="tel" class="validate" name="phone" value="{{puser.profile.phone}}">
-                                  <label for="icon_telephone">Telephone</label>
-                                </div>
-                              </div>
-                              <div class='row'>
-                                <div class="input-field col s12">
-                                    <i class="material-icons prefix">mode_edit</i>
-                                    <textarea id="icon_prefix2" class="materialize-textarea" name='bio'>{{puser.profile.bio}}</textarea>
-                                    <label for="icon_prefix2">Bio</label>
-                                  </div>
-                                </div>
-                                
-                                <input type="submit" class="btn btn-primary orange" id='b2' value='Update'> 
-                                
-                            </form>
-                           
-                        
-                      </div>
-                      {% endif %}
+          
 
 
 
-                      <div id="test5">
+                      <div id="test-swipe-5">
                       {% for bento in puser.lunchboxes.all %}
                           {% if bento.display %}
                           <div class="col s12 m6" id="bento_{{bento.id}}">
@@ -178,7 +124,7 @@
                       </div>
 
 
-                      <div id="test6">
+                      <div id="test-swipe-6">
                           <ul class="collection">
                         {% for review in puser.reviews.all%}
                         {% if review.lunchbox.display %}
@@ -264,7 +210,7 @@
                 
 
                     
-                      <div id="test7">
+                      <div id="test-swipe-7">
                         <ul class="collection">
                         {% for f in puser.followers.all%}
                         <li class="collection-item avatar">
@@ -293,7 +239,7 @@
                         </ul>
 
                       </div>
-                      <div id="test8">
+                      <div id="test-swipe-8">
                           <ul class="collection">
                           {% for f in puser.profile.following.all %}
                           <li class="collection-item avatar">
@@ -328,7 +274,7 @@
             </div>
             
           </div>
-         
+          <div class="push"></div>
            </div>
 {% endblock %}
 
