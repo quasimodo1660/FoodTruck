@@ -14,10 +14,5 @@ def index(request):
 
 
 
-def jump(request):
-    return render(request,'home/counter.ejs')
-
-
-def show(request):
-    tag=Tag.objects.last()
-    return render(request,'home/test.html',{'tag':tag})
+def search(request):
+    return HttpResponse('sbb')

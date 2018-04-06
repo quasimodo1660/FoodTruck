@@ -34,8 +34,23 @@
         <div class="nav-wrapper grey lighten-5 blue-text text-darken-2">
           &nbsp;&nbsp;&nbsp;&nbsp;
           <a href="/" class="brand-logo" style="font-family:audiowide;font-size:2em"><img class="img-responsive" src="https://i.imgur.com/Keg7X6S.png" width="40px"><span class="black-text"> BENTOMAN</span></a>
+          
           <ul class="right hide-on-med-and-down blue-text text-darken-2">
-            <li><a href="sass.html"><span class="grey-text text-darken-3"><i class="fas fa-search"></i></span></a></li>
+              <li><a id='search_button'><i class="material-icons grey-text text-darken-3">search</i></a></li>
+          <li>
+            <form id='search_form' style='display:none' method="get" action="/search/">  
+              <div class='row'>   
+                
+              <span><input type="text" placeholder="Search.." name="search" id='search_text'></span>
+             <span><i id='close_search_form' class="material-icons grey-text text-darken-3">close</i></span>
+                 
+                 
+                  
+                </div>  
+            <!-- <span><button type='submit' class="btn-flat"><i class="material-icons">search</i></button></span> -->
+          </form>
+        </li>
+            
             <li><a href="/"><span class="grey-text text-darken-3">Home</span> </a></li>
             <li><a href="/"><span class="grey-text text-darken-3">About</span> </a></li>
             {% if user.is_authenticated %}        
@@ -51,6 +66,7 @@
             {% endif %}  
           </ul>
         </div>
+        
       </nav>
 
 
@@ -81,6 +97,20 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
     <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
+    <script>
+    $(document).ready(function(){
+      $('#search_button').click(function(){
+        $('#search_form').fadeIn(1000);
+      })
+      $('#close_search_form').click(function(){
+        if($('#search_text').val()!='')
+          $('#search_text').val('');
+        else
+          $('#search_form').fadeOut();
+    
+      })
+    });
+    </script>
     {% block javascript %}
     {% endblock %}
 </body>
