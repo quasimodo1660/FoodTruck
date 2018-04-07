@@ -36,13 +36,13 @@
           <a href="/" class="brand-logo" style="font-family:audiowide;font-size:2em"><img class="img-responsive" src="https://i.imgur.com/Keg7X6S.png" width="40px"><span class="black-text"> BENTOMAN</span></a>
           
           <ul class="right hide-on-med-and-down blue-text text-darken-2">
-              <li><a id='search_button'><i class="material-icons grey-text text-darken-3">search</i></a></li>
+              <li><a ><i id='search_button' class="material-icons grey-text text-darken-3">search</i></a></li>
           <li>
-            <form id='search_form' style='display:none' method="get" action="/search/">  
+            <form id='search_form' style='display:none' method="post" action="/search/">{% csrf_token %}  
               <div class='row'>   
                 
               <span><input type="text" placeholder="Search.." name="search" id='search_text'></span>
-             <span><i id='close_search_form' class="material-icons grey-text text-darken-3">close</i></span>
+             <span><a><i id='close_search_form' class="material-icons orange-text">close</i></a></span>
                  
                  
                   
@@ -100,13 +100,19 @@
     <script>
     $(document).ready(function(){
       $('#search_button').click(function(){
-        $('#search_form').fadeIn(1000);
+        $(this).animate({left:3000, opacity:"show"}, 200);
+
+        $(this).removeClass('grey-text text-darken-3').addClass('orange-text')
+        $('#search_form').fadeIn({left:2000, opacity:"show"}, 200);
       })
       $('#close_search_form').click(function(){
         if($('#search_text').val()!='')
           $('#search_text').val('');
-        else
+        else{
           $('#search_form').fadeOut();
+          $('#search_button').removeClass('orange-text').addClass('grey-text text-darken-3')
+        }
+          
     
       })
     });

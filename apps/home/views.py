@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 import json
 from django.contrib.auth import login
+from django.db.models import Q
 
 def index(request):
     user=request.user
@@ -15,4 +16,8 @@ def index(request):
 
 
 def search(request):
+    t=request.POST['search']
+    user_filter=User.objects.filter(Q(username__contains=t)|Q(first_name__contains=t)|Q(last_name__contains=t)|Q(email__contains=t)).distinct()
+    lunchbox_filter=Lunchbox.objects.filter(Q(title__contains=t)|Q(location__contains=t)|Q(tags__name__contains=t)).filter(display=True).distinct()
+    print lunchbox_filter
     return HttpResponse('sbb')
