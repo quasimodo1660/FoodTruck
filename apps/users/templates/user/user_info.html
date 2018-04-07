@@ -10,10 +10,10 @@
 
 
 {% block content %}
-<br>
+<br><br>
         <div class="container">
           <div class='row'>
-            <div class="col-lg-3 s12 m4 l3">
+            <div class="col-lg-3">
                 {% if puser.socialaccount_set.all.0.get_avatar_url %}
                 <img src="{{ puser.socialaccount_set.all.0.get_avatar_url }}" class="hoverable responsive-img z-depth-3">
                 {% else %}
@@ -43,7 +43,7 @@
                 
 
             </div>
-            <div class="col-lg-9 s12 m8 l9">
+            <div class="col-lg-9">
 
                     <div class="card-tabs">
                       <ul class="tabs tabs-fixed-width">

@@ -2,12 +2,12 @@
     color: #000;
   }
 .input-field input[type=text]:focus + label {
-    color:#000;
+    color:orange !important;
   }
   /* label underline focus color */
 .input-field input[type=text]:focus {
-    border-bottom: 1px solid orange;
-    box-shadow: 0 1px 0 0 orange;
+    border-bottom: 1px solid orange !important;
+    box-shadow: 0 1px 0 0 orange !important;
   }
   /* valid color */
 .input-field input[type=text].valid {
@@ -34,9 +34,9 @@
 /* .tabs .tab a:hover, .tabs .tab a.active {
   background-color: orange;
 } */
-.active {
-  color:orange;
-}
+/* .active{
+  border-bottom: 1px solid orange !important;
+} */
 
 html, body {
   height: 100%;

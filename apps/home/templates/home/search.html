@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load avatar_tags %}
+{% load widget_tweaks %}
+{% load static %}
+{% load extras_tag %}
+
+{% block css %}
+
+<link rel="stylesheet" href="{% static '/css/search.css' %}">
+<link rel="stylesheet" href="{% static 'user/css/userInfo.css' %}">
+{% endblock %}
+
+{% block content %}
+<br><br>
+<div class='container'>
+        <div class="row">
+                <div class="col-3">
+                  <div class="list-group" id="list-tab" role="tablist">
+                    <a class="list-group-item list-group-item-action active a1" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home"><span class="badge badge-light">{{all_lunchboxes|length}}</span>Bento</a>
+                    
+                    <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile"><span class="badge badge-light">{{all_users|length}}</span>User</a>
+                    
+                 
+                  </div>
+                  
+                </div>
+                <div class="col-9">
+                  <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+                            {% for bento in all_lunchboxes %}
+                            {% if bento.display %}
+                            <div class="col s12 m6" id="bento_{{bento.id}}">
+                              <div class="card small hoverable">
+                              <div class="card-image waves-effect waves-block waves-light">
+                                  <a href='/lunchbox/angular/{{bento.id}}'><span class="new badge orange top-align" data-badge-caption=" like" style='position: absolute;top:0px;right:0px;'>{{bento.like}}</span><img src="/media/{{bento.images.first.image}}" class='responsive-img'></a>
+                                </div>
+                                <div class="card-content">
+                                  <span class="card-title activator grey-text text-darken-4">{{bento.title}}<i class="material-icons right">more_vert</i></span>
+                                  <p><small class="blue-grey-text text-lighten-3"><abbr  class='timeago' title='{{bento.updated_at|date:'Y-m-d H:i' }}'></abbr ></small></p><br>
+                                </div>
+                                
+                                <div class="card-reveal s12 m8 offset-m2 l6 offset-l3" style="overflow:auto">
+  
+                                    <span class="card-title grey-text text-darken-4">Description<i class="material-icons right">close</i></span>
+                                    <p>{{bento.description}}</p><hr>
+                                    <span class="card-title grey-text text-darken-4">Review</span>
+                                    {% for review in bento.reviews.all%}
+                                    
+                            
+                                        <ul class="collection hoverable">
+                                            <li class="collection-item avatar">
+                                                {% if review.user.socialaccount_set.all.0.get_avatar_url %}
+                                                <a href='/accounts/profile/{{review.user.id}}'><img src="{{ review.user.socialaccount_set.all.0.get_avatar_url }}" class="circle responsive-img z-depth-4 hoverable"></a>
+                                                {% else %}
+                                                <a href='/accounts/profile/{{review.user.id}}'>{% avatar review.user class="responsive-img z-depth-4 circle" id="review.user_avatar" %}</a>
+                                                {% endif %}
+                                              <span class="title">{{review.user.username}}</span>
+                                              <p>{{review.content}}
+                                              </p>
+                                              <a href="#!" class="secondary-content">{{review.score}}</a>
+                                            </li>
+                                        </ul>
+                                        
+                                        {% empty %}
+                                        <p>No review yep, click <a href='/lunchbox/angular/{{bento.id}}'>here</a> to add a review.</p>                                     
+                                      {% endfor %} 
+                                    </div>
+                                </div>
+                                  </div>
+                                  {% endif %}
+                                  {% empty %}
+                                  <p>No results found</p>
+                              {% endfor %}
+                    </div>
+                    <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+                            <ul class="collection">
+                                    {% for f in all_users %}
+                                    <li class="collection-item avatar">
+                                        {% if f.socialaccount_set.all.0.get_avatar_url %}
+                                        <a href='/accounts/profile/{{f.id}}'><img src="{{ f.socialaccount_set.all.0.get_avatar_url }}" class="circle responsive-img z-depth-4 hoverable">
+                                        {% else %}
+                                        <a href='/accounts/profile/{{f.id}}'>{% avatar f class="responsive-img z-depth-4 circle" id="review.user_avatar" %}
+                                        {% endif %}
+                                        <span class="title">{{f.username}}</span></a>
+                                        {% if user != f %}
+                                        <form method="post" action="/accounts/friends" class='followForm'>{% csrf_token %}
+                                          <input type="hidden" name="puser" value="{{f.id}}">
+                                          <input type="hidden" name="needchangeB" value="{{puser.id}}">
+                                          {% if f in user.profile.following.all %}
+                                          <span><input type="submit" class="col s2 secondary-content waves-effect waves-light btn btn-small orange" id='fB' value='unfollow'></span>
+                                          {% else %}
+                                          <span><input type="submit" class="col s2 secondary-content waves-effect waves-light btn btn-small orange" id='fB' value='follow'></span>
+                                          {% endif %}
+                                      </form>
+                                      {% endif %}
+                                        <p>{{f.profile.bio}}</p>
+                                        
+                              
+                                      </li>
+                                      {% empty %}
+                                      <p>No results found</p>
+                                    {% endfor %}
+                                    </ul>
+                    </div>
+                   
+                  </div>
+                </div>
+              </div>
+    <div class='push'></div>
+</div>
+
+{% endblock %}

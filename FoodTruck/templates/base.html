@@ -20,6 +20,12 @@
  
   {% block head %}
   {% endblock %}
+  <style>
+  .input-field input[type=text]:focus {
+    border-bottom: 1px solid orange !important;
+    box-shadow: 0 1px 0 0 orange !important;
+  }
+  </style>
   {% block css %}
   {% endblock %}
 </head>
@@ -41,7 +47,7 @@
             <form id='search_form' style='display:none' method="post" action="/search/">{% csrf_token %}  
               <div class='row'>   
                 
-              <span><input type="text" placeholder="Search.." name="search" id='search_text'></span>
+              <span><div class='input-field'><input type="text" placeholder="Search.." name="search" id='search_text'></div></span>
              <span><a><i id='close_search_form' class="material-icons orange-text">close</i></a></span>
                  
                  

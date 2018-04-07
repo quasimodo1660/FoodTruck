@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-<br>
+<br><br>
 <div class="container">
   <div class='row'>
     <div class="col-lg-3 s12 m4 l3">
@@ -52,7 +52,7 @@
                   <label for="icon_prefix">First Name</label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="icon_lastname" type="tel" name="ln" class="validate" value="{{user.last_name}}">
+                  <input id="icon_lastname" type="text" name="ln" class="validate" value="{{user.last_name}}">
                   <label for="icon_ln">Last Name</label>
                 </div>
               </div>
@@ -71,14 +71,14 @@
               </div>
               <div class="input-field col s6">
                 <i class="material-icons prefix">phone</i>
-                <input id="icon_telephone" type="tel" class="validate" name="phone" value="{{user.profile.phone}}">
+                <input id="icon_telephone" type="text" class="validate" name="phone" value="{{user.profile.phone}}">
                 <label for="icon_telephone">Telephone</label>
               </div>
             </div>
             <div class='row'>
               <div class="input-field col s12">
                   <i class="material-icons prefix">mode_edit</i>
-                  <textarea id="icon_prefix2" class="materialize-textarea" name='bio'>{{user.profile.bio}}</textarea>
+                  <textarea id="icon_prefix2" type='text' class="materialize-textarea" name='bio'>{{user.profile.bio}}</textarea>
                   <label for="icon_prefix2">Bio</label>
                 </div>
               </div>
