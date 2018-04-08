@@ -48,6 +48,9 @@ class Lunchbox(models.Model):
     like = models.IntegerField(default=0)   
     def __unicode__(self):
         return self.title
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('bento-detail',args=[str(self.id)])
 
 
 class Step(models.Model):
@@ -67,6 +70,7 @@ class LunchboxImage(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
     def __unicode__(self):
         return iri_to_uri(self.image)
+    
 
 
 class Review(models.Model):

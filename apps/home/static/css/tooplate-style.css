@@ -15,6 +15,7 @@ http://www.tooplate.com/view/2094-mason
 }
 
 .showAllLunchLink {
+	width: 100%;
 	opacity: 0;
 	position: absolute;
 	text-align: center;

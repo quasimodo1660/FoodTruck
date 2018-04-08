@@ -7,7 +7,7 @@ urlpatterns = [
     url(r'^update/(?P<id>\d+)$',views.update),
     url(r'^uplaods/',views.uplaods),
     url(r'^(?P<id>\d+)$', views.show),
-    url(r'^angular/(?P<id>\d+)$',views.showAn),
+    url(r'^angular/(?P<id>\d+)$',views.showAn,name='bento-detail'),
     url(r'^next/',views.next),
     url(r'^getUser/',views.getUser),
     url(r'^addReview/',views.createReview),
