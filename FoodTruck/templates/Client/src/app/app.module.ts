@@ -14,6 +14,7 @@ import { ShowapiComponent } from './showapi/showapi.component';
 
 import { HttpService } from './http.service';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpClientJsonpModule } from '@angular/common/http';
 
 import { NgxGalleryModule } from 'ngx-gallery';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -21,6 +22,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgmCoreModule } from '@agm/core';
 import { ProfileComponent } from './profile/profile.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ShareModule } from '@ngx-share/core';
+import { ShareButtonModule } from '@ngx-share/button';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { ShareButtonsModule } from '@ngx-share/buttons';
+
+
+
 
 
 @NgModule({
@@ -45,7 +53,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NgbModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAD1BgNBjRye5nHsUPtz-EukHsXe4anQhc'
-    })
+    }),
+    HttpClientJsonpModule,  // for linkedin and tumblr share counts
+    // ShareModule.forRoot(),
+    ShareButtonModule.forRoot(), 
+    AngularFontAwesomeModule,
   ],
   providers: [HttpService],
   bootstrap: [AppComponent]

@@ -1,28 +1,51 @@
 <div class='col s4'>
-    <h5 class="left-align">{{ title }}</h5>
+    <label class="left-align"><i class="fas fa-map-marker"></i>  {{ title }}</label>
     <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
       <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
     </agm-map>
     </div>
 <div class='col s8'>
-    <h5 class="left-align">Provider</h5>
-    <a href='/accounts/profile/{{lunchbox.user_id}}'>{{lunchbox.user}}</a>
+    <label class="left-align"><i class="fas fa-user"></i>  Provider</label>
+    <h5><a href='/accounts/profile/{{lunchbox.user_id}}'>{{lunchbox.user}}</a></h5>
+   
     <hr>
-    <h5 class="left-align">Description</h5>
+    <label class="left-align"><i class="fas fa-info-circle"></i>  Description</label>
     <p>{{lunchbox.description}}</p>
     <hr>
-    <h5 class="left-align">Average rating</h5>
+    <label class="left-align"><i class="fas fa-star"></i>  Average rating</label>
     <p>{{lunchbox.stars}}</p>
      <hr>
-     <h5 class="left-align">Category</h5>
+     <label class="left-align"><i class="fas fa-tags"></i>  Category</label><br>
      <ng-container *ngFor='let i of tags'>
         <div class="chip">
             {{i}}
           </div>
      </ng-container>
      <hr>
-     <h5 class="left-align">Pick up time</h5>
+     <label class="left-align"><i class="fas fa-clock"></i>  Pick up time</label>
      <p>{{lunchbox.offertime | date: 'MMM-dd-yy'}}</p>
+    <hr>
+    <label class="left-align"><i class="fas fa-share-square"></i>  Share</label><br>
+    <!-- <share-buttons [theme]="'modern-light'"
+ [include]="['facebook','twitter','google','linkedin']"
+ [show]="16"
+ [size]="4"
+ [autoSetMeta]="false"
+></share-buttons> -->
+    <button class='sb' getCount='true' mat-icon-button shareButton="facebook" #fbBtn [style.color]="share.prop.facebook.color">
+            <fa-icon [icon]="share.prop.facebook.icon" size="lg"></fa-icon>
+    </button>
+    <button class='sb' getCount='true' mat-icon-button shareButton="google" #goBtn [style.color]="share.prop.google.color">
+            <fa-icon [icon]="share.prop.google.icon" size="lg"></fa-icon>
+    </button>
+    <button class='sb' tags='c2c' getCount='true' mat-icon-button shareButton="twitter" #twtBtn [style.color]="share.prop.twitter.color">
+        <fa-icon [icon]="share.prop.twitter.icon" size="lg"></fa-icon>
+    </button>
+    <button class='sb' title='{{lunchbox.title}}' description='{{lunchbox.description}}' getCount='true' mat-icon-button shareButton="linkedin" #inBtn [style.color]="share.prop.linkedin.color">
+        <fa-icon [icon]="share.prop.linkedin.icon" size="lg"></fa-icon>
+    </button>
+
+ 
     <hr>
      <button class="btn waves-effect waves-light pulse orange" (click)="addLike()"><i class="fas fa-thumbs-up"></i> {{lunchbox.like}} like</button>
      

@@ -3,6 +3,7 @@
 {% load widget_tweaks %}
 {% load static %}
 {% load extras_tag %}
+{% load social_share %}
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'user/css/userInfo.css' %}">
@@ -62,18 +63,25 @@
                       {% for bento in puser.lunchboxes.all %}
                           {% if bento.display %}
                           <div class="col s12 m6" id="bento_{{bento.id}}">
-                            <div class="card small hoverable">
+                            <div class="card medium hoverable">
                             <div class="card-image waves-effect waves-block waves-light">
                                 <a href='/lunchbox/angular/{{bento.id}}'><span class="new badge orange top-align" data-badge-caption=" like" style='position: absolute;top:0px;right:0px;'>{{bento.like}}</span><img src="/media/{{bento.images.first.image}}" class='responsive-img'></a>
                               </div>
                               <div class="card-content">
                                 <span class="card-title activator grey-text text-darken-4">{{bento.title}}<i class="material-icons right">more_vert</i></span>
-                                <p><small class="blue-grey-text text-lighten-3"><abbr  class='timeago' title='{{bento.updated_at|date:'Y-m-d H:i' }}'></abbr ></small></p><br>
+                                <span><p><small class="right blue-grey-text text-lighten-3"><abbr  class='timeago' title='{{bento.updated_at|date:'Y-m-d H:i' }}'></abbr ></small></p></span>
+                                <div class='row' style="margin-left:1%">
+                                      <span>{% post_to_facebook bento "<i class='fab fa-facebook-f' style='color:#3b5998'></i>" %}</span>&nbsp;&nbsp;
+                                      <span>{% post_to_gplus bento "<i class='fab fa-google-plus-g' style='color:#dd4b39'></i>" %}</span>&nbsp;&nbsp;
+                                      <span>{% post_to_twitter "I found a {{bento.title}} on BentoMan" bento "<i class='fab fa-twitter' style='color:#55acee'></i>" %}</span>&nbsp;&nbsp;
+                                      <span>{% post_to_linkedin bento.title bento "<i class='fab fa-linkedin-in' style='color:#0976b4'></i>" %}</span>
+                                </div>
                               </div>
                               {% if user == puser %}    
                               <div class="card-action">
                                  
                                   <a href="#modal3" class='orange-text modal-trigger dB'>DELETE</a>
+                                 
                                   <input type="hidden" class='bID' value="{{bento.id}}">
                               </div>
                               {% endif %}

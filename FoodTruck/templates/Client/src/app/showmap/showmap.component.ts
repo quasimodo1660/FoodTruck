@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { HttpService } from '../http.service';
+import { ShareButtons } from '@ngx-share/core';
+import { faFacebookF,faTwitter,faGooglePlusG,faLinkedinIn } from '@fortawesome/free-brands-svg-icons'
 
 @Component({
   selector: 'app-showmap',
@@ -18,12 +20,17 @@ export class ShowmapComponent implements OnInit {
   reviews=[];
   // lat: number = 37.3;
   // lng: number = -121.9;
+  fbIcon = faFacebookF;
+  tweetIcon=faTwitter;
+  gIcon = faGooglePlusG;
+  lIcon = faLinkedinIn;
   
 
   constructor(
     private _httpService: HttpService, 
     private _route: ActivatedRoute, 
-    private _router: Router) { }
+    private _router: Router,
+    public share:ShareButtons) { }
 
   ngOnInit() {
     this.getLunchbox();
