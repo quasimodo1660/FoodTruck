@@ -1,55 +1,142 @@
 {% extends 'base.html' %}
+{% load avatar_tags %}
+{% load widget_tweaks %}
 {% load static %}
+{% load extras_tag %}
+{% load social_share %}
+
 {% block css %}
-<link href="{% static 'css/chatBox.css' %}" rel="stylesheet">
+<!-- <link href="{% static 'css/chatBox.css' %}" rel="stylesheet"> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
 {% endblock %}
+
+
+
 {% block content %}
+<br>
 <div class='container'>
+    <div class="row">
+        <div class='col text-center'>
+        <h2>{{lunchbox.title}}</h2> 
+    </div>
+        <div class="slider">
+                <ul class="slides">
+                {% for i in lunchbox.images.all %}
+                  <li>
+                    <img class="responsive-img" height="100%" src="/media/{{ i.image }}" alt="{{ lunchbox.title }}" id="{{ lunchbox.title }}"><!-- random image -->
+                  </li>
+                  {% endfor %}
+                </ul>
+        </div>
+        
+    </div>
     <div class='row'>
-    <div class='col-lg-8'>
-        <div class='row'>
-            <h1>display the info of this lunchbox</h1>
-        </div>
-        <div class='row'>
-            <h1>display Graphics via API</h1>
-        </div>
+            <div class='col-lg-4 s12'>
+                    google map
+                    </div>
+                <div class='col-lg-8 s12'>
+                    <label class="left-align"><i class="fas fa-user"></i>  Provider</label>
+                    <h5><a href='/accounts/profile/{{lunchbox.user_id}}'>{{lunchbox.user.username}}</a></h5>
+                    <hr>
+                    <label class="left-align"><i class="fas fa-info-circle"></i>  Description</label>
+                    <p>{{lunchbox.description}}</p>
+                    <hr>
+                    <label class="left-align"><i class="fas fa-star"></i>  Average rating</label>
+                    <p>{% avg_rate lunchbox.reviews.all %} average based on {{lunchbox.reviews.all.count}} reviews.</p>
+                     <hr>
+                     <label class="left-align"><i class="fas fa-tags"></i>  Category</label><br>
+                     {% for i in lunchbox.tags.all %}
+                     <div class="chip">
+                            {{i}}
+                          </div>
+                     {% endfor %}
+                     <hr>
+                     <label class="left-align"><i class="fas fa-clock"></i>  Pick up time</label><br>
+                     {{lunchbox.offertime|date:'Y-m-d'}} {{lunchbox.offertime|date:'g:i A'}}
+                    <hr>
+                    <label class="left-align"><i class="fas fa-share-square"></i>  Share</label><br>
+                    <div class='row' style="margin-left:1%">
+                            <span>{% post_to_facebook lunchbox "<a class='btn-flat'><i class='fab fa-facebook-f fa-lg' style='color:#3b5998'></i></a>" %}</span>&nbsp;&nbsp;
+                            <span>{% post_to_gplus lunchbox "<i class='fab fa-google-plus-g' style='color:#dd4b39'></i>" %}</span>&nbsp;&nbsp;
+                            <span>{% post_to_twitter "I found a {{lunchbox.title}} on BentoMan" lunchbox "<i class='fab fa-twitter' style='color:#55acee'></i>" %}</span>&nbsp;&nbsp;
+                            <span>{% post_to_linkedin lunchbox.title lunchbox "<i class='fab fa-linkedin-in' style='color:#0976b4'></i>" %}</span>
+                            </div>
+                    <hr>
+                     {% if user in lunchbox.likedby.all %}
+                     <a class="waves-effect waves-teal btn-flat"><i class="material-icons">favorite</i></a>
+                     {% else %}
+                     <a class="btn-flat"><i class="material-icons">favorite_border</i></a>
+                     <a class="btn waves-effect waves-light red"><i class="material-icons">add</i></a>
+                     {% endif %}
+                </div>
     </div>
-    <div class='col-lg-4'>
-        <div class='row'>
-            <h1>goole map display location</h1>
-        </div>
-        <!-- Chatbox using socket -->
-        <div class='row'>
-            <div class="top_menu">
-                <div class="buttons">
-                    <div class="button close"></div>
-                    <div class="button minimize"></div>
-                    <div class="button maximize"></div>
-                </div>
-                <div class="title">Chat</div>
-            </div>
-            <ul class="messages"></ul>
-            <div class="bottom_wrapper clearfix">
-                <div class="message_input_wrapper">
-                    <input class="message_input" placeholder="Type your message here..." />
-                </div>
-                <div class="send_message">
-                    <div class="icon"></div>
-                    <div class="text">Send</div>
-                </div>
-            </div>
-        </div>
-        <div class="message_template">
-            <li class="message">
-                <div class="avatar"></div>
-                <div class="text_wrapper">
-                    <div class="text"></div>
-                </div>
-            </li>
-        </div>
-        <!-- End of Chatbox using socket -->
+    <div class='row'>
+            {% for review in lunchbox.reviews.all%}
+                                  
+                          
+            <ul class="collection hoverable col">
+                <li class="collection-item avatar">
+                    {% if review.user.socialaccount_set.all.0.get_avatar_url %}
+                    <a href='/accounts/profile/{{review.user.id}}'><img src="{{ review.user.socialaccount_set.all.0.get_avatar_url }}" class="circle responsive-img z-depth-4 hoverable"></a>
+                    {% else %}
+                    <a href='/accounts/profile/{{review.user.id}}'>{% avatar review.user class="responsive-img z-depth-4 circle" id="review.user_avatar" %}</a>
+                    {% endif %}
+                  <span class="title"><a href='/accounts/profile/{{review.user.id}}'>{{review.user.username}}</a></span>
+                  <div>
+                        {% full_star review.score as range %}
+                        {% for _ in range %}
+                        <span><i class="material-icons orange-text">star</i></span>
+                        {% endfor %}
+                       
+                        {% blank_star review.score as range1 %}
+                        {% for _ in range1 %}
+                        <span><i class="material-icons orange-text">star_border</i></span>
+                        {% endfor%}
+                        
+                      </div>
+                  <p>{{review.content}}
+                  </p>
+                  <small class="secondary-content blue-grey-text text-lighten-3"><abbr  class='timeago' title='{{review.updated_at|date:'Y-m-d H:i' }}'></abbr ></small>
+                </li>
+            </ul>
+            
+            {% empty %}
+            <p>No review yep. Be the first reviewer.</p>                                     
+          {% endfor %}
     </div>
-</div>
+    <div class='row'>
+            <form class="needs-validation col-lg-12 s12" (submit)="onSubmit()" novalidate>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Review:</label>
+                        <textarea class="form-control" name='review.content' [(ngModel)]='review.content'></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Stars</label>
+                        <select class="form-control materialize-textarea" id="exampleFormControlSelect1" name='review.score' [(ngModel)]='review.score'>
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option>5</option>
+                        </select>
+                      </div>
+                    <button type="submit" class="btn btn-primary orange" >Add a review</button> 
+                </form>
+    </div>
+    
 </div>
 
 {% endblock %}
+{% block javascript %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.1/jquery.timeago.js"></script>  
+<script>
+$(document).ready(function(){
+    $('.materialboxed').materialbox();
+    $('.slider').slider();
+});
+jQuery.timeago.settings.allowFuture = true;
+    jQuery("abbr.timeago").timeago();
+</script>
+{%endblock%}

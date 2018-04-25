@@ -12,3 +12,10 @@ def blank_star(value):
 @register.simple_tag
 def full_star(value):
     return range(value)
+
+@register.simple_tag
+def avg_rate(value):
+    total=0
+    for i in value:
+        total+=i.score
+    return round(total/value.count(),2)

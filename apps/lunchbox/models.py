@@ -45,7 +45,8 @@ class Lunchbox(models.Model):
     updated_at = models.DateTimeField(auto_now = True)
     public  = models.BooleanField(default = False)
     display  = models.BooleanField(default = True)
-    like = models.IntegerField(default=0)   
+    like = models.IntegerField(default=0)
+    likedby=models.ManyToManyField(User,related_name='liked')   
     def __unicode__(self):
         return self.title
     def get_absolute_url(self):

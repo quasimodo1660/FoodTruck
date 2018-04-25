@@ -113,7 +113,7 @@ def tag(request):
 def show(request,id):
     lunchbox=Lunchbox.objects.get(pk=int(id))
     user=request.user
-    return render(request,'lunchbox/showOne.html',{lunchbox:lunchbox,user:user})
+    return render(request,'lunchbox/showOne.html',{'lunchbox':lunchbox,'user':user})
 
 def showAn(request,id):   
     request.session = request.user.id
