@@ -137,15 +137,19 @@ def createReview(request):
             data={'errors':'Something wrong'}
         return JsonResponse(data)       
         
-@csrf_exempt
+
 def addLike(request,id):
-    if request.method=='GET':
+    if request.method=='POST':
         lunchbox=Lunchbox.objects.get(pk=id)
-        print lunchbox.like
+        # print lunchbox.like
         lunchbox.like+=1
+        lunchbox.likedby.add(request.user)
         lunchbox.save()
-        print lunchbox.like
-        data={'succes':'Add like by 1'}
+        # print lunchbox.like
+        # print request.POST
+        data={'succes':'add like',
+            'userid':request.user.id,
+            'username':request.user.username}
         return JsonResponse(data)       
         
 # REVIEW STUFF

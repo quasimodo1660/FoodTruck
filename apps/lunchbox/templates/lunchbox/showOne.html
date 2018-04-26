@@ -8,6 +8,7 @@
 {% block css %}
 <!-- <link href="{% static 'css/chatBox.css' %}" rel="stylesheet"> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+<link href='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.css' rel='stylesheet' />
 {% endblock %}
 
 
@@ -19,6 +20,8 @@
         <div class='col text-center'>
         <h2>{{lunchbox.title}}</h2> 
     </div>
+    </div>
+    
         <div class="slider">
                 <ul class="slides">
                 {% for i in lunchbox.images.all %}
@@ -27,14 +30,14 @@
                   </li>
                   {% endfor %}
                 </ul>
-        </div>
-        
+     
     </div>
+    <br>
     <div class='row'>
-            <div class='col-lg-4 s12'>
-                    google map
-                    </div>
-                <div class='col-lg-8 s12'>
+            <div class='col-lg-6 s12' id='map' style="height:45em;width: 100%";>
+                <label class="left-align"><i class="fas fa-map-marker"></i>  Pick up location</label>
+            </div>
+                <div class='col-lg-6 s12'>
                     <label class="left-align"><i class="fas fa-user"></i>  Provider</label>
                     <h5><a href='/accounts/profile/{{lunchbox.user_id}}'>{{lunchbox.user.username}}</a></h5>
                     <hr>
@@ -55,19 +58,40 @@
                      {{lunchbox.offertime|date:'Y-m-d'}} {{lunchbox.offertime|date:'g:i A'}}
                     <hr>
                     <label class="left-align"><i class="fas fa-share-square"></i>  Share</label><br>
-                    <div class='row' style="margin-left:1%">
-                            <span>{% post_to_facebook lunchbox "<a class='btn-flat'><i class='fab fa-facebook-f fa-lg' style='color:#3b5998'></i></a>" %}</span>&nbsp;&nbsp;
-                            <span>{% post_to_gplus lunchbox "<i class='fab fa-google-plus-g' style='color:#dd4b39'></i>" %}</span>&nbsp;&nbsp;
-                            <span>{% post_to_twitter "I found a {{lunchbox.title}} on BentoMan" lunchbox "<i class='fab fa-twitter' style='color:#55acee'></i>" %}</span>&nbsp;&nbsp;
-                            <span>{% post_to_linkedin lunchbox.title lunchbox "<i class='fab fa-linkedin-in' style='color:#0976b4'></i>" %}</span>
-                            </div>
+                    <div class='row'>
+                            <span>{% post_to_facebook lunchbox "<a class='btn-flat'><i class='fab fa-facebook-f fa-lg' style='color:#3b5998'></i></a>" %}</span>
+                            <span>{% post_to_gplus lunchbox "<a class='btn-flat'><i class='fab fa-google-plus-g fa-lg' style='color:#dd4b39'></i></a>" %}</span>
+                            <span>{% post_to_twitter "I found a {{lunchbox.title}} on BentoMan" lunchbox "<a class='btn-flat'><i class='fab fa-twitter fa-lg' style='color:#55acee'></i></a>" %}</span>
+                            <span>{% post_to_linkedin lunchbox.title lunchbox "<a class='btn-flat'><i class='fab fa-linkedin-in fa-lg' style='color:#0976b4'></i></a>" %}</span>
+                        </div>
                     <hr>
+                    <div class='row'>
+                    
+                    <form method="POST" action="/lunchbox/addLike/{{lunchbox.id}}" id='likeForm'>{% csrf_token %}
+                            <input type="hidden" name="bentoID" value="{{lunchbox.id}}">
+                    
+                
                      {% if user in lunchbox.likedby.all %}
-                     <a class="waves-effect waves-teal btn-flat"><i class="material-icons">favorite</i></a>
+                     <button type='submit' class='btn-flat'><i class='fas fa-thumbs-up fa-lg' style='color:orange'></i></button>
                      {% else %}
-                     <a class="btn-flat"><i class="material-icons">favorite_border</i></a>
-                     <a class="btn waves-effect waves-light red"><i class="material-icons">add</i></a>
-                     {% endif %}
+                    <button type='submit' class='btn-flat'><i class='far fa-thumbs-up fa-lg' style='color:orange'></i></button>
+                    
+                    {% endif %}
+                    </form>
+                
+                   
+                    {% for u in lunchbox.likedby.all %}
+                        {% if forloop.first %}
+                            <span><h6><a id='like_{{u.id}}' href='/accounts/profile/{{u.id}}'>{{u.username}}</a></h6></span>   
+                        {% elif forloop.last %}  
+                            <span><h6><a id='like_{{u.id}}' href='/accounts/profile/{{u.id}}'>, {{u.username}}</a></h6></span>     
+                        {% else %}
+                            <span><h6><a id='like_{{u.id}}' href='/accounts/profile/{{u.id}}'>, {{u.username}}</a></h6></span>
+                        {% endif %}
+                    {% endfor%}
+             
+                    
+                    </div>
                 </div>
     </div>
     <div class='row'>
@@ -130,7 +154,9 @@
 {% block javascript %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.1/jquery.timeago.js"></script>  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.1/jquery.timeago.js"></script> 
+<script src='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.js'></script> 
+<script src="{% static 'lunchbox/js/map.js' %}"></script>
 <script>
 $(document).ready(function(){
     $('.materialboxed').materialbox();
@@ -138,5 +164,15 @@ $(document).ready(function(){
 });
 jQuery.timeago.settings.allowFuture = true;
     jQuery("abbr.timeago").timeago();
+</script>
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoicXVhc2ltb2RvMTY2MCIsImEiOiJjamc0NDl3cjUxM3BrMnF4ZmtxOXE3YWg3In0.kVwbt6_30MvCJq12iNchOQ';
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v9', 
+    center: ['{{lunchbox.lon}}','{{lunchbox.lat}}'],
+    zoom: 13
+});
+
 </script>
 {%endblock%}
