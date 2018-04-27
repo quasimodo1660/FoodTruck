@@ -73,6 +73,19 @@ $(document).ready(function(){
     })
     $('.modal').modal();
 
-
+    $('#test_btn').click(function(){
+        $.ajax({
+            url: 'http://localhost:6789/test', /* Where should this go? */
+            method: 'post', /* Which HTTP verb? */
+            dataType:'json',
+            data: JSON.stringify({'test':'sbb_message'}), /* Any data to send along? */
+            success: function(serverResponse) { /* What code should we run when the server responds? */
+              if(serverResponse['errors'])
+                console.log(serverResponse['errors'])
+              else
+                console.log(serverResponse)
+            }
+        })
+    })
 
 })
