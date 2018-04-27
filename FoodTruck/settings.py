@@ -54,11 +54,13 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.facebook',
     'django_social_share',
+    'corsheaders'
   
 ]
 SITE_ID = 1
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -183,7 +185,7 @@ USE_TZ = True
 # STATIC_ROOT = os.path.join(BASE_DIR, '/static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'apps/static')
+    os.path.join(BASE_DIR, 'apps/static'),
 )
 
 
