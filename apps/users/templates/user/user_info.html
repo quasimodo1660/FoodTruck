@@ -65,7 +65,7 @@
                           <div class="col s12 m6" id="bento_{{bento.id}}">
                             <div class="card medium hoverable">
                             <div class="card-image waves-effect waves-block waves-light">
-                                <a href='/lunchbox/angular/{{bento.id}}'><span class="new badge orange top-align" data-badge-caption=" like" style='position: absolute;top:0px;right:0px;'>{{bento.like}}</span><img src="/media/{{bento.images.first.image}}" class='responsive-img'></a>
+                                <a href='{{bento.get_absolute_url}}'><span class="new badge orange top-align" data-badge-caption=" like" style='position: absolute;top:0px;right:0px;'>{{bento.like}}</span><img src="/media/{{bento.images.first.image}}" class='responsive-img'></a>
                               </div>
                               <div class="card-content">
                                 <span class="card-title activator grey-text text-darken-4">{{bento.title}}<i class="material-icons right">more_vert</i></span>
@@ -108,7 +108,7 @@
                                       </ul>
                                       
                                       {% empty %}
-                                      <p>No review yep, click <a href='/lunchbox/angular/{{bento.id}}'>here</a> to add a review.</p>                                     
+                                      <p>No review yep, click <a href='{{bento.get_absolute_url}}'>here</a> to add a review.</p>                                     
                                     {% endfor %}
                                 
                               </div>
@@ -138,7 +138,7 @@
                         {% if review.lunchbox.display %}
                         
                         <li class="collection-item hoverable avatar" id="review_{{review.id}}">
-                            <a href='/lunchbox/angular/{{review.lunchbox.id}}'><img src="/media/{{review.lunchbox.images.first.image}}" alt="" class="circle responsive-img">
+                            <a href='{{review.lunchbox.get_absolute_url}}'><img src="/media/{{review.lunchbox.images.first.image}}" alt="" class="circle responsive-img">
                             <span class="title blue-grey-text text-darken-3">{{review.lunchbox.title}}</span></a><br>
                             <div>
                             {% full_star review.score as range %}
@@ -210,7 +210,7 @@
                           
                           <div class="modal-footer">
                             <button class="d modal-action modal-close waves-effect waves-green btn-flat orange-text">Cancel</button>
-                            <button type='submit' class="modal-action modal-close btn-flat orange-text">Submit</button>                             
+                            <button id='edit_btn' type='submit' class="modal-action modal-close btn-flat orange-text">Submit</button>                             
                           </div>
                         </form>
                         </div>

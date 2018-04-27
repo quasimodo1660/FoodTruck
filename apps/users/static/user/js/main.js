@@ -279,14 +279,13 @@ $(document).ready(function(){
         $('#edit_content').val($(this).siblings('p').text())
     })
 
-    $("#edit_review_form").on('submit',function(event){
+
+    $('#edit_btn').click(function(event){
         event.preventDefault();
-        // $('.clicked_me').addClass('dismiss_me');
-        var me=this
         $.ajax({
-            url: $(this).attr('action'), /* Where should this go? */
+            url: $('#edit_review_form').attr('action'), /* Where should this go? */
             method: 'post', /* Which HTTP verb? */
-            data: $(this).serialize(), /* Any data to send along? */
+            data: $('#edit_review_form').serialize(), /* Any data to send along? */
             success: function(serverResponse) { /* What code should we run when the server responds? */
               if(serverResponse['errors'])
                 console.log(serverResponse['errors'])

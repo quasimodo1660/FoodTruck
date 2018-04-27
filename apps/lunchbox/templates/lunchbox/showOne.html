@@ -9,6 +9,7 @@
 <!-- <link href="{% static 'css/chatBox.css' %}" rel="stylesheet"> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
 <link href='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.css' rel='stylesheet' />
+<link rel="stylesheet" href="{% static 'user/css/userInfo.css' %}">
 {% endblock %}
 
 
@@ -82,11 +83,11 @@
                    
                     {% for u in lunchbox.likedby.all %}
                         {% if forloop.first %}
-                            <span><h6><a id='like_{{u.id}}' href='/accounts/profile/{{u.id}}'>{{u.username}}</a></h6></span>   
+                            <span id='like_{{u.id}}'><h6><a href='/accounts/profile/{{u.id}}'>{{u.username}}</a></h6></span>   
                         {% elif forloop.last %}  
-                            <span><h6><a id='like_{{u.id}}' href='/accounts/profile/{{u.id}}'>, {{u.username}}</a></h6></span>     
+                            <span id='like_{{u.id}}'><h6><a href='/accounts/profile/{{u.id}}'>, {{u.username}}</a></h6></span>     
                         {% else %}
-                            <span><h6><a id='like_{{u.id}}' href='/accounts/profile/{{u.id}}'>, {{u.username}}</a></h6></span>
+                            <span id='like_{{u.id}}'><h6><a href='/accounts/profile/{{u.id}}'>, {{u.username}}</a></h6></span>
                         {% endif %}
                     {% endfor%}
              
@@ -94,12 +95,11 @@
                     </div>
                 </div>
     </div>
-    <div class='row'>
-            {% for review in lunchbox.reviews.all%}
-                                  
-                          
-            <ul class="collection hoverable col">
-                <li class="collection-item avatar">
+    <div class='row' id='review_div'>
+        <ul class="collection col-12">
+            {% for review in lunchbox.reviews.all%}               
+           
+                <li class="collection-item avatar hoverable" id="review_{{review.id}}">
                     {% if review.user.socialaccount_set.all.0.get_avatar_url %}
                     <a href='/accounts/profile/{{review.user.id}}'><img src="{{ review.user.socialaccount_set.all.0.get_avatar_url }}" class="circle responsive-img z-depth-4 hoverable"></a>
                     {% else %}
@@ -118,25 +118,50 @@
                         {% endfor%}
                         
                       </div>
-                  <p>{{review.content}}
-                  </p>
+                  <p>{{review.content}}</p>
+                  <input type="hidden" class='rID' value="/lunchbox/deleteReview/{{review.id}}"> 
+                  <input type="hidden" class='review_stars' value="{{review.score}}">              
+                            {% if user == review.user %}  
+                            <hr>
+                            <a href="#modal2" class='orange-text modal-trigger edit_review'>EDIT</a>&nbsp;&nbsp;&nbsp;
+                            <a href="#modal1" class='orange-text modal-trigger dM'>DELETE</a>
+                
+                            {% endif %}
                   <small class="secondary-content blue-grey-text text-lighten-3"><abbr  class='timeago' title='{{review.updated_at|date:'Y-m-d H:i' }}'></abbr ></small>
                 </li>
-            </ul>
+           
             
             {% empty %}
             <p>No review yep. Be the first reviewer.</p>                                     
           {% endfor %}
-    </div>
-    <div class='row'>
-            <form class="needs-validation col-lg-12 s12" (submit)="onSubmit()" novalidate>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Review:</label>
-                        <textarea class="form-control" name='review.content' [(ngModel)]='review.content'></textarea>
-                    </div>
+        </ul>  
+        <a href="#modal3" class='btn orange modal-trigger edit_review'>Add a review</a>
+        
+        <div id="modal1" class="modal fade" style="height:25%">
+                <div class="modal-content">
+                  <h4>Delete review</h4>
+                  <p>This review will be delete.</p>
+                  <input type="hidden" class='rID'>
+                </div>
+                <div class="modal-footer">
+                  <a href="#!" class="d modal-action modal-close waves-effect waves-green btn-flat orange-text">Cancel</a>
+                  <a href="#!" class="q modal-action modal-close waves-effect waves-green btn-flat orange-text">Submit</a>                             
+                </div>
+              </div>
+    
+              
+          
+           <!-- Modal Structure -->
+           <div id="modal2" class="modal fade">
+                <div class="modal-content">
+                  <h4>Edit review</h4>
+                  
+                  <form method="post" action="" id='edit_review_form'>{% csrf_token %}
+                    <input type="hidden" class='rID'>
+       
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Stars</label>
-                        <select class="form-control materialize-textarea" id="exampleFormControlSelect1" name='review.score' [(ngModel)]='review.score'>
+                        <select class="form-control" id="edit_stars" name="stars">
                           <option>1</option>
                           <option>2</option>
                           <option>3</option>
@@ -144,10 +169,56 @@
                           <option>5</option>
                         </select>
                       </div>
-                    <button type="submit" class="btn btn-primary orange" >Add a review</button> 
-                </form>
-    </div>
-    
+                      <div class="form-group">
+                          <label for="exampleFormControlTextarea1">content</label>
+                          <textarea class="form-control" id="edit_content" name='content' rows="5"></textarea>
+                        </div>
+                 
+                </div>
+                
+                <div class="modal-footer">
+                  <button class="d modal-action modal-close waves-effect waves-green btn-flat orange-text">Cancel</button>
+                  <button id='edit_btn' type='submit' class="modal-action modal-close btn-flat orange-text">Submit</button>                             
+                </div>
+              </form>
+              </div>
+
+              <!-- Add a review -->
+              <div id="modal3" class="modal fade">
+                    <div class="modal-content">
+                      <h4>Add a review</h4>
+                      
+                      <form method="post" action="/lunchbox/addReview/" id='add_review_form'>{% csrf_token %}
+                        <input type="hidden" name="bentoID" value="{{lunchbox.id}}">
+                        <div class="form-group">
+                                <label for="exampleFormControlSelect1">Stars</label>
+                                <select class="form-control" id="edit_stars" name="score">
+                                  <option>1</option>
+                                  <option>2</option>
+                                  <option>3</option>
+                                  <option>4</option>
+                                  <option>5</option>
+                                </select>
+                              </div>
+                              <div class="form-group">
+                                  <label for="exampleFormControlTextarea1">content</label>
+                                  <textarea class="form-control" id="edit_content" name='content' rows="5"></textarea>
+                                </div>
+                        
+                     
+                    </div>
+                    
+                    <div class="modal-footer">
+                      <button class="d modal-action modal-close waves-effect waves-green btn-flat orange-text">Cancel</button>
+                      <button id='add_btn' type='submit' class="modal-action modal-close btn-flat orange-text">Submit</button>                             
+                    </div>
+                  </form>
+                  </div>
+              </div>
+              <br><br><br>
+              <div class="push"></div>
+   
+   
 </div>
 
 {% endblock %}
@@ -157,6 +228,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.1/jquery.timeago.js"></script> 
 <script src='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.js'></script> 
 <script src="{% static 'lunchbox/js/map.js' %}"></script>
+<script src="{% static 'user/js/main.js' %}"></script> 
 <script>
 $(document).ready(function(){
     $('.materialboxed').materialbox();
@@ -167,12 +239,18 @@ jQuery.timeago.settings.allowFuture = true;
 </script>
 <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoicXVhc2ltb2RvMTY2MCIsImEiOiJjamc0NDl3cjUxM3BrMnF4ZmtxOXE3YWg3In0.kVwbt6_30MvCJq12iNchOQ';
-var map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v9', 
-    center: ['{{lunchbox.lon}}','{{lunchbox.lat}}'],
-    zoom: 13
-});
+    var el=document.createElement('i');
+    el.className='fas fa-map-marker-alt fa-3x';
+    el.style.color='orange';
+   
 
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v9', 
+        center: ['{{lunchbox.lon}}','{{lunchbox.lat}}'],
+        zoom: 15
+    });
+
+    new mapboxgl.Marker(el).setLngLat(['{{lunchbox.lon}}','{{lunchbox.lat}}']).addTo(map)
 </script>
 {%endblock%}

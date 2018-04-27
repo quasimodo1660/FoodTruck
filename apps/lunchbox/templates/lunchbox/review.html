@@ -1,0 +1,134 @@
+{% load avatar_tags %}
+{% load static %}
+{% load extras_tag %}
+<div class='row' id='review_div'>
+<ul class="collection col-12">
+        {% for review in lunchbox.reviews.all%}               
+       
+            <li class="collection-item avatar hoverable" id="review_{{review.id}}">
+                {% if review.user.socialaccount_set.all.0.get_avatar_url %}
+                <a href='/accounts/profile/{{review.user.id}}'><img src="{{ review.user.socialaccount_set.all.0.get_avatar_url }}" class="circle responsive-img z-depth-4 hoverable"></a>
+                {% else %}
+                <a href='/accounts/profile/{{review.user.id}}'>{% avatar review.user class="responsive-img z-depth-4 circle" id="review.user_avatar" %}</a>
+                {% endif %}
+              <span class="title"><a href='/accounts/profile/{{review.user.id}}'>{{review.user.username}}</a></span>
+              <div>
+                    {% full_star review.score as range %}
+                    {% for _ in range %}
+                    <span><i class="material-icons orange-text">star</i></span>
+                    {% endfor %}
+                   
+                    {% blank_star review.score as range1 %}
+                    {% for _ in range1 %}
+                    <span><i class="material-icons orange-text">star_border</i></span>
+                    {% endfor%}
+                    
+                  </div>
+              <p>{{review.content}}</p>
+              <input type="hidden" class='rID' value="/lunchbox/deleteReview/{{review.id}}"> 
+              <input type="hidden" class='review_stars' value="{{review.score}}">              
+                        {% if user == review.user %}  
+                        <hr>
+                        <a href="#modal2" class='orange-text modal-trigger edit_review'>EDIT</a>&nbsp;&nbsp;&nbsp;
+                        <a href="#modal1" class='orange-text modal-trigger dM'>DELETE</a>
+            
+                        {% endif %}
+              <small class="secondary-content blue-grey-text text-lighten-3"><abbr  class='timeago' title='{{review.updated_at|date:'Y-m-d H:i' }}'></abbr ></small>
+            </li>
+       
+        
+        {% empty %}
+        <p>No review yep. Be the first reviewer.</p>                                     
+      {% endfor %}
+    </ul>
+    <a href="#modal3" class='btn orange modal-trigger edit_review'>Add a review</a>
+        
+        <div id="modal1" class="modal fade" style="height:25%">
+                <div class="modal-content">
+                  <h4>Delete review</h4>
+                  <p>This review will be delete.</p>
+                  <input type="hidden" class='rID'>
+                </div>
+                <div class="modal-footer">
+                  <a href="#!" class="d modal-action modal-close waves-effect waves-green btn-flat orange-text">Cancel</a>
+                  <a href="#!" class="q modal-action modal-close waves-effect waves-green btn-flat orange-text">Submit</a>                             
+                </div>
+              </div>
+    
+              
+          
+           <!-- Modal Structure -->
+           <div id="modal2" class="modal fade">
+                <div class="modal-content">
+                  <h4>Edit review</h4>
+                  
+                  <form method="post" action="" id='edit_review_form'>{% csrf_token %}
+                    <input type="hidden" class='rID'>
+       
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Stars</label>
+                        <select class="form-control" id="edit_stars" name="stars">
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option>5</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                          <label for="exampleFormControlTextarea1">content</label>
+                          <textarea class="form-control" id="edit_content" name='content' rows="5"></textarea>
+                        </div>
+                 
+                </div>
+                
+                <div class="modal-footer">
+                  <button class="d modal-action modal-close waves-effect waves-green btn-flat orange-text">Cancel</button>
+                  <button id='edit_btn' type='submit' class="modal-action modal-close btn-flat orange-text">Submit</button>                             
+                </div>
+              </form>
+              </div>
+
+              <!-- Add a review -->
+              <div id="modal3" class="modal fade">
+                    <div class="modal-content">
+                      <h4>Add a review</h4>
+                      
+                      <form method="post" action="/lunchbox/addReview/" id='add_review_form'>{% csrf_token %}
+                        <input type="hidden" name="bentoID" value="{{lunchbox.id}}">
+                        <div class="form-group">
+                                <label for="exampleFormControlSelect1">Stars</label>
+                                <select class="form-control" id="edit_stars" name="score">
+                                  <option>1</option>
+                                  <option>2</option>
+                                  <option>3</option>
+                                  <option>4</option>
+                                  <option>5</option>
+                                </select>
+                              </div>
+                              <div class="form-group">
+                                  <label for="exampleFormControlTextarea1">content</label>
+                                  <textarea class="form-control" id="edit_content" name='content' rows="5"></textarea>
+                                </div>
+                        
+                     
+                    </div>
+                    
+                    <div class="modal-footer">
+                      <button class="d modal-action modal-close waves-effect waves-green btn-flat orange-text">Cancel</button>
+                      <button id='add_btn' type='submit' class="modal-action modal-close btn-flat orange-text">Submit</button>                             
+                    </div>
+                  </form>
+                  </div>
+              </div>
+              </div>
+              <br><br><br>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.1/jquery.timeago.js"></script> 
+    <script>
+        jQuery.timeago.settings.allowFuture = true;
+        jQuery("abbr.timeago").timeago();
+        jQuery.getScript("{% static 'lunchbox/js/map.js' %}")
+        jQuery.getScript("{% static 'user/js/main.js' %}")
+    </script>
+    <!-- <script src="{% static 'lunchbox/js/map.js' %}"></script> -->
+    <!-- <script src="{% static 'user/js/main.js' %}"></script>  -->

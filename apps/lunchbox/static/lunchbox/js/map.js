@@ -40,18 +40,38 @@ $(document).ready(function(){
             success: function(serverResponse) { /* What code should we run when the server responds? */
               if(serverResponse['errors'])
                 console.log(serverResponse['errors'])
-              else{
-                console.log(serverResponse)
+              if(serverResponse['succes']=='add like'){
                 $(me).find('button').html("<i class='fas fa-thumbs-up fa-lg' style='color:orange'></i>");
                 if($(me).next().length>0)
-                    $(me).closest('div').append("<span><h6><a id='like_"+ serverResponse.userid +"{{u.id}}' href='/accounts/profile/"+ serverResponse.userid +"'>, "+ serverResponse.username +"</a></h6></span>")
+                    $(me).closest('div').append("<span id='like_"+ serverResponse.userid +"'><h6><a href='/accounts/profile/"+ serverResponse.userid +"'>, "+ serverResponse.username +"</a></h6></span>")
                 else
-                $(me).closest('div').append("<span><h6><a id='like_"+ serverResponse.userid +"{{u.id}}' href='/accounts/profile/"+ serverResponse.userid +"'>"+ serverResponse.username +"</a></h6></span>")
-              }          
+                    $(me).closest('div').append("<span id='like_"+ serverResponse.userid +"'><h6><a href='/accounts/profile/"+ serverResponse.userid +"'>"+ serverResponse.username +"</a></h6></span>")
+              }    
+              else{
+                //   console.log(serverResponse)
+                  $(me).find('button').html("<i class='far fa-thumbs-up fa-lg' style='color:orange'></i>");
+                  $('#like_'+serverResponse.userid).remove()
+              }      
             }
           })
     })
 
+
+    $('#add_btn').on('click',function(event){
+        event.preventDefault();
+        $.ajax({
+            url: $('#add_review_form').attr('action'), /* Where should this go? */
+            method: 'post', /* Which HTTP verb? */
+            data: $('#add_review_form').serialize(), /* Any data to send along? */
+            success: function(serverResponse) { /* What code should we run when the server responds? */
+              if(serverResponse['errors'])
+                console.log(serverResponse['errors'])
+              else
+                $('#review_div').replaceWith(serverResponse)
+            }
+        })
+    })
+    $('.modal').modal();
 
 
 

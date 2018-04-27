@@ -18,4 +18,7 @@ def avg_rate(value):
     total=0
     for i in value:
         total+=i.score
-    return round(total/value.count(),2)
+    if value.count()==0:
+        return 0
+    else:
+        return round(total/value.count(),2)

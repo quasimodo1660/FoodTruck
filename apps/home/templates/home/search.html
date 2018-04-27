@@ -33,7 +33,7 @@
                             <div class="col s12 m6" id="bento_{{bento.id}}">
                               <div class="card medium hoverable">
                               <div class="card-image waves-effect waves-block waves-light">
-                                  <a href='/lunchbox/angular/{{bento.id}}'><span class="new badge orange top-align" data-badge-caption=" like" style='position: absolute;top:0px;right:0px;'>{{bento.like}}</span><img src="/media/{{bento.images.first.image}}" class='responsive-img'></a>
+                                  <a href='{{bento.get_absolute_url}}'><span class="new badge orange top-align" data-badge-caption=" like" style='position: absolute;top:0px;right:0px;'>{{bento.like}}</span><img src="/media/{{bento.images.first.image}}" class='responsive-img'></a>
                                 </div>
                                 <div class="card-content">
                                   <span class="card-title activator grey-text text-darken-4">{{bento.title}}<i class="material-icons right">more_vert</i></span>
@@ -71,7 +71,7 @@
                                         </ul>
                                         
                                         {% empty %}
-                                        <p>No review yep, click <a href='/lunchbox/angular/{{bento.id}}'>here</a> to add a review.</p>                                     
+                                        <p>No review yep, click <a href='{{bento.get_absolute_url}}'>here</a> to add a review.</p>                                     
                                       {% endfor %} 
                                     </div>
                                 </div>

@@ -126,30 +126,32 @@ def getUser(request):
     }
     return JsonResponse(data)
 
-@csrf_exempt
+
 def createReview(request):
     if request.method=='POST':
-        temp = json.loads(request.body)
-        review=Review.objects.create(user=request.user,lunchbox=Lunchbox.objects.get(pk=temp['lunchbox']),score=temp['score'],content=temp['content'])
-        if review:
-            data={'succes':'Add a review'}
-        else:
-            data={'errors':'Something wrong'}
-        return JsonResponse(data)       
+        lunchbox=lunchbox=Lunchbox.objects.get(pk=request.POST['bentoID'])
+        review=Review.objects.create(user=request.user,lunchbox=lunchbox,score=request.POST['score'],content=request.POST['content'])
+        return render(request,'lunchbox/review.html',{'lunchbox':lunchbox})      
         
 
 def addLike(request,id):
     if request.method=='POST':
         lunchbox=Lunchbox.objects.get(pk=id)
         # print lunchbox.like
-        lunchbox.like+=1
-        lunchbox.likedby.add(request.user)
+        if request.user in lunchbox.likedby.all():
+            lunchbox.like-=1
+            lunchbox.likedby.remove(request.user)
+            data={'succes':'remove like',
+            'userid':request.user.id}
+        else:
+            lunchbox.like+=1
+            lunchbox.likedby.add(request.user)
+            data={'succes':'add like',
+            'userid':request.user.id,
+            'username':request.user.username}
         lunchbox.save()
         # print lunchbox.like
         # print request.POST
-        data={'succes':'add like',
-            'userid':request.user.id,
-            'username':request.user.username}
         return JsonResponse(data)       
         
 # REVIEW STUFF
