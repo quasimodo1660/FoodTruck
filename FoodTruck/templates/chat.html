@@ -1,0 +1,44 @@
+{% load static %}
+{% load avatar_tags %}
+<!-- Modal Trigger -->
+<div id="addLunboxButton" >
+    <a id='add_b' href='/lunchbox/add' class="waves-effect waves-orange btn-floating btn-large orange tooltipped" data-position="left" data-tooltip="Add a Bento" style="position: fixed;bottom: 13%;right: 10px;z-index: 1000"><i class="material-icons">add</i></a>
+    {% if user.is_authenticated %}  
+    <a id='chat_b' href='#modal1' class="waves-effect waves-orange btn-floating btn-large orange modal-trigger tooltipped" data-position="left" data-tooltip="Chat" style="position: fixed;bottom: 5%;right: 10px;z-index: 1000"><i class="material-icons">chat</i></a>
+    {% else %}
+    <a id='chat_b' href='#modal1' class="disabled waves-effect waves-orange btn-floating btn-large orange modal-trigger tooltipped" data-position="left" data-tooltip="Please sign in to chat" style="position: fixed;bottom: 5%;right: 10px;z-index: 1000"><i class="material-icons">chat</i></a>
+    {% endif %}
+</div>
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal bottom-sheet">
+  <div class="modal-content">
+      <h5 id='chat_title' class='orange-text'>Chat box</h5>
+            <ul id='user_list' class="collection">
+            
+            </ul>
+        
+       
+    </div>
+ 
+  <div class="modal-footer">
+    <a href="#!" class="modal-action modal-close waves-effect waves-orange btn-flat">Close</a>
+  </div>
+</div>
+
+<script type ="text/javascript" src="http://13.57.221.111:6789/socket.io/socket.io.js"></script>
+<!-- <script type ="text/javascript" src="http://127.0.0.1:6789/socket.io/socket.io.js"></script> -->
+<script type="text/javascript">
+    $(document).ready(function(){
+    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+    $('.tooltipped').tooltip();
+  });     
+</script>
+<script>
+    var jsuser={
+        username:'{{user.username}}',
+        user_id:'{{ user.id }}',
+    }
+</script>
+<script type="text/javascript" src="{% static 'js/chat.js' %}"></script> 

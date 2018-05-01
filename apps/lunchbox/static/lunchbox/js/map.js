@@ -75,7 +75,7 @@ $(document).ready(function(){
 
     $('#test_btn').click(function(){
         $.ajax({
-            url: 'http://localhost:6789/test', /* Where should this go? */
+            url: 'http://127.0.0.1:6789/test', /* Where should this go? */
             method: 'post', /* Which HTTP verb? */
             dataType:'json',
             data: JSON.stringify({'test':'sbb_message'}), /* Any data to send along? */

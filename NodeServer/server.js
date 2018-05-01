@@ -4,21 +4,39 @@ var path = require( "path");
 var app = express();
 var bodyParser = require('body-parser');
 
-var server=app.listen(6789, function() {
+var server=require('http').Server(app);
+server.listen(6789, function() {
  console.log("listening on port 6789");
 })
+
+
+var userList=[];
 var userCounter=0;
-var io = require('socket.io').listen(server);
+var io = require('socket.io')(server);
 io.sockets.on('connection',function(socket){
     userCounter++;
     console.log('Client socket is connected!');
+    var temp=socket.id
     console.log(userCounter);
-    io.emit( "my_full_broadcast_event",{count:userCounter});
+    socket.on('authentication',function(data){  
+        data['cid']=temp
+        userList.push(data);
+        io.emit( "my_full_broadcast_event",{count:userCounter,users:userList});
+    })
+    
+    
+    
     socket.on('disconnect',function(){
         userCounter--;
         console.log(userCounter);
-        io.emit( "my_full_broadcast_event",{count:userCounter});
+        userList=userList.filter(function(x){
+            // console.log(x)
+            return x.cid!=socket.id;
+        })
+        
+        io.emit( "my_full_broadcast_event",{count:userCounter,users:userList});
     })
+    
     socket.on('newMessage', function(data) {
         console.log(data);
         socket.broadcast.emit( "my_broadcast_event",{message:data.message,user:data.name});
