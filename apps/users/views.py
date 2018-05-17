@@ -64,6 +64,20 @@ def signup(request):
     })
 
 
+# def guest_signup(request):
+#     # print request
+#     if request.method=='POST':
+#         guest=User.objects.create(username='GUEST'+ str(User.objects.last().id+1),password='abc12345'+str(User.objects.last().id+1))
+#         # guest=User.objects.last()
+#         if guest:
+#             login(request,guest)
+#             return JsonResponse({'guestname':guest.username,'ud':guest.id})
+#         else:
+#             return JsonResponse({'errors':'create guest faild'})
+#     else:
+#         return HttpResponse('sbb')
+
+
 @login_required
 def show(request,id):
     user=request.user

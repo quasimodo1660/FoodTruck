@@ -188,7 +188,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'apps/static'),
 )
 
-
+AVATAR_GRAVATAR_DEFAULT='https://i.imgur.com/Keg7X6S.png'
 LOGIN_URL = '/accounts/login'
 LOGOUT_URL = '/accounts/logout'
 LOGIN_REDIRECT_URL = '/'
@@ -198,7 +198,7 @@ IMPORT_EXPORT_USE_TRANSACTIONS = True
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 CORS_ORIGIN_ALLOW_ALL = True
-
+X_FRAME_OPTIONS = 'DENY'
 
 # Social Login stuff
 

@@ -41,6 +41,7 @@ class Profile(models.Model):
     postal_code= models.CharField(max_length=10, blank=True)
     phone = models.CharField(max_length=15, blank=True)
     following = models.ManyToManyField(User,related_name='followers',blank=True)
+    chating = models.ManyToManyField(User,related_name='related_to',blank=True)
     
 
 @receiver(post_save, sender=User)
@@ -49,9 +50,9 @@ def create_user_profile(sender, instance, created, **kwargs):
         Profile.objects.create(user=instance)
         
 
-# @receiver(post_save, sender=User)
-# def save_user_profile(sender, instance, **kwargs):
-#     instance.profile.save()
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
 
 @receiver(post_save,sender=User)
 def create_auth_token(sender, instance, created, **kwargs):

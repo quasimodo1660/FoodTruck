@@ -7,7 +7,11 @@ from django.http import JsonResponse
 import json
 from django.contrib.auth import login
 from django.db.models import Q
+from django.views.decorators.clickjacking import xframe_options_exempt
+from .models import *
 
+
+@xframe_options_exempt
 def index(request):
     user=request.user
     lunchboxImages = LunchboxImage.objects.all()
@@ -21,3 +25,21 @@ def search(request):
     lunchbox_filter=Lunchbox.objects.filter(Q(title__contains=t)|Q(location__contains=t)|Q(tags__name__contains=t)|Q(user__username__contains=t)).filter(display=True).distinct()
     # print user_filter
     return render(request,'home/search.html',{'all_users':user_filter,'all_lunchboxes':lunchbox_filter,'user':request.user})
+
+
+def chat_users(request):
+    # print request.POST
+    if 'purpose' in request.POST:
+        chater=User.objects.get(pk=request.POST['rid'])
+        Message.objects.create(sender=request.user,receiver=chater,content=request.POST['msg_type_content'])
+        return JsonResponse({'success':'add a message'})
+    else:
+        chater=User.objects.get(pk=request.POST['uid'])
+    # return JsonResponse({'sbb':'ajj'})   
+        msg_list=Message.objects.filter(Q(sender=request.user,receiver=chater)|Q(receiver=request.user,sender=chater)).order_by('created_at')
+    # print msg_list
+        return render(request,'home/msg_list.html',{'cid':request.POST['cid'],'chater':chater,'user':request.user,'msg_list':msg_list})
+
+def chat(request):
+    print request.user
+    return render(request,'chat.html',{'user':request.user})

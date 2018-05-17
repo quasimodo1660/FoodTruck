@@ -1,0 +1,134 @@
+{% load avatar_tags %}
+{% load static %}
+{% load extras_tag %}
+<style>
+    .chat_content{
+        overflow: auto;
+    }
+    .messages{
+        width: 98%;
+        height: 17em;
+        padding: 5px 5px 5px 5px;
+        list-style: none;
+        overflow: auto;
+        margin-left:5px;
+        margin-right:5px;
+        position: relative;
+    }
+    .messages .message {
+    clear: both;
+    overflow: hidden;
+    margin-bottom: 10px;
+    transition: all 0.5s linear;
+    opacity: 0;
+  }
+  .messages .message.left .avatar {
+    background-color: #f5886e;
+    float: left;
+  }
+  .messages .message.left .text_wrapper {
+    background-color: #ffe6cb;
+    margin-left: 10px;
+  }
+  .messages .message.left .text_wrapper::after, .messages .message.left .text_wrapper::before {
+    right: 100%;
+    border-right-color: #ffe6cb;
+  }
+  .messages .message.left .text {
+    color: #c48843;
+  }
+  .messages .message.right .avatar {
+    background-color: #fdbf68;
+    float: right;
+  }
+  .messages .message.right .text_wrapper {
+    background-color: #eceff1;
+    margin-right: 10px;
+    float: right;
+  }
+  .messages .message.right .text_wrapper::after, .messages .message.right .text_wrapper::before {
+    left: 100%;
+    border-left-color:#eceff1;
+  }
+  .messages .message.right .text {
+    color: #455a64;
+  }
+  .messages .message.appeared {
+    opacity: 1;
+  }
+  .messages .message .avatar {
+    width: 40px;
+    /* height: 35px; */
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .messages .message .text_wrapper {
+    display: inline-block;
+    padding: 8px;
+    border-radius: 6px;
+    /* width: calc(100% - 85px);
+    min-width: 100px; */
+    max-width: 300px;
+    overflow-wrap: break-word;
+    position: relative;
+  }
+  /* .messages .message .text_wrapper::after, .messages .message .text_wrapper:before {
+    top: 18px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  .messages .message .text_wrapper::after {
+    border-width: 13px;
+    margin-top: 0px;
+  }
+  .messages .message .text_wrapper::before {
+    border-width: 15px;
+    margin-top: -2px;
+  } */
+  .messages .message .text_wrapper .text {
+    font-size: 18px;
+    font-weight: 300;
+  }
+  
+</style>
+
+
+
+
+<div class='chat_content'>
+<ul id='{{cid}}' class='messages'>
+    {% for msg in msg_list %}
+    {% if user == msg.sender %}
+    <li class='message right appeared'>
+            <div class="avatar">
+                    {% if msg.sender.socialaccount_set.all.0.get_avatar_url %}
+                    <a href='/accounts/profile/{{msg.sender.id}}'><img src="{{ msg.sender.socialaccount_set.all.0.get_avatar_url }}" class="circle responsive-img hoverable"></a>
+                    {% else %}
+                    <a href='/accounts/profile/{{msg.sender.id}}'>{% avatar msg.sender class="responsive-img circle hoverable" %}</a>
+                    {% endif %}
+                    </div>
+            <div class="text_wrapper">
+                    <div class="text">{{msg.content}}</div> 
+            </div>     
+    </li>
+    {% else %}
+    <li class='message left appeared'>
+        <div class="avatar">
+        {% if msg.sender.socialaccount_set.all.0.get_avatar_url %}
+        <a href='/accounts/profile/{{msg.sender.id}}'><img src="{{ msg.sender.socialaccount_set.all.0.get_avatar_url }}" class="circle responsive-img hoverable"></a>
+        {% else %}
+        <a href='/accounts/profile/{{msg.sender.id}}'>{% avatar msg.sender class="responsive-img circle hoverable" %}</a>
+        {% endif %}
+        </div>
+        <div class="text_wrapper">
+                <div class="text">{{msg.content}}</div> 
+        </div>   
+    {% endif %}
+    {% endfor %}
+</ul>
+
+</div>

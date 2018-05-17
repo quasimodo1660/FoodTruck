@@ -18,7 +18,7 @@ from datetime import datetime
 from django.utils import timezone
 from avatar.models import Avatar
 from django.contrib.auth.decorators import login_required
-
+from django.views.decorators.clickjacking import xframe_options_exempt
 
 # Create your views here.
 def index(request):
@@ -109,7 +109,7 @@ def tag(request):
 # end of Frank's code
 
 
-
+@xframe_options_exempt
 def show(request,id):
     lunchbox=Lunchbox.objects.get(pk=int(id))
     user=request.user

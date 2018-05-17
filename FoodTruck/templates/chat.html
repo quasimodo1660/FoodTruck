@@ -1,31 +1,191 @@
 {% load static %}
 {% load avatar_tags %}
-<!-- Modal Trigger -->
-<div id="addLunboxButton" >
-    <a id='add_b' href='/lunchbox/add' class="waves-effect waves-orange btn-floating btn-large orange tooltipped" data-position="left" data-tooltip="Add a Bento" style="position: fixed;bottom: 13%;right: 10px;z-index: 1000"><i class="material-icons">add</i></a>
-    {% if user.is_authenticated %}  
-    <a id='chat_b' href='#modal1' class="waves-effect waves-orange btn-floating btn-large orange modal-trigger tooltipped" data-position="left" data-tooltip="Chat" style="position: fixed;bottom: 5%;right: 10px;z-index: 1000"><i class="material-icons">chat</i></a>
-    {% else %}
-    <a id='chat_b' href='#modal1' class="disabled waves-effect waves-orange btn-floating btn-large orange modal-trigger tooltipped" data-position="left" data-tooltip="Please sign in to chat" style="position: fixed;bottom: 5%;right: 10px;z-index: 1000"><i class="material-icons">chat</i></a>
-    {% endif %}
-</div>
-
-<!-- Modal Structure -->
-<div id="modal1" class="modal bottom-sheet">
-  <div class="modal-content">
-      <h5 id='chat_title' class='orange-text'>Chat box</h5>
-            <ul id='user_list' class="collection">
-            
-            </ul>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+<style>
+    .userList{
+        position: fixed;
+        /* width: 25%; */
+        height: 30em;
+        bottom: 0px;
+        right: 15px;
+        z-index: 1000;
+        background-color: white;
+    }
+    .chat_window{
+        position: fixed;
+        /* width: 30%; */
+        height: 30em;
+        bottom: 0px;
+        right: 28%;
+        z-index: 1000;
+        margin:0;
+        padding:0;
+        background-color: white;
+    }
+    .chat_wrapper{  
+        position: fixed;
+        /* width: 25%; */
         
-       
-    </div>
- 
-  <div class="modal-footer">
-    <a href="#!" class="modal-action modal-close waves-effect waves-orange btn-flat">Close</a>
-  </div>
+        bottom: 0px;
+        right: 15px;
+        z-index: 1100;
+        height: 6%;
+        background-color: white;
+    }
+    .ct{
+        height: 8%; 
+        background-color: white;
+        border-bottom: 1px,solid
+    }
+    .type_msg{
+        height:19%;
+        width: 100%;
+        border-top: 1px,grey;
+        bottom:0px;
+        position: absolute;
+    }
+    .chat_content{
+        overflow: auto;
+    }
+    .messages{
+        width: 98%;
+        height: 17em;
+        padding: 5px 5px 5px 5px;
+        list-style: none;
+        overflow: auto;
+        margin-left:5px;
+        margin-right:5px;
+        position: relative;
+    }
+    .messages .message {
+    clear: both;
+    overflow: hidden;
+    margin-bottom: 10px;
+    transition: all 0.5s linear;
+    opacity: 0;
+  }
+  .messages .message.left .avatar {
+    background-color: #f5886e;
+    float: left;
+  }
+  .messages .message.left .text_wrapper {
+    background-color: #ffe6cb;
+    margin-left: 10px;
+  }
+  .messages .message.left .text_wrapper::after, .messages .message.left .text_wrapper::before {
+    right: 100%;
+    border-right-color: #ffe6cb;
+  }
+  .messages .message.left .text {
+    color: #c48843;
+  }
+  .messages .message.right .avatar {
+    background-color: #fdbf68;
+    float: right;
+  }
+  .messages .message.right .text_wrapper {
+    background-color: #eceff1;
+    margin-right: 10px;
+    float: right;
+  }
+  .messages .message.right .text_wrapper::after, .messages .message.right .text_wrapper::before {
+    left: 100%;
+    border-left-color:#eceff1;
+  }
+  .messages .message.right .text {
+    color: #455a64;
+  }
+  .messages .message.appeared {
+    opacity: 1;
+  }
+  .messages .message .avatar {
+    width: 40px;
+    /* height: 35px; */
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .messages .message .text_wrapper {
+    display: inline-block;
+    padding: 8px;
+    border-radius: 6px;
+    /* width: calc(100% - 85px);
+    min-width: 100px; */
+    max-width: 300px;
+    overflow-wrap: break-word;
+    position: relative;
+  }
+  /* .messages .message .text_wrapper::after, .messages .message .text_wrapper:before {
+    top: 18px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  .messages .message .text_wrapper::after {
+    border-width: 13px;
+    margin-top: 0px;
+  }
+  .messages .message .text_wrapper::before {
+    border-width: 15px;
+    margin-top: -2px;
+  } */
+  .messages .message .text_wrapper .text {
+    font-size: 18px;
+    font-weight: 300;
+  }
+</style>
+
+
+
+
+
+<div id="addLunboxButton" >
+    <a id='add_b' href='/lunchbox/add' class="waves-effect waves-orange btn-floating btn-large orange tooltipped" data-position="left" data-tooltip="Add a Bento" style="position: fixed;bottom: 10%;right: 10px;z-index: 1000"><i class="material-icons">add</i></a>
+</div>
+<div class="col-lg-3 chat_wrapper valign-wrapper z-depth-2">
+    
+    <i class="fas fa-comments" style="color:orange"></i>&nbsp; Massaging<span id='total_new' style='display: none;' class="right new badge orange">0</span>
+   
+    
+</div>
+<div class='col-lg-3 userList z-depth-4' style="display:none">
+  
+      <lable id='chat_title'>You are online</lable><hr>
+      <ul class="collection" style="overflow: auto" id="user_list"></ul>
+  
 </div>
 
+
+
+<div class='col-lg-4 chat_window z-depth-4' style="display:none">
+        <nav>
+                <div class="chatbar nav-wrapper grey lighten-5 blue-text text-darken-2">
+                  &nbsp;&nbsp;<a href="#!" class="avatar chat-avatar grey-text text-darken-3"></a>
+                  <ul class="right hide-on-med-and-down">
+                    <li><a id='close-chat' href="#"><i class="material-icons orange-text">cancel</i></a></li>
+                  </ul>
+                </div>
+        </nav>
+        <div class='chat_content'>
+
+        </div>
+        <div class='type_msg z-depth-4'>
+                <input class='render_uid' type="hidden" value=''>
+                <textarea placeholder="Type your message" class="form-control" id="msg_type_content" rows="3" required></textarea>
+                <button class="float-right btn-flat orange-text" id='send_msg_btn'>send
+                        <i class="material-icons right">send</i>
+                      </button>
+        </div>
+</div> 
+
+
+<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
 <script type ="text/javascript" src="http://13.57.221.111:6789/socket.io/socket.io.js"></script>
 <!-- <script type ="text/javascript" src="http://127.0.0.1:6789/socket.io/socket.io.js"></script> -->
 <script type="text/javascript">
@@ -36,9 +196,15 @@
   });     
 </script>
 <script>
+   '{% if user.is_authenticated %}'   
     var jsuser={
         username:'{{user.username}}',
         user_id:'{{ user.id }}',
     }
+    '{% else %}'
+    var jsuser={}
+    '{% endif %}'
 </script>
 <script type="text/javascript" src="{% static 'js/chat.js' %}"></script> 
+
+

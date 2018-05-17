@@ -286,6 +286,10 @@
            </div>
 {% endblock %}
 
+{% block chatbox %}
+{% include 'chat.html' %}
+{% endblock %}
+
 {% block javascript %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.1/jquery.timeago.js"></script>  
 <script src="{% static 'user/js/main.js' %}"></script> 

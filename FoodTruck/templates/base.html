@@ -64,12 +64,13 @@
             {% if user.socialaccount_set.all.0.get_avatar_url %}
             <li><a href="/accounts/profile/{{user.id}}"><img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="own-img img-circle img-responsive rounded-circle" style="width:2.25em"><span class="grey-text text-darken-3"> {{user.get_full_name }}</span></a></li>
             {% else %}
-            <li><a href="/accounts/profile/{{user.id}}">{% avatar user 35 class="own-img img-circle img-responsive rounded-circle" %} <span class="grey-text text-darken-3">{{user.username }}</span></a></li>
+            <li><a href="/accounts/profile/{{user.id}}">{% avatar user 35 class="avatar img-circle responsive-img rounded-circle" %} <span class="grey-text text-darken-3">{{user.username }}</span></a></li>
+            {% avatar user class="avatar img-circle own-img responsive-img rounded-circle" style="display:none"%} 
             {% endif %}
             <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="material-icons right"><span class="grey-text text-darken-3">arrow_drop_down</span></i></a></li>
             {% else %}
             <li><a href="/accounts/login"><span class="grey-text text-darken-3">Log in</span> </a></li>
-            <li><a href="/accounts/signup"><span class="grey-text text-darken-3">Sign up</span> </a></li>
+            <!-- <li><a href="/accounts/signup"><span class="grey-text text-darken-3">Sign up</span> </a></li> -->
             {% endif %}  
           </ul>
         </div>
