@@ -140,16 +140,16 @@
 </style>
 
 
-
-
-
 <div id="addLunboxButton" >
-    <a id='add_b' href='/lunchbox/add' class="waves-effect waves-orange btn-floating btn-large orange tooltipped" data-position="left" data-tooltip="Add a Bento" style="position: fixed;bottom: 10%;right: 10px;z-index: 1000"><i class="material-icons">add</i></a>
+        <a id='add_b' href='/lunchbox/add' class="z-depth-4 waves-effect waves-orange btn-floating btn-large orange tooltipped" data-position="left" data-tooltip="Add a Bento" style="position: fixed;bottom: 10%;right: 10px;z-index: 1000"><i class="material-icons">add</i></a>
 </div>
-<div class="col-lg-3 chat_wrapper valign-wrapper z-depth-2">
-    
+
+
+
+<div class="col-lg-3 chat_wrapper valign-wrapper z-depth-5">
+  
     <i class="fas fa-comments" style="color:orange"></i>&nbsp; Massaging<span id='total_new' style='display: none;' class="right new badge orange">0</span>
-   
+
     
 </div>
 <div class='col-lg-3 userList z-depth-4' style="display:none">
@@ -203,7 +203,7 @@
     }
     '{% else %}'
     var jsuser={}
-    '{% endif %}'
+    '{% endif %}'   
 </script>
 <script type="text/javascript" src="{% static 'js/chat.js' %}"></script> 
 

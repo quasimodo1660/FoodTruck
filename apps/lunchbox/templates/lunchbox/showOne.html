@@ -71,12 +71,15 @@
                     <form method="POST" action="/lunchbox/addLike/{{lunchbox.id}}" id='likeForm'>{% csrf_token %}
                             <input type="hidden" name="bentoID" value="{{lunchbox.id}}">
                     
-                
+                    {% if user.is_authenticated %}        
                      {% if user in lunchbox.likedby.all %}
                      <button type='submit' class='btn-flat'><i class='fas fa-thumbs-up fa-lg' style='color:orange'></i></button>
                      {% else %}
                     <button type='submit' class='btn-flat'><i class='far fa-thumbs-up fa-lg' style='color:orange'></i></button>
                     
+                    {% endif %}
+                    {% else %}
+                    <a href='#' class='btn-flat tooltipped' data-position="bottom" data-tooltip="Please login"><i class='far fa-thumbs-up fa-lg' style='color:orange'></i></a>
                     {% endif %}
                     </form>
                 
@@ -91,7 +94,7 @@
                         {% endif %}
                     {% endfor%}
              
-                    <button id='test_btn'>comunicate to nodeserver</button>
+                   
                     </div>
                 </div>
     </div>
@@ -135,8 +138,11 @@
             <p>No review yep. Be the first reviewer.</p>                                     
           {% endfor %}
         </ul>  
+        {% if user.is_authenticated %}        
         <a href="#modal3" class='btn orange modal-trigger edit_review'>Add a review</a>
-        
+        {% else %}
+        <a href="#" class='btn orange tooltipped' data-position="bottom" data-tooltip="Please login to add a review">Add a review</a>
+        {% endif %}
         <div id="modal1" class="modal fade" style="height:25%">
                 <div class="modal-content">
                   <h4>Delete review</h4>
@@ -238,6 +244,7 @@
 $(document).ready(function(){
     $('.materialboxed').materialbox();
     $('.slider').slider();
+    $('.tooltipped').tooltip();
 });
 jQuery.timeago.settings.allowFuture = true;
     jQuery("abbr.timeago").timeago();

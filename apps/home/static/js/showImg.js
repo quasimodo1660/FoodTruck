@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    console.log('showImg working');
+    // console.log('showImg working');
     // init Masonry
     // https://codepen.io/craigwheeler/pen/MYjBga
     var $grid = $('.grid').masonry({
@@ -21,7 +21,7 @@ $(document).ready(function(){
 
 
 });
-// emily's. for close button.
+//emily's. for close button.
 var targetArea = document.getElementById("ShowArea").style;
 
 function closead() {

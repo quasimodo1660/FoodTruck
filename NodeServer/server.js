@@ -63,7 +63,7 @@ class Client{
     }
 }
 
-
+var users=[];
 var userList=[];
 var messages=[];
 var userCounter=0;
@@ -77,22 +77,41 @@ io.sockets.on('connection',function(socket){
     
     socket.on('authentication',function(data){  
         // console.log(data);
-        if(data.isUser){
-            var client = new Client(temp,true,data['user_id'],data['username'],data['img'])
-            userList.push(client);
-        }
-        else{            
-            var client = new Client(temp,false)
-            userList.push(client);
-        }
-        console.log(userList)
-        // transporter.sendMail(mailOptions, function(error, info){
+        var user=users.find(function(x){
+            return x.user_id==data.client
+        })
+        // console.log('user in users'+user)
+        if(user==undefined){
+            // transporter.sendMail(mailOptions, function(error, info){
         //     if (error) {
         //       console.log(error);
         //     } else {
         //       console.log('Email sent: ' + info.response);
         //     }
         //   });
+            var client;
+            if(data.isUser){
+                client = new Client(temp,true,data['user_id'],data['username'],data['img'])
+                users.push(client);
+                userList.push(client)
+            }
+            else{            
+                client = new Client(temp,false)
+                users.push(client);
+                userList.push(client)      
+            }
+            socket.emit('generate_id',{'client_id':client.user_id})
+        }
+        else{
+            user.cid=temp
+            userList.push(user)
+        }
+           
+
+
+
+        
+        console.log(userList)
         io.emit( "my_full_broadcast_event",{count:userCounter,users:userList});
     })
     
@@ -110,12 +129,12 @@ io.sockets.on('connection',function(socket){
             return x.cid!=socket.id;
         })
         // console.log(userList)
-        messages=messages.filter(function(x){
-            return x.sender!=dis_client.user_id
-        }).filter(function(x){
-            return x.receiver!=dis_client.user_id
-        })
-        console.log(messages)
+        // messages=messages.filter(function(x){
+        //     return x.sender!=dis_client.user_id
+        // }).filter(function(x){
+        //     return x.receiver!=dis_client.user_id
+        // })
+        // console.log(messages)
         io.emit( "my_full_broadcast_event",{count:userCounter,users:userList});
     })
     
@@ -146,7 +165,10 @@ io.sockets.on('connection',function(socket){
 
     socket.on('new_message', function(data) {
         data['sender_id']=socket.id
-        socket.broadcast.to(data.client_id).emit( "received_message",data);
+        var receiver=users.find(function(x){
+            return x.user_id==data.client_id.replace('chat','')
+        })
+        socket.broadcast.to(receiver.cid).emit( "received_message",data);
     })
     socket.on('new_message_node',function(data){
         // console.log(data)
@@ -157,6 +179,10 @@ io.sockets.on('connection',function(socket){
         //     return y.chat_user_id==data.receiver
         // }).messages.push(msg);
         // socket.broadcast.to(data.sender.cid).emit('add_message',{'dbb':'sbb'})
+        var receiver=users.find(function(x){
+            return x.user_id==data.receiver
+        })
+        console.log(receiver)
         var msg = new Message(data.sender.user_id,data.receiver,data.content)
         messages.push(msg)
         // console.log(messages)
@@ -167,7 +193,7 @@ io.sockets.on('connection',function(socket){
         rdata['img']=data.sender.img
         rdata['user_id']=data.sender.user_id
         rdata['msg']=data.content
-        socket.broadcast.to(data.receiver_id).emit( "received_message",rdata);
+        socket.broadcast.to(receiver.cid).emit( "received_message",rdata);
     })
 })
 

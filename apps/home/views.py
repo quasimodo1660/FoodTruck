@@ -12,6 +12,11 @@ from .models import *
 
 
 @xframe_options_exempt
+def home(request):
+    return render(request,'home/index.html',{'user':request.user})
+
+
+@xframe_options_exempt
 def index(request):
     user=request.user
     lunchboxImages = LunchboxImage.objects.all()
@@ -40,6 +45,7 @@ def chat_users(request):
     # print msg_list
         return render(request,'home/msg_list.html',{'cid':request.POST['cid'],'chater':chater,'user':request.user,'msg_list':msg_list})
 
+@xframe_options_exempt
 def chat(request):
     print request.user
     return render(request,'chat.html',{'user':request.user})

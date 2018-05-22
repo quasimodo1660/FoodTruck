@@ -28,29 +28,34 @@ $(document).ready(function(){
             }
         }
      });
-
-
-    
-    
-    // console.log(typeof(jsuser))
-    // if(jsuser.username==''){
-        // $.ajax({
-        //     async: false,
-        //     global: false,
-        //     url:'/accounts/signupguest',
-        //     method:'post',
-        //     success: function(serverResponse){
-        //         jsuser.username=serverResponse.guestname
-        //         jsuser.user_id=serverResponse.ud
-        //         jsuser.img='https://api.adorable.io/avatars/132/'+serverResponse.guestname+'.png'
-        //         }          
-        // })
-    // }
+//=================== UI staff =========================   
+    // var userList_display=sessionStorage.getItem('userlist_is_display')
+    // console.log(sessionStorage.getItem('userlist_is_display'));
+    if(sessionStorage.getItem('userlist_is_display')=='1'){
+        // console.log(userList_display)
+        $('.userList').show()
+    }
    
+    var chatwindow_display=sessionStorage.getItem('chatwindow_id_display')
+    var lc=sessionStorage.getItem('last_chat_id')
+    var lcn=sessionStorage.getItem('last_chat_name')
+    var clinet=sessionStorage.getItem('user_id')
+
+
+    
+        
+
+    
+    
+
+//=================== INIT USER =========================
+    
+    jsuser.client=clinet;
     if(!jsuser.username==''){
         var img=$('.own-img').prop('src');
         jsuser['img']=img;
-        jsuser.isUser=true;
+        jsuser.isUser=true;  
+        jsuser.client=jsuser.user_id  
     }
        
     
@@ -67,7 +72,45 @@ $(document).ready(function(){
     
     socket.once('connect',function(){
         socket.emit('authentication',jsuser)
+        if(chatwindow_display=='1'){
+            $('.chat_window').show()
+            $('.chat-avatar').text(lcn)
+            $('.render_uid').val(lc)
+            if(lc.includes('G')||clinet.includes('G')){
+                socket.emit('load_conversation',{'sender':clinet,'receiver':lc})
+                socket.on('return_conversations',function(data){
+                    $('.chat_content').html("<ul class='messages'></ul>")
+                    $('.messages').attr('id','chat'+lc)
+                    // console.log(data.messages.length)
+                    for(var x=0;x<data.messages.length;x++){
+                        if(jsuser.user_id==data.messages[x].sender)
+                            $('.messages').append("<li class='message right appeared'><div class='avatar'><img src=\'"+jsuser.img+"\' class='circle responsive-img hoverable'></div><div class='text_wrapper'><div class='text'>"+data.messages[x].content+"</div></div></li>")
+                        else
+                            $('.messages').append("<li class='message left appeared'><div class='avatar'><img src=\'"+$('#'+lc).find('img').prop('src')+"\' class='circle responsive-img hoverable'></div><div class='text_wrapper'><div class='text'>"+data.messages[x].content+"</div></div></li>")   
+                    }
+                    $('.messages').animate({scrollTop: $('.messages').prop("scrollHeight")}, 500);
+                })
+            }
+            else{
+                $.ajax({
+                    url:'/chat/users',
+                    method:'post',
+                    data:{'uid':lc,'cid':clinet},
+                    // type:'clone',
+                    success: function(serverResponse){
+                        $('.chat_content').html(serverResponse)
+                        $('.messages').animate({scrollTop: $('.messages').prop("scrollHeight")}, 500);
+                        }
+                    })
+            }
+        }
     })
+
+    socket.on('generate_id',function(data){
+        // console.log(data)
+        sessionStorage.setItem('user_id',data.client_id)
+    })
+
 
     socket.on('my_full_broadcast_event',function(data){
         if(data.count>=2)  
@@ -117,6 +160,9 @@ $(document).ready(function(){
                 $('.messages').animate({scrollTop: $('.messages').prop("scrollHeight")}, 500);
                 }
             })
+            sessionStorage.setItem('chatwindow_id_display','1')
+            sessionStorage.setItem('last_chat_id',$(this).attr('id'))
+            sessionStorage.setItem('last_chat_name',$(this).find('.title').text())
          });
          $('.show_btn_node').on('click',function(event){
             var me=$(this)
@@ -136,7 +182,7 @@ $(document).ready(function(){
             socket.emit('load_conversation',{'sender':jsuser.user_id,'receiver':$(this).attr('id')})
             socket.on('return_conversations',function(data){
                 $('.chat_content').html("<ul class='messages'></ul>")
-                $('.messages').attr('id',me.find('.cid').val())
+                $('.messages').attr('id','chat'+me.attr('id'))
                 // console.log(data.messages.length)
                 for(var x=0;x<data.messages.length;x++){
                     if(jsuser.user_id==data.messages[x].sender)
@@ -144,7 +190,12 @@ $(document).ready(function(){
                     else
                         $('.messages').append("<li class='message left appeared'><div class='avatar'><img src=\'"+me.find('img').prop('src')+"\' class='circle responsive-img hoverable'></div><div class='text_wrapper'><div class='text'>"+data.messages[x].content+"</div></div></li>")   
                 }
+                $('.messages').animate({scrollTop: $('.messages').prop("scrollHeight")}, 500);
             })
+            sessionStorage.setItem('chatwindow_id_display','1')
+            // console.log($('.messages').attr('id'))
+            sessionStorage.setItem('last_chat_id',$(this).attr('id'))
+            sessionStorage.setItem('last_chat_name',$(this).find('.title').text())
      })
     })
 
@@ -156,7 +207,7 @@ $(document).ready(function(){
             last_left="<li class='message left appeared'><div class='avatar'><a href='/accounts/profile/"+data.user_id+"\'><img src=\'"+data.img+"\' class='circle responsive-img hoverable'></a></div><div class='text_wrapper'><div class='text'>"+data.msg+"</div></div></li>"
        else
             last_left="<li class='message left appeared'><div class='avatar'><img src=\'"+data.img+"\' class='circle responsive-img hoverable'></div><div class='text_wrapper'><div class='text'>"+data.msg+"</div></div></li>"
-       if($('.messages').attr('id')==data.sender_id){
+       if($('.messages').attr('id')=='chat'+data.user_id){
             $('.messages').append(last_left)   
             $('.messages').animate({scrollTop: $('.messages').prop("scrollHeight")}, 500);
        }
@@ -172,13 +223,20 @@ $(document).ready(function(){
 
 
     $('.chat_wrapper').on('click',function(event){  
-       $('.userList').slideToggle();
+       $('.userList').slideToggle('slow',function(){
+        if($('.userList').is(':hidden')){
+            sessionStorage.setItem('userlist_is_display','0')
+        }
+        else
+            sessionStorage.setItem('userlist_is_display','1')
+       });
        $('#total_new').fadeOut();
     });
     
     $('#close-chat').click(function(){
         $('.chat-avatar').empty();
         $('.chat_window').fadeOut();
+        sessionStorage.setItem('chatwindow_id_display','0')
     })
     
     $('#send_msg_btn').click(function(){
