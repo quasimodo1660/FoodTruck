@@ -184,9 +184,9 @@ USE_TZ = True
 
 # STATIC_ROOT = os.path.join(BASE_DIR, '/static')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'apps/static'),
-)
+#STATICFILES_DIRS = (
+    #os.path.join(BASE_DIR, 'apps/static'),
+#)
 
 AVATAR_GRAVATAR_DEFAULT='https://i.imgur.com/Keg7X6S.png'
 LOGIN_URL = '/accounts/login'

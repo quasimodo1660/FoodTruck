@@ -1,12 +1,18 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from .models import *
+from avatar.models import Avatar
+
+
+
+
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     profile = serializers.PrimaryKeyRelatedField(many=False, queryset=Profile.objects.all())
+    # avatar = serializers.PrimaryKeyRelatedField(many=False, queryset=Avatar.objects.get(''))
     class Meta:
         model = User
-        fields = ('url', 'username', 'email', 'groups','profile')
+        fields = ('id','url', 'username', 'email', 'groups','profile')
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):

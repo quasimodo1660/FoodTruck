@@ -53,13 +53,14 @@ class Message{
 // }
 
 class Client{
-    constructor(cid,isuser,id='G'+guset_id,username='GUEST',img='https://api.adorable.io/avatars/135/'+makeid()){
+    constructor(cid,isuser,id='G'+guset_id,username='GUEST',img='https://api.adorable.io/avatars/135/'+makeid()+'.png'){
         this.user_id=id;
         this.cid=cid;
         this.username=username
         this.conversations=[];
         this.isUser=isuser;
         this.img=img
+        this.platform='Web Browser'
     }
 }
 
@@ -71,12 +72,13 @@ var io = require('socket.io')(server);
 io.sockets.on('connection',function(socket){
     userCounter++;
     guset_id++;
+    // console.log(socket)
     console.log('Client socket is connected!');
     var temp=socket.id
     console.log(userCounter);
     
     socket.on('authentication',function(data){  
-        // console.log(data);
+        console.log(data);
         var user=users.find(function(x){
             return x.user_id==data.client
         })
@@ -97,9 +99,14 @@ io.sockets.on('connection',function(socket){
             }
             else{            
                 client = new Client(temp,false)
+            
                 users.push(client);
                 userList.push(client)      
             }
+            if(data.platform)  
+                client.platform=data.platform
+            else
+                client.platform='Web Browser'
             socket.emit('generate_id',{'client_id':client.user_id})
         }
         else{
