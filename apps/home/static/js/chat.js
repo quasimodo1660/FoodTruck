@@ -126,13 +126,13 @@ $(document).ready(function(){
                 jsuser=data.users[x]
             if(socket.id!=data.users[x].cid){
                 if(!jsuser.isUser){
-                    l+="<li class='collection-item avatar show_btn_node' id=\'"+data.users[x].user_id+"\'><img src=\'"+data.users[x].img+"\' class='circle'><span class='title'>"+data.users[x].username+"</span><p class='nn' style='display:none'>0</p><input class='cid' type='hidden' value=\'"+data.users[x].cid+"\'><a href='#' class='secondary-content orange-text'><i class='material-icons orange-text'>chat</i></a></li>";
+                    l+="<li class='collection-item avatar show_btn_node' id=\'"+data.users[x].user_id+"\'><img src=\'"+data.users[x].img+"\' class='circle'><span class='title'>"+data.users[x].username+"</span><p>"+data.users[x].platform+"</p><p class='nn' style='display:none'>0</p><input class='cid' type='hidden' value=\'"+data.users[x].cid+"\'><a href='#' class='secondary-content orange-text'><i class='material-icons orange-text'>chat</i></a></li>";
                 }
                 else{
                     if(data.users[x].isUser)
-                    l+="<li class='collection-item avatar show_btn' id=\'"+data.users[x].user_id+"\'><img src=\'"+data.users[x].img+"\' class='circle'><span class='title'>"+data.users[x].username+"</span><p class='nn' style='display:none'>0</p><input class='cid' type='hidden' value=\'"+data.users[x].cid+"\'><a href='#' class='secondary-content orange-text'><i class='material-icons orange-text'>chat</i></a></li>";
+                    l+="<li class='collection-item avatar show_btn' id=\'"+data.users[x].user_id+"\'><img src=\'"+data.users[x].img+"\' class='circle'><span class='title'>"+data.users[x].username+"</span><p>"+data.users[x].platform+"</p><p class='nn' style='display:none'>0</p><input class='cid' type='hidden' value=\'"+data.users[x].cid+"\'><a href='#' class='secondary-content orange-text'><i class='material-icons orange-text'>chat</i></a></li>";
                     else
-                    l+="<li class='collection-item avatar show_btn_node' id=\'"+data.users[x].user_id+"\'><img src=\'"+data.users[x].img+"\' class='circle'><span class='title'>"+data.users[x].username+"</span><p class='nn' style='display:none'>0</p><input class='cid' type='hidden' value=\'"+data.users[x].cid+"\'><a href='#' class='secondary-content orange-text'><i class='material-icons orange-text'>chat</i></a></li>";
+                    l+="<li class='collection-item avatar show_btn_node' id=\'"+data.users[x].user_id+"\'><img src=\'"+data.users[x].img+"\' class='circle'><span class='title'>"+data.users[x].username+"</span><p>"+data.users[x].platform+"</p><p class='nn' style='display:none'>0</p><input class='cid' type='hidden' value=\'"+data.users[x].cid+"\'><a href='#' class='secondary-content orange-text'><i class='material-icons orange-text'>chat</i></a></li>";
                 }                
             }
                 

@@ -19,6 +19,7 @@ var mailOptions = {
     text: 'Client socket is connected!! Check it please.'
   };
   
+const g = require('node-unique-id-generator');
 
 
 
@@ -38,10 +39,14 @@ function makeid() {
   }
 
 class Message{
-    constructor(sender,receiver,content){
+    constructor(sender,sender_username,sender_img,receiver,content,mid=g.generateGUID()){
         this.sender=sender;
+        this.sender_username=sender_username
+        this.sender_img=sender_img
         this.receiver=receiver;
-        this.content=content
+        this.content=content  
+        this.mid=mid
+        this.createdAt=new Date()
     }
 }
 
@@ -107,7 +112,7 @@ io.sockets.on('connection',function(socket){
                 client.platform=data.platform
             else
                 client.platform='Web Browser'
-            socket.emit('generate_id',{'client_id':client.user_id})
+            socket.emit('generate_id',{'client_id':client.user_id,'client_name':client.username,'client_img':client.img})
         }
         else{
             user.cid=temp
@@ -164,7 +169,7 @@ io.sockets.on('connection',function(socket){
         var conversation=messages.filter(function(x){
             return (x.sender==data.sender&&x.receiver==data.receiver)||(x.sender==data.receiver&&x.receiver==data.sender)
         })
-        // console.log(conversation)
+        console.log('conversation'+conversation)
         socket.emit('return_conversations',{'messages':conversation})
             
     })
@@ -189,11 +194,11 @@ io.sockets.on('connection',function(socket){
         var receiver=users.find(function(x){
             return x.user_id==data.receiver
         })
-        console.log(receiver)
-        var msg = new Message(data.sender.user_id,data.receiver,data.content)
+        // console.log(receiver)
+        var msg = new Message(data.sender.user_id,data.sender.username,data.sender.img,data.receiver,data.content,data.mid)
         messages.push(msg)
-        // console.log(messages)
-        // socket.emit('add_message','success')
+        console.log(messages)
+    
         var rdata={}
         rdata['username']=data.sender.username
         rdata['sender_id']=socket.id
@@ -201,6 +206,7 @@ io.sockets.on('connection',function(socket){
         rdata['user_id']=data.sender.user_id
         rdata['msg']=data.content
         socket.broadcast.to(receiver.cid).emit( "received_message",rdata);
+        socket.broadcast.to(receiver.cid).emit( "rn_received_message",msg);
     })
 })
 
