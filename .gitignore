@@ -1,3 +1,3 @@
 *.pyc
 venv/
-settings.py
+FoodTruck/settings.py
