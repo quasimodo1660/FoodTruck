@@ -7,20 +7,32 @@ from django.http import JsonResponse
 import json
 from django.contrib.auth import login
 from django.db.models import Q
-from django.views.decorators.clickjacking import xframe_options_exempt
+
 from .models import *
 
 
-@xframe_options_exempt
+
 def home(request):
-    return render(request,'home/index.html',{'user':request.user})
+    print request.user_agent.is_mobile
+    if request.user_agent.is_mobile and request.user.is_authenticated:
+        response = HttpResponse('',status=302)
+        response['Location']='BENTOMAN://login?user=124'
+        return redirect('')
+        return response['Location'] 
+    else:
+        return render(request,'home/index.html',{'user':request.user})
 
 
-@xframe_options_exempt
+
 def index(request):
-    user=request.user
-    lunchboxImages = LunchboxImage.objects.all()
-    return render(request,'home/home.html',{'user':user,'all_lunchboxes':Lunchbox.objects.all().order_by("-updated_at"),'LIS':lunchboxImages})
+    if request.user_agent.is_mobile:
+        response=HttpResponse("",status=302)
+        response['Location']="bentoman://id="+str(request.user.id)
+        return response
+    else:
+        user=request.user
+        lunchboxImages = LunchboxImage.objects.all()
+        return render(request,'home/home.html',{'user':user,'all_lunchboxes':Lunchbox.objects.all().order_by("-updated_at"),'LIS':lunchboxImages})
 
 
 
@@ -45,7 +57,7 @@ def chat_users(request):
     # print msg_list
         return render(request,'home/msg_list.html',{'cid':request.POST['cid'],'chater':chater,'user':request.user,'msg_list':msg_list})
 
-@xframe_options_exempt
+
 def chat(request):
     print request.user
     return render(request,'chat.html',{'user':request.user})

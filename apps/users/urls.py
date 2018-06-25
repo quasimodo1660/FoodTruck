@@ -7,5 +7,5 @@ urlpatterns = [
     url(r'update',views.update),
     url(r'friends',views.friendShip),
     url(r'^setting/(?P<id>\d+)$', views.settingPofile),
-
+    url(r'^renderUser/(?P<id>\d+)$', views.renderUser),
 ]

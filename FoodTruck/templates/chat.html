@@ -198,7 +198,7 @@
 <script>
    '{% if user.is_authenticated %}'   
     var jsuser={
-        username:'{{user.username}}',
+        username:'{{user.get_full_name}}',
         user_id:'{{ user.id }}',
     }
     '{% else %}'

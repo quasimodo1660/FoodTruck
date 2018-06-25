@@ -1,4 +1,4 @@
-from django.shortcuts import render,HttpResponse,redirect
+from django.shortcuts import render,HttpResponse,redirect,HttpResponseRedirect
 from .forms import *
 from django.contrib import messages
 from django.http import JsonResponse
@@ -10,6 +10,16 @@ from .serializers import UserSerializer, GroupSerializer
 import avatar
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
+from django.dispatch import receiver
+from allauth.socialaccount.signals import pre_social_login
+from allauth.account.signals import user_logged_in
+
+
+
+
+
+
+
 
 @login_required
 def update(request):
@@ -124,3 +134,37 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+
+
+
+# Moble App Social login stuff
+# @receiver(pre_social_login)
+# def UserFeedBack(sender,request,sociallogin,**kwargs):
+#     print sender
+#     print request.user
+#     print sociallogin.account.user
+#     print sociallogin.token
+#     print sociallogin.state
+#     return JsonResponse({'sb':'desx'})
+
+@receiver(user_logged_in)
+def ddd(request,user,**kwargs):
+    print request
+    print user.socialaccount_set.first().get_avatar_url()
+    # return redirect('OAuthLogin://login?user='+str(user.id))
+    print request.user_agent.is_mobile
+    if request.user_agent.is_mobile:
+        # response = HttpResponse('',status=302)
+        # response['Location']='BENTOMAN://login?user=124'
+        # return response['Location']
+        return redirect('lunchbox/82')
+
+
+def renderUser(request,id):
+    user=User.objects.get(pk=id)
+    if user.first_name and user.last_name:
+        username=user.get_full_name()
+    else:
+        username=user.username
+    avatar=user.socialaccount_set.first().get_avatar_url()
+    return JsonResponse({'user_id':user.id,'user_name':username,'img':avatar})

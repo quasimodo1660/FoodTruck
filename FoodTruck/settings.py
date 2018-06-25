@@ -54,7 +54,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.facebook',
     'django_social_share',
-    'corsheaders'
+    'corsheaders',
+    'django_user_agents'
   
 ]
 SITE_ID = 1
@@ -70,6 +71,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'social_django.middleware.SocialAuthExceptionMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
 ]
 
 ROOT_URLCONF = 'FoodTruck.urls'
@@ -96,6 +98,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'FoodTruck.wsgi.application'
 
+
+USER_AGENTS_CACHE = 'default'
+
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+#         'LOCATION': '127.0.0.1:11211',
+#     }
+# }
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
@@ -198,7 +209,7 @@ IMPORT_EXPORT_USE_TRANSACTIONS = True
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 CORS_ORIGIN_ALLOW_ALL = True
-X_FRAME_OPTIONS = 'DENY'
+# X_FRAME_OPTIONS = 'DENY'
 
 # Social Login stuff
 
@@ -229,6 +240,7 @@ SOCIALACCOUNT_PROVIDERS = {
             'name',
             'first_name',
             'last_name',
+            'picture',
             'verified',
             'locale',
             'timezone',

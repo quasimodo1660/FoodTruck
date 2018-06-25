@@ -60,7 +60,7 @@ $(document).ready(function(){
        
     
 
-    var server='http://127.0.0.1:6789'
+    // var server='http://127.0.0.1:6789'
     // var server='http://13.57.221.111:6789';
     var socket = io.connect('http://127.0.0.1:6789',{
         reconnection: true,
