@@ -76,7 +76,7 @@ $(document).ready(function(){
             $('.chat_window').show()
             $('.chat-avatar').text(lcn)
             $('.render_uid').val(lc)
-            if(lc.includes('G')||clinet.includes('G')){
+            // if(lc.includes('G')||clinet.includes('G')){
                 socket.emit('load_conversation',{'sender':clinet,'receiver':lc})
                 socket.on('return_conversations',function(data){
                     $('.chat_content').html("<ul class='messages'></ul>")
@@ -90,19 +90,19 @@ $(document).ready(function(){
                     }
                     $('.messages').animate({scrollTop: $('.messages').prop("scrollHeight")}, 500);
                 })
-            }
-            else{
-                $.ajax({
-                    url:'/chat/users',
-                    method:'post',
-                    data:{'uid':lc,'cid':clinet},
-                    // type:'clone',
-                    success: function(serverResponse){
-                        $('.chat_content').html(serverResponse)
-                        $('.messages').animate({scrollTop: $('.messages').prop("scrollHeight")}, 500);
-                        }
-                    })
-            }
+            //}
+            // else{
+            //     $.ajax({
+            //         url:'/chat/users',
+            //         method:'post',
+            //         data:{'uid':lc,'cid':clinet},
+            //         // type:'clone',
+            //         success: function(serverResponse){
+            //             $('.chat_content').html(serverResponse)
+            //             $('.messages').animate({scrollTop: $('.messages').prop("scrollHeight")}, 500);
+            //             }
+            //         })
+            // }
         }
     })
 
@@ -130,7 +130,7 @@ $(document).ready(function(){
                 }
                 else{
                     if(data.users[x].isUser)
-                    l+="<li class='collection-item avatar show_btn' id=\'"+data.users[x].user_id+"\'><img src=\'"+data.users[x].img+"\' class='circle'><span class='title'>"+data.users[x].username+"</span><p>"+data.users[x].platform+"</p><p class='nn' style='display:none'>0</p><input class='cid' type='hidden' value=\'"+data.users[x].cid+"\'><a href='#' class='secondary-content orange-text'><i class='material-icons orange-text'>chat</i></a></li>";
+                    l+="<li class='collection-item avatar show_btn_node' id=\'"+data.users[x].user_id+"\'><img src=\'"+data.users[x].img+"\' class='circle'><span class='title'>"+data.users[x].username+"</span><p>"+data.users[x].platform+"</p><p class='nn' style='display:none'>0</p><input class='cid' type='hidden' value=\'"+data.users[x].cid+"\'><a href='#' class='secondary-content orange-text'><i class='material-icons orange-text'>chat</i></a></li>";
                     else
                     l+="<li class='collection-item avatar show_btn_node' id=\'"+data.users[x].user_id+"\'><img src=\'"+data.users[x].img+"\' class='circle'><span class='title'>"+data.users[x].username+"</span><p>"+data.users[x].platform+"</p><p class='nn' style='display:none'>0</p><input class='cid' type='hidden' value=\'"+data.users[x].cid+"\'><a href='#' class='secondary-content orange-text'><i class='material-icons orange-text'>chat</i></a></li>";
                 }                
@@ -241,27 +241,27 @@ $(document).ready(function(){
     
     $('#send_msg_btn').click(function(){
         if($('#msg_type_content').val()!==''){
-            if(!$('.render_uid').val().includes('G')&&jsuser.isUser){
-            $.ajax({
-                    url:'/chat/users',
-                    method:'post',
-                    data:{'rid':$('.render_uid').val(),'msg_type_content':$('#msg_type_content').val(),'purpose':'add a message'},
+            // if(!$('.render_uid').val().includes('G')&&jsuser.isUser){
+            // $.ajax({
+            //         url:'/chat/users',
+            //         method:'post',
+            //         data:{'rid':$('.render_uid').val(),'msg_type_content':$('#msg_type_content').val(),'purpose':'add a message'},
                    
-                    // type:'clone',
-                    success: function(serverResponse){
-                        if(serverResponse['success']){
-                            var last_right="<li class='message right appeared'><div class='avatar'><a href='/accounts/profile/"+jsuser.user_id+"\'><img src=\'"+jsuser.img+"\' class='circle responsive-img hoverable'></a></div><div class='text_wrapper'><div class='text'>"+$('#msg_type_content').val()+"</div></div></li>"
-                            $('.messages').append(last_right)   
-                            $('.messages').animate({scrollTop: $('.messages').prop("scrollHeight")}, 500);
-                            jsuser['client_id']=$('.messages').attr('id');
-                            jsuser['msg']=$('#msg_type_content').val()
-                            socket.emit('new_message',jsuser)
-                            $('#msg_type_content').val('')
-                        }   
-                    }
-                })
-            }
-            else{
+            //         // type:'clone',
+            //         success: function(serverResponse){
+            //             if(serverResponse['success']){
+            //                 var last_right="<li class='message right appeared'><div class='avatar'><a href='/accounts/profile/"+jsuser.user_id+"\'><img src=\'"+jsuser.img+"\' class='circle responsive-img hoverable'></a></div><div class='text_wrapper'><div class='text'>"+$('#msg_type_content').val()+"</div></div></li>"
+            //                 $('.messages').append(last_right)   
+            //                 $('.messages').animate({scrollTop: $('.messages').prop("scrollHeight")}, 500);
+            //                 jsuser['client_id']=$('.messages').attr('id');
+            //                 jsuser['msg']=$('#msg_type_content').val()
+            //                 socket.emit('new_message',jsuser)
+            //                 $('#msg_type_content').val('')
+            //             }   
+            //         }
+            //     })
+            // }
+            // else{
                 console.log($('.messages').attr('id'))
                 socket.emit('new_message_node',{'sender':jsuser,'receiver':$('.render_uid').val(),'receiver_id':$('.messages').attr('id'),'content':$('#msg_type_content').val()})
                 // socket.on('add_message',function(data){
@@ -272,7 +272,7 @@ $(document).ready(function(){
                     $('#msg_type_content').val('')
                 // })
             }
-        }
+        // }
     })
     // console.log('sb')
     

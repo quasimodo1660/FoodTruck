@@ -24,7 +24,7 @@ class ReviewSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model=Review
         fields=('user','user_name','user_id','lunchbox','score','content','updated_at','created_at')
-        read_only_fields = ('url')
+        read_only_fields = ('url',)
 
 
 class LunchboxSerializer(serializers.HyperlinkedModelSerializer):
@@ -34,10 +34,26 @@ class LunchboxSerializer(serializers.HyperlinkedModelSerializer):
     images = LunchboxImageSerializer(many=True,read_only=True)
     tags = serializers.StringRelatedField(many=True)
     reviews = ReviewSerializer(many=True,read_only=True)
-    likedby = serializers.StringRelatedField(many=True)
+    likedby = UserSerializer(many=True,read_only=True)
     ingredient = serializers.StringRelatedField(many=True)
     class Meta:
         model=Lunchbox
         fields = ('url','user','user_id','title','description','lon','lat','offertime','images','tags','reviews','likedby','ingredient')
-        read_only_fields = ('url','images')
+        read_only_fields = ('url','images',)
+
+
+
+class TagSerializer(serializers.HyperlinkedModelSerializer):
+    label = serializers.SerializerMethodField('get_tag_name')
+    class Meta:
+        model=Tag
+        fields=('id','label')
+    def get_tag_name(self, obj):
+        return obj.name
+
+class CategorySerializer(serializers.HyperlinkedModelSerializer):
+    tags = TagSerializer(many=True,read_only=True)
+    class Meta:
+        model=Category
+        fields=('id','url','tags','name')
 

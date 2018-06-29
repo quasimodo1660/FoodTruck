@@ -175,7 +175,27 @@ def deleteReview(request,id):
             data={'errors':'Something wrong'}
         return JsonResponse(data)
         
-
+# Moblie stuff
+@csrf_exempt
+def moblieUpload(request):
+    if request.method=='POST':
+        # print request.POST
+        user=User.objects.get(pk=request.POST['user'])
+        tags = json.loads(request.POST['tags'])
+        try:
+            lunchbox=Lunchbox.objects.create(user=user,title = request.POST['title'],description = request.POST['des'],location = request.POST['loc'],offertime = request.POST['offertime'],lon = request.POST['lng'],lat= request.POST['lat'])
+            LunchboxImage.objects.create(user=user,lunchbox = lunchbox,image=request.FILES['photo'])
+            for x in tags:
+                # print x
+                this_tag = Tag.objects.get(id=int(x['id']))
+                lunchbox.tags.add(this_tag)
+            data={'success':'add a bento'}
+        except:
+            data={'errors':'Something wrong'}
+        # print tags[0].id
+        # print request.body  
+        # print request.FILES
+        return JsonResponse(data)
 
 
 # API view
@@ -205,3 +225,6 @@ class AvatarImageViewSet(mixins.CreateModelMixin,mixins.ListModelMixin,mixins.Re
     serializer_class = AvatarImageSerializer
 
 
+class CategoryViewSet(mixins.CreateModelMixin,mixins.ListModelMixin,mixins.RetrieveModelMixin,viewsets.GenericViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer

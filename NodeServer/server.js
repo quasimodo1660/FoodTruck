@@ -116,6 +116,10 @@ io.sockets.on('connection',function(socket){
         }
         else{
             user.cid=temp
+            if(data.platform)
+                user.platform=data.platform
+            else
+                user.platform='Web Browser'
             userList.push(user)
         }
            

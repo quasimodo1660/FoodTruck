@@ -13,6 +13,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.dispatch import receiver
 from allauth.socialaccount.signals import pre_social_login
 from allauth.account.signals import user_logged_in
+from rest_framework import mixins
 
 
 
@@ -120,7 +121,7 @@ def settingPofile(request,id):
     if request.method=='POST':
         return HttpResponse('sbb')
 
-class UserViewSet(viewsets.ModelViewSet):
+class UserViewSet(mixins.CreateModelMixin,mixins.ListModelMixin,mixins.RetrieveModelMixin,viewsets.GenericViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """

@@ -30,6 +30,7 @@ router.register(r'lunchbox',LV.LunchboxViewSet)
 router.register(r'review',LV.ReviewViewSet)
 router.register(r'images',LV.LunchboxImageViewSet)
 router.register(r'avatars',LV.AvatarImageViewSet)
+router.register(r'category',LV.CategoryViewSet)
 
 urlpatterns = [
     url(r'^api/', include(router.urls)),
