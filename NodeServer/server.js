@@ -89,13 +89,13 @@ io.sockets.on('connection',function(socket){
         })
         // console.log('user in users'+user)
         if(user==undefined){
-            // transporter.sendMail(mailOptions, function(error, info){
-        //     if (error) {
-        //       console.log(error);
-        //     } else {
-        //       console.log('Email sent: ' + info.response);
-        //     }
-        //   });
+            transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+            }
+          });
             var client;
             if(data.isUser){
                 client = new Client(temp,true,data['user_id'],data['username'],data['img'])

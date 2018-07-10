@@ -64,6 +64,6 @@ def chat(request):
 
 
 
-@xframe_options_exempt
+
 def about(request):
     return render(request,'home/about.html')
