@@ -42,7 +42,7 @@
                     {% endfor %}
                     <div class="showAllLunchLink">
                             {% if lunchbox.user.socialaccount_set.all.0.get_avatar_url %}
-                            <img src="{{ puser.socialaccount_set.all.0.get_avatar_url }}" class="circle hoverable responsive-img z-depth-3">
+                            <img src="{{ lunchbox.user.socialaccount_set.all.0.get_avatar_url }}" class="circle hoverable responsive-img z-depth-3" style="width:70px">
                             {% else %}
                             {% avatar lunchbox.user 70 class="img-circle img-responsive rounded-circle" id="user_avatar" %}
                             {% endif %}

@@ -10,16 +10,22 @@ from avatar.utils import (
 )
 from avatar.views import _get_avatars
 
-
-
+class ProfileSerializer(serializers.HyperlinkedModelSerializer):
+    user = serializers.ReadOnlyField(source='user.username')
+    following = serializers.StringRelatedField(many=True)
+    class Meta:
+        model = Profile
+        fields = ('user','bio','birth_date','postal_code','phone','following')
+        read_only_fields = ('url',)
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-    profile = serializers.PrimaryKeyRelatedField(many=False, queryset=Profile.objects.all())
+    profile = ProfileSerializer(many=False, read_only=True)
     # avatar = serializers.PrimaryKeyRelatedField(many=False, queryset=Avatar.objects.get(''))
     avatar = serializers.SerializerMethodField('render_avatar')
+    followers = serializers.StringRelatedField(many=True)
     class Meta:
         model = User
-        fields = ('id','url', 'username', 'avatar','email', 'groups','profile')
+        fields = ('id','url', 'username', 'avatar','email','followers','profile')
     def render_avatar(self, obj):
         print obj.socialaccount_set.first()
         # user = User.objects.get(pk=obj.id)
@@ -35,8 +41,3 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         model = Group
         fields = ('url', 'name')
 
-class ProfileSerializer(serializers.HyperlinkedModelSerializer):
-    user = serializers.ReadOnlyField(source='user.username')
-    class Meta:
-        model = Profile
-        fields = ('bio','birth_date','postal_code','phone')

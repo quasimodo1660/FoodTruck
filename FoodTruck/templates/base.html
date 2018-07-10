@@ -59,7 +59,7 @@
         </li>
             
             <li><a href="/"><span class="grey-text text-darken-3">Home</span> </a></li>
-            <li><a href="/"><span class="grey-text text-darken-3">About</span> </a></li>
+            <li><a href="/about"><span class="grey-text text-darken-3">About</span> </a></li>
             {% if user.is_authenticated %}        
             {% if user.socialaccount_set.all.0.get_avatar_url %}
             <li><a href="/accounts/profile/{{user.id}}"><img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="own-img img-circle img-responsive rounded-circle" style="width:2.25em"><span class="grey-text text-darken-3"> {{user.get_full_name }}</span></a></li>

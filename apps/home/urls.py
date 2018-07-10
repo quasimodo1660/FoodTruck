@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^search/',views.search),
     url(r'^chat/users$',views.chat_users),
     url(r'^chat/',views.chat),
+    url(r'^about/',views.about),
 ]

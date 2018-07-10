@@ -7,7 +7,7 @@ from django.http import JsonResponse
 import json
 from django.contrib.auth import login
 from django.db.models import Q
-
+from django.views.decorators.clickjacking import xframe_options_exempt
 from .models import *
 
 
@@ -61,3 +61,9 @@ def chat_users(request):
 def chat(request):
     print request.user
     return render(request,'chat.html',{'user':request.user})
+
+
+
+@xframe_options_exempt
+def about(request):
+    return render(request,'home/about.html')
