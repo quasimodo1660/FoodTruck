@@ -53,7 +53,7 @@ Twisted==17.9.0
 txaio==2.9.0
 ua-parser==0.8.0
 unicodecsv==0.14.1
-urllib3==1.22
+urllib3==1.26.5
 user-agents==1.1.0
 virtualenv==15.1.0
 Werkzeug==0.12.2
