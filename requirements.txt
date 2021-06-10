@@ -12,7 +12,7 @@ click==6.7
 constantly==15.1.0
 daphne==2.1.0
 diff-match-patch==20121119
-Django==1.11.7
+Django==2.2.24
 django-allauth==0.35.0
 django-appconf==1.0.2
 django-avatar==4.1.0
